@@ -6,16 +6,20 @@
 #    By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/12 23:59:26 by muabdi            #+#    #+#              #
-#    Updated: 2024/08/18 22:08:22 by muabdi           ###   ########.fr        #
+#    Updated: 2024/08/24 16:09:08 by muabdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
+
 INCLUDES = ./includes
+LIBS = ./libs
+
+LIBFT = $(LIBS)/libft
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -pthread -g3
-INCLUDEFLAGS = -I$(INCLUDES)
+CFLAGS = -Wall -Werror -Wextra -g3
+INCLUDEFLAGS = -I$(INCLUDES) -I$(LIBFT)/includes
 
 RED = \033[0;31m
 GREEN = \033[0;32m
@@ -40,18 +44,24 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) $(INCLUDEFLAGS) -c $< -o $@
 
 ${NAME}: $(OBJS)
+	@make -C $(LIBFT)
 	@echo "${YELLOW}Creating $(NAME)...${NC}"
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -o $(NAME) -lreadline
 	@echo "${GREEN}$(NAME) created.${NC}"
 
 all: $(NAME) $(OBJ_DIR)
 
 clean:
+	@make -C $(LIBFT) clean
 	@echo "${YELLOW}Removing object files...${NC}"
 	@rm -rf $(OBJ_DIR)
 	@echo "${GREEN}Object files removed.${NC}"
 
-fclean: clean
+fclean:
+	@make -C $(LIBFT) fclean
+	@echo "${YELLOW}Removing object files...${NC}"
+	@rm -rf $(OBJ_DIR)
+	@echo "${GREEN}Object files removed.${NC}"
 	@echo "${YELLOW}Removing $(Name) executable...${NC}"
 	@rm -f $(NAME)
 	@echo "${GREEN}$(NAME) executable removed.${NC}"
