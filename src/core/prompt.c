@@ -6,14 +6,12 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 16:35:04 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/25 17:04:52 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/25 22:58:06 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/colour.h"
 #include "../../includes/minishell.h"
-
-// TODO: Handle window size change (SIGWINCH)
 
 static char	*format_prompt(t_prompt *prompt);
 
