@@ -6,7 +6,7 @@
 #    By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/12 23:59:26 by muabdi            #+#    #+#              #
-#    Updated: 2024/08/24 16:09:08 by muabdi           ###   ########.fr        #
+#    Updated: 2024/08/25 18:41:51 by muabdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,5 +72,8 @@ libs:
 	@echo "${YELLOW}Updating submodules...${NC}"
 	@git submodule update --init --recursive --remote
 	@echo "${GREEN}Submodules updated.${NC}"
+
+leaks: all
+	valgrind --suppressions=valgrind.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
 
 .PHONY: all clean fclean re libs
