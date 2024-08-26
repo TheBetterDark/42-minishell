@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:53:48 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/26 15:59:55 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/26 23:03:32 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -28,6 +29,10 @@
 
 # ifndef PATH_MAX
 #  define PATH_MAX 4096
+# endif
+
+# ifndef ECHOCTL
+#  define ECHOCTL 0001000
 # endif
 
 typedef struct s_prompt
@@ -44,6 +49,8 @@ typedef struct s_data
 
 t_prompt		*initialize_prompt(void);
 char			*display_prompt(t_prompt *prompt);
+
+int				initalize_signals(void);
 
 int				ft_getcwd(char *cwd, bool is_tilde);
 int				ft_gethostname(char *hostname);
