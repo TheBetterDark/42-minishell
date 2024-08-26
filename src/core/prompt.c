@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 16:35:04 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/26 16:07:01 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/26 16:11:30 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ char	*display_prompt(t_prompt *prompt)
 	if (!prompt_str)
 		return (perror("Error formatting prompt"), NULL);
 	input = readline((const char *)prompt_str);
-	if (!input)
-		return (perror("Error reading input"), NULL);
 	return (input);
 }
 

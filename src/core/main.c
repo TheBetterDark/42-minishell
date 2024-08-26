@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:54:22 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/26 15:57:37 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/26 16:13:08 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ int	main(void)
 	while (true)
 	{
 		buffer = display_prompt(prompt);
-		if (!buffer)
-			break ;
-		if (ft_strncmp(buffer, "exit", 4) == 0)
+		if (!buffer || ft_strncmp(buffer, "exit", 4) == 0)
 		{
 			printf("exit\n");
-			free(buffer);
+			if (buffer)
+				free(buffer);
 			break ;
 		}
 		free(buffer);
