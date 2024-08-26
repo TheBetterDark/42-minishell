@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:53:48 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/25 16:56:18 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/26 15:59:55 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_data
 t_prompt		*initialize_prompt(void);
 char			*display_prompt(t_prompt *prompt);
 
+int				ft_getcwd(char *cwd, bool is_tilde);
 int				ft_gethostname(char *hostname);
-int				ft_getcwd(char *cwd);
 
 #endif

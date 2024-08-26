@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 16:35:04 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/25 22:58:06 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/26 16:07:01 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_prompt	*initialize_prompt(void)
 			NULL);
 	if (ft_gethostname(prompt->hostname) == -1)
 		return (perror("Error getting hostname"), free(prompt), NULL);
-	if (ft_getcwd(prompt->cwd) == -1)
+	if (ft_getcwd(prompt->cwd, true) == -1)
 		return (perror("Error getting current working directory"), free(prompt),
 			NULL);
 	return (prompt);

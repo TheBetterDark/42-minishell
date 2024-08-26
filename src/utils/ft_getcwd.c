@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:50:18 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/25 16:55:47 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/26 15:59:41 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	replace_home_with_tilde(char *cwd, const char *home);
 
-int	ft_getcwd(char *cwd)
+int	ft_getcwd(char *cwd, bool is_tilde)
 {
 	char	*home;
 
@@ -30,7 +30,7 @@ int	ft_getcwd(char *cwd)
 		perror("Error getting current working directory");
 		return (-1);
 	}
-	if (home && ft_strstr(cwd, home) == cwd)
+	if (is_tilde && home && ft_strstr(cwd, home) == cwd)
 		replace_home_with_tilde(cwd, home);
 	return (0);
 }
