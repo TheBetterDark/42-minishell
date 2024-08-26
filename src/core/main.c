@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:54:22 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/26 16:13:08 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/26 23:04:58 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	main(void)
 
 	prompt = initialize_prompt();
 	if (!prompt)
+		return (EXIT_FAILURE);
+	if (initalize_signals() == -1)
 		return (EXIT_FAILURE);
 	while (true)
 	{
