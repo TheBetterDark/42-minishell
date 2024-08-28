@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:53:48 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/27 20:56:18 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:49:57 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@
 #  define PATH_MAX 4096
 # endif
 
-# define RST "\001\033[0;39m\002"   // Reset
-# define USR "\001\033[1;92m\002"   // Green
-# define CWD "\001\033[1;94m\002"   // Blue
-# define ERR "\001\033[1;91m\002"   // Red
-# define INF "\001\033[1;96m\002"   // Cyan
-# define WRN "\001\033[1;95m\002"   // Magenta
-# define DEF "\001\033[0;97m\002"   // White
+# define RST "\001\033[0;39m\002" // Reset
+# define USR "\001\033[1;92m\002" // Green
+# define CWD "\001\033[1;94m\002" // Blue
+# define ERR "\001\033[1;91m\002" // Red
+# define INF "\001\033[1;96m\002" // Cyan
+# define WRN "\001\033[1;95m\002" // Magenta
+# define DEF "\001\033[0;97m\002" // White
 
 // Structs
 
