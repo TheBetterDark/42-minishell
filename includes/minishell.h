@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:53:48 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/30 08:23:31 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/30 10:34:05 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,60 @@
 # define WRN "\001\033[1;95m\002" // Magenta
 # define DEF "\001\033[0;97m\002" // White
 
+// Enums
+
+typedef enum e_token_type
+{
+	TOKEN_EMPTY,
+	TOKEN_CMD,
+	TOKEN_ARG,
+	TOKEN_TRUNCATE,
+	TOKEN_APPEND,
+	TOKEN_INPUT,
+	TOKEN_PIPE,
+	TOKEN_END
+}					t_token_type;
+
 // Structs
+
+typedef struct s_lexer
+{
+	unsigned int	position;
+	char			*input;
+	char			cursor;
+}					t_lexer;
+
+typedef struct s_token
+{
+	t_token_type	type;
+	char			*value;
+	struct s_token	*prev;
+	struct s_token	*next;
+}					t_token;
+
+typedef struct s_command
+{
+}					t_command;
 
 typedef struct s_data
 {
-	char	hostname[HOST_NAME_MAX];
-	char	cwd[PATH_MAX];
-	char	*user;
+	char			hostname[HOST_NAME_MAX];
+	char			cwd[PATH_MAX];
+	char			*user;
 
-	char	*input;
-}			t_data;
+	char			*input;
+}					t_data;
 
 // Functions
 
-t_data		*initialize_shell(void);
-int			initalize_signals(void);
+t_data				*initialize_shell(void);
+int					initalize_signals(void);
 
-int			ft_getcwd(char *cwd, bool is_tilde);
-int			ft_gethostname(char *hostname);
+t_token				*token_new(t_token_type type, char *value);
+void				token_append(t_token **tokens, t_token *new);
+void				token_cleanup(t_token **tokens);
+
+int					ft_getcwd(char *cwd, bool is_tilde);
+int					ft_gethostname(char *hostname);
 
 #endif
