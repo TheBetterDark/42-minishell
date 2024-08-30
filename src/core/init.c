@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 19:49:04 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/27 20:52:56 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/30 08:46:32 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 static void	handle_sigint(int sig);
 
+/*
+* @brief Initialize the shell
+*
+* @return t_data* The shell data structure
+*/
 t_data	*initialize_shell(void)
 {
 	t_data	*data;
@@ -26,15 +31,18 @@ t_data	*initialize_shell(void)
 		return (perror("Error getting USER environment variable"), free(data),
 			NULL);
 	if (ft_gethostname(data->hostname) == -1)
-		return (perror("Error getting hostname"), free(data), NULL);
+		return (free(data), NULL);
 	if (ft_getcwd(data->cwd, true) == -1)
-		return (perror("Error getting current working directory"), free(data),
-			NULL);
+		return (free(data), NULL);
 	return (data);
 }
 
+/*
+* @brief Initialize signal handlers
+*
+* @return int 0 on success, -1 on error
+*/
 int	initalize_signals(void)
-
 {
 	if (signal(SIGINT, handle_sigint) == SIG_ERR)
 		return (perror("Error setting SIGINT handler"), -1);
@@ -45,6 +53,11 @@ int	initalize_signals(void)
 	return (0);
 }
 
+/*
+* @brief Handle the SIGINT signal
+*
+* @param sig The signal number
+*/
 static void	handle_sigint(int sig)
 {
 	(void)sig;

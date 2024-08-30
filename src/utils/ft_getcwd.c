@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:50:18 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/26 16:08:54 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/30 08:25:17 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 static void	replace_home_with_tilde(char *cwd, const char *home);
 
+/*
+* @brief Get the current working directory
+*
+* @param cwd The buffer to store the current working directory
+* @param is_tilde If true, replace the home directory with a tilde
+* @return int 0 on success, -1 on error
+*/
 int	ft_getcwd(char *cwd, bool is_tilde)
 {
 	char	*home;
@@ -37,6 +44,13 @@ int	ft_getcwd(char *cwd, bool is_tilde)
 	return (0);
 }
 
+/*
+* @brief Replace the home directory with a tilde
+*
+* @param cwd The current working directory
+* @param home The home directory
+* @return void
+*/
 static void	replace_home_with_tilde(char *cwd, const char *home)
 {
 	size_t	home_len;

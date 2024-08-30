@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:53:48 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/28 14:49:57 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/30 08:23:31 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 #  define HOST_NAME_MAX 256
 # endif
 
-# ifndef PATH_MAXk
+# ifndef PATH_MAX
 #  define PATH_MAX 4096
 # endif
 

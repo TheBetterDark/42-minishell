@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:54:22 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/27 20:55:55 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/30 08:24:32 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 static char	*display_prompt(t_data *data);
 
+/*
+* @brief The main entry point of the shell
+*
+* @return int EXIT_SUCCESS on success, EXIT_FAILURE on error
+*/
 int	main(void)
 {
 	t_data	*data;
@@ -35,6 +40,12 @@ int	main(void)
 	return (EXIT_SUCCESS);
 }
 
+/*
+* @brief Display the shell prompt
+*
+* @param data The shell data structure
+* @return char* The user input
+*/
 static char	*display_prompt(t_data *data)
 {
 	char	prompt_str[256];

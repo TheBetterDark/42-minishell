@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:52:44 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/25 16:56:06 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/30 08:25:32 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 static void	truncate_after_first_period(char *hostname);
 
+/*
+* @brief Get the hostname of the system
+*
+* @param hostname The buffer to store the hostname
+* @return int 0 on success, -1 on error
+*/
 int	ft_gethostname(char *hostname)
 {
 	int		fd;
@@ -38,6 +44,12 @@ int	ft_gethostname(char *hostname)
 	return (0);
 }
 
+/*
+* @brief Truncate the hostname after the first period
+*
+* @param hostname The hostname
+* @return void
+*/
 static void	truncate_after_first_period(char *hostname)
 {
 	int	i;
