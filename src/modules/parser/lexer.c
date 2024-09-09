@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:44:01 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/28 17:55:23 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/09/08 23:16:03 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,7 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 	while (lexer->cursor != '\0')
 	{
 		if (lexer->cursor == ' ')
-			lexer_skip_whitespace(lexer);
-		else if (lexer->cursor == '|')
-			return (lexer_handle_pipe(lexer));
-		else if (lexer->cursor == '>')
-			return (lexer_handle_truncate(lexer));
-		else if (lexer->cursor == '<')
-			return (lexer_handle_input(lexer));
-		else
-			return (lexer_handle_cmd(lexer));
+			lexer_advance(lexer);
 	}
 	return (NULL);
 }

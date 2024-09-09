@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:59:05 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/28 17:43:47 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/08/30 10:39:43 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	token_cleanup(t_token **tokens)
 		return ;
 	if ((*tokens)->next)
 		token_cleanup(&(*tokens)->next);
+	if ((*tokens)->value)
+		free((*tokens)->value);
 	free(*tokens);
 	*tokens = NULL;
 }
