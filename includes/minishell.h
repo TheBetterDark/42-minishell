@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:53:48 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/30 10:35:54 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/09/09 19:53:23 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ typedef struct s_token
 
 typedef struct s_command
 {
+	int				num_of_args;
+	char			*path;
+	char			**args;
 }					t_command;
 
 typedef struct s_data
@@ -87,16 +90,37 @@ typedef struct s_data
 	char			*user;
 
 	char			*input;
+
+	t_command		**commands;
+	char			*out_file;
+	char			*in_file;
+	char			*err_file;
 }					t_data;
 
 // Functions
 
 t_data				*initialize_shell(void);
-int					initalize_signals(void);
+// int					initalize_signals(void);
 
 t_token				*token_new(t_token_type type, char *value);
 void				token_append(t_token **tokens, t_token *new);
 void				token_cleanup(t_token **tokens);
+
+t_token				*handle_greater(t_lexer *lexer);
+t_token				*handle_less(t_lexer *lexer);
+t_token				*handle_single_quote(t_lexer *lexer);
+t_token				*handle_double_quote(t_lexer *lexer);
+t_token				*handle_pipe(t_lexer *lexer);
+
+t_command			*command_new(char *path, char **args);
+void				command_append(t_command ***commands, t_command *new);
+void				command_cleanup(t_command **commands);
+
+t_lexer				*lexer_init(char *input);
+void				lexer_advance(t_lexer *lexer);
+t_token				*lexer_get_next_token(t_lexer *lexer);
+t_token				*lexer_tokenize(char *input);
+void				lexer_cleanup(t_lexer *lexer);
 
 int					ft_getcwd(char *cwd, bool is_tilde);
 int					ft_gethostname(char *hostname);

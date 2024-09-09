@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:54:22 by muabdi            #+#    #+#             */
-/*   Updated: 2024/09/08 23:27:00 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/09/09 19:53:13 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,29 @@ static char	*display_prompt(t_data *data);
 int	main(void)
 {
 	t_data	*data;
+	t_token	*tokens;
+	t_token	*current_token;
 
+	current_token = NULL;
 	data = initialize_shell();
 	if (!data)
 		return (EXIT_FAILURE);
-	if (initalize_signals() == -1)
-		return (free(data), EXIT_FAILURE);
+	// if (initalize_signals() == -1)
+	// 	return (free(data), EXIT_FAILURE);
 	while (true)
 	{
 		data->input = display_prompt(data);
 		if (!data->input)
 			break ;
+		tokens = lexer_tokenize(data->input);
+		current_token = tokens;
+		while (current_token != NULL)
+		{
+			printf("Token Type: %d, Token Value: %s\n", current_token->type,
+				current_token->value);
+			current_token = current_token->next;
+		}
+		token_cleanup(&tokens);
 		free(data->input);
 	}
 	free(data);
@@ -52,8 +64,8 @@ static char	*display_prompt(t_data *data)
 	char	*input;
 
 	ft_snprintf(prompt_str, sizeof(prompt_str),
-		USR "%s@%s" RST ":" CWD "%s" RST "$ ", data->user,
-		data->hostname, data->cwd);
+		USR "%s@%s" RST ":" CWD "%s" RST "$ ", data->user, data->hostname,
+		data->cwd);
 	input = readline((const char *)prompt_str);
 	return (input);
 }

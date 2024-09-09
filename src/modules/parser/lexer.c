@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:44:01 by muabdi            #+#    #+#             */
-/*   Updated: 2024/09/09 14:53:46 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/09/09 19:46:01 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 	{
 		if (lexer->cursor == ' ')
 			lexer_advance(lexer);
+		else if (lexer->cursor == '>')
+			return (handle_greater(lexer));
+		else if (lexer->cursor == '<')
+			return (handle_less(lexer));
+		else if (lexer->cursor == '\'')
+			return (handle_single_quote(lexer));
+		else if (lexer->cursor == '"')
+			return (handle_double_quote(lexer));
+		else if (lexer->cursor == '|')
+			return (handle_pipe(lexer));
 	}
 	return (NULL);
 }
@@ -56,11 +66,23 @@ t_token	*lexer_tokenize(char *input)
 	t_token	*token;
 
 	lexer = lexer_init(input);
+	if (!lexer)
+		return (NULL);
 	tokens = NULL;
 	while (lexer->cursor != '\0')
 	{
 		token = lexer_get_next_token(lexer);
+		if (!token)
+			break ;
 		token_append(&tokens, token);
 	}
+	lexer_cleanup(lexer);
 	return (tokens);
+}
+
+void	lexer_cleanup(t_lexer *lexer)
+{
+	if (!lexer)
+		return ;
+	free(lexer);
 }
