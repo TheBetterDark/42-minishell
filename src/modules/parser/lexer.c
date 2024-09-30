@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:44:01 by muabdi            #+#    #+#             */
-/*   Updated: 2024/09/09 19:46:01 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/09/30 17:25:57 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ void	lexer_advance(t_lexer *lexer)
 
 t_token	*lexer_get_next_token(t_lexer *lexer)
 {
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
 	if (!lexer)
 		return (NULL);
 	while (lexer->cursor != '\0')
@@ -55,6 +52,8 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 			return (handle_double_quote(lexer));
 		else if (lexer->cursor == '|')
 			return (handle_pipe(lexer));
+		else
+			lexer_advance(lexer);
 	}
 	return (NULL);
 }

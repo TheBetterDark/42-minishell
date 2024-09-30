@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:40:50 by muabdi            #+#    #+#             */
-/*   Updated: 2024/09/09 19:51:25 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/09/30 17:25:29 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ t_token	*handle_greater(t_lexer *lexer)
 	if (lexer->cursor == '>')
 	{
 		lexer_advance(lexer);
-		return (token_new(TOKEN_APPEND, ">>"));
+		return (token_new(TOKEN_APPEND, ft_strdup(">>")));
 	}
-	return (token_new(TOKEN_TRUNCATE, ">"));
+	return (token_new(TOKEN_TRUNCATE, ft_strdup(">")));
 }
 
 /*
@@ -41,9 +41,9 @@ t_token	*handle_less(t_lexer *lexer)
 	if (lexer->cursor == '<')
 	{
 		lexer_advance(lexer);
-		return (token_new(TOKEN_INPUT, "<<"));
+		return (token_new(TOKEN_INPUT, ft_strdup("<<")));
 	}
-	return (token_new(TOKEN_INPUT, "<"));
+	return (token_new(TOKEN_INPUT, ft_strdup("<")));
 }
 
 /*
@@ -55,7 +55,7 @@ t_token	*handle_less(t_lexer *lexer)
 t_token	*handle_single_quote(t_lexer *lexer)
 {
 	lexer_advance(lexer);
-	return (token_new(TOKEN_ARG, "'"));
+	return (token_new(TOKEN_ARG, ft_strdup("'")));
 }
 
 /*
@@ -67,7 +67,7 @@ t_token	*handle_single_quote(t_lexer *lexer)
 t_token	*handle_double_quote(t_lexer *lexer)
 {
 	lexer_advance(lexer);
-	return (token_new(TOKEN_ARG, "\""));
+	return (token_new(TOKEN_ARG, ft_strdup("\"")));
 }
 
 /*
@@ -79,5 +79,5 @@ t_token	*handle_double_quote(t_lexer *lexer)
 t_token	*handle_pipe(t_lexer *lexer)
 {
 	lexer_advance(lexer);
-	return (token_new(TOKEN_PIPE, "|"));
+	return (token_new(TOKEN_PIPE, ft_strdup("|")));
 }
