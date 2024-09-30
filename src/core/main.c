@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:54:22 by muabdi            #+#    #+#             */
-/*   Updated: 2024/09/09 19:53:13 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/09/11 19:42:33 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	main(void)
 	data = initialize_shell();
 	if (!data)
 		return (EXIT_FAILURE);
-	// if (initalize_signals() == -1)
-	// 	return (free(data), EXIT_FAILURE);
+	if (initalize_signals() == -1)
+		return (free(data), EXIT_FAILURE);
 	while (true)
 	{
 		data->input = display_prompt(data);
