@@ -6,10 +6,9 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:25:28 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../inc/minishell.h"
 
 static void	nested_shell_count(t_mini *m)
@@ -56,7 +55,7 @@ void	config_terminal(t_mini *m)
 	tcgetattr(STDIN_FILENO, &m->terminal);
 	termios = m->terminal;
 	termios.c_lflag &= ~ECHOCTL;
-	termios.c_lflag |= (ECHO | ICANON | ISIG);	
+	termios.c_lflag |= (ECHO | ICANON | ISIG);
 	tcsetattr(STDIN_FILENO, TCSANOW, &termios);
 }
 

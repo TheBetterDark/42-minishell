@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:40:26 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static bool	new_token(t_mini *m, char *cont, t_token *prev, t_token *now)
 	return (0);
 }
 
-static bool	add_split_tokens(t_mini *m, t_token **prev, t_token *now, char **tmp)
+static bool	add_split_toks(t_mini *m, t_token **prev, t_token *now, char **tmp)
 {
 	int		i;
 
@@ -68,7 +68,7 @@ static bool	divide_token(t_mini *m, t_token *prev, t_token *current)
 			tmp = ft_split(current->cont, ' ');
 			if (!tmp)
 				return (1);
-			if (add_split_tokens(m, &prev, current, tmp))
+			if (add_split_toks(m, &prev, current, tmp))
 				return (1);
 			current = prev->next;
 			free(tmp);
@@ -94,12 +94,12 @@ bool	tokenizer(t_mini *m)
 		return (1);
 	merge_sort_tokens(m);
 	if (tokenize_pipeline(m))
-	if (redirection(m))
-		return (1);
+		if (redirection(m))
+			return (1);
 	merge_sort_tokens(m);
 	if (tokenize_pipeline(m))
-	if (merge_adjacent_tokens(m))
-		return (1);
+		if (merge_adjacent_tokens(m))
+			return (1);
 	if (divide_token(m, m->t_head, m->t_head->next))
 		return (1);
 	if (!m->t_head->next)

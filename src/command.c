@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:26:58 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	child_processes(t_mini *m, int idx)
 		close(m->cmd[idx].hdc[m->cmd[idx].hdc_size - 1].pipe[1]);
 	}
 	if (m->cmd[idx].if_executable)
-		execute_cmd(m, idx); //
+		execute_cmd(m, idx);
 	exit(1);
 }
 

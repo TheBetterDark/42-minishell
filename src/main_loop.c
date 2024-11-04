@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:36:29 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	main_loop(t_mini *m)
 			printf("exit\n");
 			break ;
 		}
-		//if (m->input[0] == '\0' || ft_strncmp(m->input, "\t", ft_strlen(m->input)) == 0)
 		if (m->input[0] == '\0')
 		{
 			re_init_minishell(m);

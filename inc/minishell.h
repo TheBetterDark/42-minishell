@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:53:02 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@
 
 extern volatile sig_atomic_t	g_signal;
 
-typedef struct s_token		t_token;
-typedef struct s_cmd		t_cmd;
-typedef struct s_rdr		t_rdr;
-typedef struct s_hdc		t_hdc;
+typedef struct s_token			t_token;
+typedef struct s_cmd			t_cmd;
+typedef struct s_rdr			t_rdr;
+typedef struct s_hdc			t_hdc;
 
 typedef enum e_type
 {
@@ -52,7 +52,7 @@ typedef enum e_type
 	FILENAME
 }	t_type;
 
-typedef struct	s_token
+typedef struct s_token
 {
 	char	*cont;
 	t_token	*next;
@@ -60,9 +60,9 @@ typedef struct	s_token
 	int		end_pos;
 	t_type	type;
 	bool	can_split;
-} t_token;
+}	t_token;
 
-typedef struct	s_rdr
+typedef struct s_rdr
 {
 	int		fd;
 	int		o_fd;
@@ -78,7 +78,7 @@ typedef struct s_hdc
 	int		pipe[2];
 }	t_hdc;
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	char	**args;
 	t_rdr	*rdr;

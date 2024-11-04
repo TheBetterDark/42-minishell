@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:35:51 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ void	b_cd(t_mini *m, int idx)
 {
 	if (!m->cmd[idx].args[1])
 		cd_to_home(m, idx);
-	else if (ft_strncmp(m->cmd[idx].args[1], "~", 2) == 0 ||
-		!m->cmd[idx].args[1] ||
-		ft_strncmp(m->cmd[idx].args[1], "~/", 3) == 0)
+	else if (ft_strncmp(m->cmd[idx].args[1], "~", 2) == 0
+		|| !m->cmd[idx].args[1]
+		|| ft_strncmp(m->cmd[idx].args[1], "~/", 3) == 0)
 		cd_to_home(m, idx);
 	else if (ft_strncmp(m->cmd[idx].args[1], "-", 2) == 0
 		|| ft_strncmp(m->cmd[idx].args[1], "-/", 3) == 0)

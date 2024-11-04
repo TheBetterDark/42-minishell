@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:34:34 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	b_unset(t_mini *m, int idx)
 	{
 		if (getenv(m->cmd[idx].args[i]))
 			m_unset(m, m->cmd[idx].args[i]);
-		else if (!(ft_isalpha(m->cmd[idx].args[i][0])&& ft_isalnum_str(m->cmd[idx].args[i] + 1)))
+		else if (!(ft_isalpha(m->cmd[idx].args[i][0])
+			&& ft_isalnum_str(m->cmd[idx].args[i] + 1)))
 		{
 			ft_putstr_fd("minishell: unset: `", 2);
 			ft_putstr_fd(m->cmd[idx].args[i], 2);

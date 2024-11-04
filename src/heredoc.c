@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:25:01 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	heredoc_process(t_mini *m, t_hdc hdc)
 	{
 		write(1, "> ", 2);
 		if (ft_strncmp(buf, hdc.eof, size) == 0 && buf[size] == '\n')
-				break ;
+			break ;
 		if (get_env_str(m, &buf))
 		{
 			m->exit_status = 1;

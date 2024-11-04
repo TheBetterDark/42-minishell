@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:26:06 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ bool	executor(t_mini *m)
 	if (is_heredoc(m))
 		return (1);
 	cmd_redir(m);
-	if (is_command(m)) //
+	if (is_command(m))
 		return (1);
 	i = 0;
 	while (i < m->job_size - 1)

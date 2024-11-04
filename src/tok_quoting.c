@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:41:22 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static bool	new_token(t_mini *m, int size, int pos)
 	new = ft_malloc(sizeof(t_token), m->mem);
 	if (!new)
 		return (1);
-;
-
 	ft_memset(new, 0, sizeof(t_token));
 	m->t_tail->next = new;
 	m->t_tail = new;
