@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 19:49:04 by muabdi            #+#    #+#             */
-/*   Updated: 2024/11/21 16:18:09 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/11/21 19:19:25 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ t_data	*initialize_shell(void)
 		return (free(data), NULL);
 	data->input = NULL;
 	data->commands = NULL;
-	data->out_file = NULL;
-	data->in_file = NULL;
-	data->err_file = NULL;
 	return (data);
 }
 
