@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:54:22 by muabdi            #+#    #+#             */
-/*   Updated: 2024/09/11 19:42:33 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/11/21 17:01:52 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,15 @@ int	main(void)
 	while (true)
 	{
 		data->input = display_prompt(data);
-		if (!data->input)
+		if (!data->input || ft_strncmp(data->input, "exit", 5) == 0)
 			break ;
+		printf("Input: %s\n", data->input);
 		tokens = lexer_tokenize(data->input);
+		if (!tokens)
+		{
+			printf("No tokens generated.\n");
+			continue ;
+		}
 		current_token = tokens;
 		while (current_token != NULL)
 		{
