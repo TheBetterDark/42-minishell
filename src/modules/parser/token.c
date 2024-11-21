@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:59:05 by muabdi            #+#    #+#             */
-/*   Updated: 2024/09/09 18:43:31 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/11/21 17:13:00 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_token	*token_new(t_token_type type, char *value)
 	token->type = type;
 	token->value = value;
 	token->next = NULL;
-	token->prev = NULL;
 	return (token);
 }
 
@@ -41,7 +40,6 @@ void	token_append(t_token **tokens, t_token *new)
 	while (last->next)
 		last = last->next;
 	last->next = new;
-	new->prev = last;
 }
 
 void	token_cleanup(t_token **tokens)
