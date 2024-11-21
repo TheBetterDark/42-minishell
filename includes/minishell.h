@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:53:48 by muabdi            #+#    #+#             */
-/*   Updated: 2024/08/28 14:49:57 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/11/21 18:04:28 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,64 @@
 # define WRN "\001\033[1;95m\002" // Magenta
 # define DEF "\001\033[0;97m\002" // White
 
+// Enums
+
+typedef enum e_token_type
+{
+	TOKEN_CMD,
+	TOKEN_ARG,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_APPEND,
+	TOKEN_HEREDOC,
+	TOKEN_DELIMETER,
+	TOKEN_PIPE,
+	TOKEN_END
+}						t_token_type;
+
 // Structs
+
+typedef struct s_lexer
+{
+	unsigned int		position;
+	char				*input;
+	char				cursor;
+}						t_lexer;
+
+typedef struct s_token
+{
+	t_token_type		type;
+	char				*value;
+	struct s_token		*next;
+}						t_token;
+
+typedef struct s_command
+{
+	char				*path;
+	char				**args;
+	int					input_fd;
+	int					output_fd;
+	int					append_fd;
+	char				*end_of_file;
+	struct s_command	*next;
+}						t_command;
 
 typedef struct s_data
 {
-	char	hostname[HOST_NAME_MAX];
-	char	cwd[PATH_MAX];
-	char	*user;
+	char				hostname[HOST_NAME_MAX];
+	char				cwd[PATH_MAX];
+	char				*user;
+	char				*input;
 
-	char	*input;
-}			t_data;
+	t_command			**commands;
+}						t_data;
 
 // Functions
 
-t_data		*initialize_shell(void);
-int			initalize_signals(void);
+t_data					*initialize_shell(void);
+int						initalize_signals(void);
 
-int			ft_getcwd(char *cwd, bool is_tilde);
-int			ft_gethostname(char *hostname);
+int						ft_getcwd(char *cwd, bool is_tilde);
+int						ft_gethostname(char *hostname);
 
 #endif
