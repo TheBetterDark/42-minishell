@@ -6,9 +6,11 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:16:25 by muabdi            #+#    #+#             */
-/*   Updated: 2024/11/21 20:37:01 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/11/23 13:36:20 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../../includes/minishell.h"
 
 t_command	*command_new(char *path, char **args)
 {
@@ -49,9 +51,7 @@ void	command_cleanup(t_command **commands)
 	if (!commands || !*commands)
 		return ;
 	if ((*commands)->next)
-		token_cleanup(&(*commands)->next);
-	if ((*commands)->value)
-		free((*commands)->value);
+		command_cleanup(&(*commands)->next);
 	free(*commands);
 	*commands = NULL;
 }
