@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:53:48 by muabdi            #+#    #+#             */
-/*   Updated: 2024/11/21 19:17:13 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/11/27 18:44:18 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@
 
 typedef enum e_token_type
 {
-	TOKEN_CMD,
-	TOKEN_ARG,
+	TOKEN_CMD,			// TODO
+	TOKEN_ARG,			// TODO
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_APPEND,

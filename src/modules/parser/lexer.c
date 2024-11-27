@@ -6,12 +6,18 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:44:01 by muabdi            #+#    #+#             */
-/*   Updated: 2024/11/21 16:35:45 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:51:35 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
+/*
+* @brief Initialize the lexer
+*
+* @param input The input string
+* @return A new lexer 
+*/
 t_lexer	*lexer_init(char *input)
 {
 	t_lexer	*lexer;
@@ -33,7 +39,8 @@ void	lexer_advance(t_lexer *lexer)
 		lexer->cursor = lexer->input[lexer->position];
 	}
 }
-
+,l
+// TODO: Handle CMD and ARG that is not in quotes
 t_token	*lexer_get_next_token(t_lexer *lexer)
 {
 	if (!lexer)
@@ -42,16 +49,14 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 	{
 		if (lexer->cursor == ' ')
 			lexer_advance(lexer);
-		else if (lexer->cursor == '>')
-			return (handle_greater(lexer));
-		else if (lexer->cursor == '<')
-			return (handle_less(lexer));
-		else if (lexer->cursor == '\'')
-			return (handle_single_quote(lexer));
-		else if (lexer->cursor == '"')
-			return (handle_double_quote(lexer));
+		else if (lexer->cursor == '>' || lexer->cursor == '<')
+			return (handle_redirect(lexer, lexer->cursor));
+		else if (lexer->cursor == '\'' || lexer->cursor == '"')
+			return (handle_quotes(lexer, lexer->cursor));
 		else if (lexer->cursor == '|')
 			return (handle_pipe(lexer));
+		else if (lexer->cursor == '/0')
+			return (token_new(TOKEN_END, ft_strdup("\0")));
 		else
 			lexer_advance(lexer);
 	}
