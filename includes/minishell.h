@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:53:48 by muabdi            #+#    #+#             */
-/*   Updated: 2024/11/27 18:44:18 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/11/30 16:35:48 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@
 
 typedef enum e_token_type
 {
-	TOKEN_CMD,			// TODO
-	TOKEN_ARG,			// TODO
+	TOKEN_CMD, // TODO
+	TOKEN_ARG, // TODO
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_APPEND,
 	TOKEN_HEREDOC,
-	TOKEN_DELIMETER,
+	TOKEN_DELIMETER, // TODO
 	TOKEN_PIPE,
 	TOKEN_END
 }						t_token_type;
@@ -108,10 +108,9 @@ t_token					*token_new(t_token_type type, char *value);
 void					token_append(t_token **tokens, t_token *new);
 void					token_cleanup(t_token **tokens);
 
-t_token					*handle_greater(t_lexer *lexer);
-t_token					*handle_less(t_lexer *lexer);
-t_token					*handle_single_quote(t_lexer *lexer);
-t_token					*handle_double_quote(t_lexer *lexer);
+t_token					*handle_redirect(t_lexer *lexer, char type);
+t_token					*handle_quotes(t_lexer *lexer, char quote_type);
+t_token					*handle_delimiter(t_lexer *lexer, char *delimiter);
 t_token					*handle_pipe(t_lexer *lexer);
 
 t_command				*command_new(char *path, char **args);

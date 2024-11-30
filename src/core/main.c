@@ -6,13 +6,14 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 21:54:22 by muabdi            #+#    #+#             */
-/*   Updated: 2024/11/21 18:01:05 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/11/30 15:58:39 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static char	*display_prompt(t_data *data);
+static void	main_loop(t_data *data);
 
 /*
 * @brief The main entry point of the shell
@@ -22,15 +23,23 @@ static char	*display_prompt(t_data *data);
 int	main(void)
 {
 	t_data	*data;
-	t_token	*tokens;
-	t_token	*current_token;
 
-	current_token = NULL;
 	data = initialize_shell();
 	if (!data)
 		return (EXIT_FAILURE);
 	if (initalize_signals() == -1)
 		return (free(data), EXIT_FAILURE);
+	main_loop(data);
+	free(data);
+	printf("exit\n");
+	return (EXIT_SUCCESS);
+}
+
+static void	main_loop(t_data *data)
+{
+	static t_token	*current_token = NULL;
+	t_token			*tokens;
+
 	while (true)
 	{
 		data->input = display_prompt(data);
@@ -53,9 +62,6 @@ int	main(void)
 		token_cleanup(&tokens);
 		free(data->input);
 	}
-	free(data);
-	printf("exit\n");
-	return (EXIT_SUCCESS);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 18:40:50 by muabdi            #+#    #+#             */
-/*   Updated: 2024/11/27 18:46:37 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/11/30 16:48:46 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@
 */
 t_token	*handle_redirect(t_lexer *lexer, char type)
 {
-    lexer_advance(lexer);
-    if (lexer->cursor == type)
-    {
-        lexer_advance(lexer);
-        if (type == '>')
-            return (token_new(TOKEN_APPEND, ft_strdup(">>")));
-        else if (type == '<')
-            return (token_new(TOKEN_HEREDOC, ft_strdup("<<")));
-    }
-    if (type == '>')
-        return (token_new(TOKEN_REDIR_OUT, ft_strdup(">")));
-    else if (type == '<')
-    	return (token_new(TOKEN_REDIR_IN, ft_strdup("<")));
+	lexer_advance(lexer);
+	if (lexer->cursor == type)
+	{
+		lexer_advance(lexer);
+		if (type == '>')
+			return (token_new(TOKEN_APPEND, ft_strdup(">>")));
+		else if (type == '<')
+			handle_heredoc(lexer);
+	}
+	if (type == '>')
+		return (token_new(TOKEN_REDIR_OUT, ft_strdup(">")));
+	else if (type == '<')
+		return (token_new(TOKEN_REDIR_IN, ft_strdup("<")));
 	return (NULL);
 }
 
@@ -43,12 +43,16 @@ t_token	*handle_redirect(t_lexer *lexer, char type)
 * @param lexer The lexer structure
 * @return A new token
 */
-t_token	*handle_quotes(t_lexer *lexer, char quote)
+/*
+    TODO: Grab the stuff inside the quotes 
+    TODO: Identify if its a double or single for expasion
+*/
+t_token	*handle_quotes(t_lexer *lexer, char quote_type)
 {
-	if (!quote)
+	if (!quote_type)
 		return (NULL);
 	lexer_advance(lexer);
-	return (token_new(TOKEN_ARG, ft_strdup(quote_type)));
+	return (token_new(TOKEN_ARG, ft_strdup(&quote_type)));
 }
 
 /*
@@ -57,7 +61,7 @@ t_token	*handle_quotes(t_lexer *lexer, char quote)
 * @param lexer The lexer structure
 * @return A new token
 */
-t_token	*handle_delimiter(t_lexer *lexer, char *delimiter)
+t_token	*handle_heredoc(t_lexer *lexer)
 {
 	if (!delimiter)
 		return (NULL);
