@@ -6,12 +6,12 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 17:52:02 by smoore            #+#    #+#             */
-/*   Updated: 2023/11/04 11:28:31 by smoore           ###   ########.fr       */
+/*   Updated: 2024/11/29 17:25:46 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
-
+// memset(&obj, 0, sizeof(CustomType));
 void	*ft_memset(void *s, int c, size_t n)
 {
 	size_t	i;

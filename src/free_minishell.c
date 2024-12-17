@@ -1,36 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.h                                           :+:      :+:    :+:   */
+/*   free_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/16 17:12:55 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENS_H
-# define TOKENS_H
+#include "../inc/data.h"
 
-# include "minishell.h"
-
-typedef struct s_sort
+void	free_minishell(t_data *d)
 {
-	t_token	*a_cur;
-	t_token	*b_cur;
-	int		a_i;
-	int		b_i;
-}				t_sort;
-
-bool	handle_quotes(t_mini *m);
-bool	tokenize_input(t_mini *m);
-bool	redirection(t_mini *m);
-void	merge_sort_tokens(t_mini *m);
-bool	extract_tokens(t_mini *m, char *str, char *delims);
-
-bool	merge_adjacent_tokens(t_mini *m);
-bool	tokenize_pipeline(t_mini *m);
-void	assign_token_type(t_mini *m);
-
-#endif
+	free(d->input);
+	d->cmd_ct = 0;
+	tok_lstclear(&d->toks);
+	d->input_fd = 0;
+	d->output_fd = 1;
+	d->r_input_fd = -1;
+	d->r_output_fd = -1;
+}

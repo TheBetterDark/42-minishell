@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_cmd_utils.c                                :+:      :+:    :+:   */
+/*   ft_str_arr_out.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Created: 2023/11/07 15:51:08 by smoore            #+#    #+#             */
+/*   Updated: 2024/12/16 15:39:09 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cmd.h"
+#include "../include/libft.h"
 
-void	is_a_dir(char *str)
+void	ft_str_arr_out(const char **str_arr)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": is a directory\n", 2);
-	exit(126);
-}
+	const char	**tmp;
 
-void	check_if_dir(char *cmd)
-{
-	struct stat	statbuf;
-
-	if (stat(cmd, &statbuf) != 0)
-		return ;
-	if (S_ISDIR(statbuf.st_mode))
-		is_a_dir(cmd);
+	tmp = str_arr;
+	while (*tmp)
+	{
+		ft_printf("%s\n", *tmp);
+		tmp++;
+	}
 }

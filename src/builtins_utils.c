@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/16 15:07:09 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cmd.h"
+#include "../inc/data.h"
 
-void	b_pwd(t_mini *m, bool is_print)
+bool	input_matches(char *input, char *test)
 {
-	if (getcwd(m->path, PATH_MAX) != NULL)
-	{
-		if (is_print)
-		{
-			printf("%s\n", m->path);
-			exit(0);
-		}
-	}
-	else if (is_print == 1)
-	{
-		m->path = getenv("PWD");
-		printf("%s\n", m->path);
-		m->exit_status = 1;
-		if (!is_parent(m))
-			exit(1);
-	}
-	else
-		m->path = getenv("PWD");
+	if (ft_strncmp(input, test, ft_strlen(input)) == 0)
+		return (true);
+	return (false);	
 }

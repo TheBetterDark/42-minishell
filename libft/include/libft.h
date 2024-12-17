@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:06:50 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 17:50:29 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/16 15:39:51 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <unistd.h>
 
 int			ft_isalpha(int c);
@@ -93,25 +94,31 @@ typedef struct s_list_len
 	struct s_list_len		*next;
 }						t_list_len;
 
-void		str_copy(char *dest, const char *src, size_t n);
-void		pop_head(t_list_len **head);
-int			has_newline(t_list_len *head);
-size_t		len_of_newline(t_list_len *head);
-char		*gnl_substr(char const *s, size_t start, size_t size);
-char		*get_next_line(int fd);
+void	str_copy(char *dest, const char *src, size_t n);
+void	pop_head(t_list_len **head);
+int		has_newline(t_list_len *head);
+size_t	len_of_newline(t_list_len *head);
+char	*gnl_substr(char const *s, size_t start, size_t size);
+char	*get_next_line(int fd);
 
 // ---------------------FT_PRINTF------------------------------------
 
-int			ft_printf(const char *f_str, ...);
-int			print_str(char *str);
-int			print_hex(unsigned int num, char f_char);
-int			print_ptr(unsigned long long ptr);
-int			print_unsigned(unsigned int num);
+int	ft_printf(const char *f_str, ...);
+int	print_str(char *str);
+int	print_hex(unsigned int num, char f_char);
+int	print_ptr(unsigned long long ptr);
+int	print_unsigned(unsigned int num);
 
 // ---------------------NEW------------------------------------------
 
-void		*ft_malloc(size_t size, t_list *mem);
-void		ft_free_all(t_list *mem);
-void		ft_free(void *ptr, t_list *mem);
+void	*ft_malloc(size_t size, t_list *mem);
+void	ft_free_all(t_list *mem);
+void	ft_free(void *ptr, t_list *mem);
+void	ft_free_str_arr(char **str_arr);
+char	**ft_str_arr_add(const char **str_arr, const char *str);
+char	**ft_str_arr_minus(const char **str_arr, const char *str);
+char	**ft_str_arr_dup(const char **str_arr);
+bool	ft_str_arr_has(const char **str_arr, const char *str);
+void	ft_str_arr_out(const char **str_arr);
 
 #endif

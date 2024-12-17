@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   ft_str_arr_has.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Created: 2023/11/07 15:51:08 by smoore            #+#    #+#             */
+/*   Updated: 2024/12/13 17:11:07 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cmd.h"
+#include "../include/libft.h"
 
-void	b_env(t_mini *m, int idx)
+bool	ft_str_arr_has(const char **str_arr, const char *str)
 {
-	int	i;
+	const char	**tmp;
 
-	if (m->cmd[idx].args[1])
+	if (!str_arr || !str)
+		return (NULL);
+	tmp = str_arr;
+	while (*tmp)
 	{
-		ft_putstr_fd("minishell: we don't handle options or arguments.\n", 2);
-		exit(1);
+		if (ft_strncmp(*tmp, str, ft_strlen(str)) == 0)
+			return (true);
+		tmp++;
 	}
-	i = 0;
-	while (__environ[i])
-		printf("%s\n", __environ[i++]);
-	exit(0);
+	return (false);
 }

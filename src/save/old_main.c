@@ -6,18 +6,11 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/17 14:49:18 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/17 13:32:33 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
-
-char	*check_null(char *av)
-{
-	if (ft_strncmp(av, "NULL", 4) == 0)
-		return (NULL);
-	return (ft_strdup(av));
-}
 
 int		find_cmdv_size(t_token *cur)
 {
@@ -26,7 +19,7 @@ int		find_cmdv_size(t_token *cur)
 
 	size = 0;
 	cur_cur = cur;
-	while (cur_cur && (cur_cur->type == CMD || cur_cur->type == ARG)) 
+	while (cur_cur->type != CMD && cur_cur->type != ARG)
 	{
 		size++;
 		cur_cur = cur_cur->next;
@@ -36,48 +29,30 @@ int		find_cmdv_size(t_token *cur)
 
 char	**init_cmdv(t_token *cur, int size)
 {
-	char	**cmdv;
-	int		i;
+	char **cmdv;
+	char **tmp;
 
 	cmdv = malloc(sizeof(char *) * (size + 1));
 	if (!cmdv)
 		return (NULL);
-	i = 0;
-	while (i < size && cur)
+	tmp = cmdv;
+	while (*tmp)
 	{
 		if (cur->type == CMD || cur->type == ARG)
 		{
-			cmdv[i] = ft_strdup(cur->cont);
-			if (!cmdv[i])
-			{
-				perror("Cmdv strdup Error");
-				while (i > 0)
-					free(cmdv[--i]);
-				free(cmdv);
+			*tmp = ft_strdup(cur->cont);
+			if (*tmp == NULL)
 				return (NULL);
-			}
-			i++;
 		}
 		cur = cur->next;
+		tmp++;
 	}
-	cmdv[i] = NULL;
 	return (cmdv);
 }
-void	set_new_cmd_nulls(t_cmd *new_cmd)
-{
-	new_cmd->append_fn = NULL;
-	new_cmd->open_fn = NULL;
-	new_cmd->input_fn = NULL;
-	new_cmd->eof = NULL;
-	new_cmd->e_len = 0;
-	new_cmd->next = NULL;
-}
 
-void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur)
+void	get_new_cmd_data(t_cmd	*new_cmd, t_token *cur)
 {
-	set_new_cmd_nulls(new_cmd);
-	//while (cur && (cur->type != PIPE && cur->type != CMD))
-	while (cur)
+	while (cur && cur->type != PIPE && cur->type != CMD)
 	{
 		if (cur->type == APPEND_FILE)
 			new_cmd->append_fn = cur->cont;
@@ -94,27 +69,28 @@ void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur)
 	}
 }
 
-t_token	*init_new_cmd(t_cmd **new_cmd, t_token *cur)
+t_cmd	*init_new_cmd(t_token *cur)
 {
 	int		size;
+	t_cmd	*new_cmd;
 	
-	size = find_cmdv_size(cur);
-	*new_cmd = malloc(sizeof(t_cmd));
-	if (!*new_cmd)
-		return (NULL);
-	(*new_cmd)->cmdv = init_cmdv(cur, size);
-	if (!(*new_cmd)->cmdv)
+	size = 0;
+	while (cur)
 	{
-		perror("Cmdv Error");
-		return (NULL);
+		size = find_cmdv_size(cur);
+		new_cmd = malloc(sizeof(t_cmd));
+		if (!new_cmd)
+			return (NULL);
+		new_cmd->cmdv = init_cmdv(cur, size);
+		if (!new_cmd->cmdv)
+		{
+			perror("Cmdv Error");
+			return (NULL);
+		}
+		get_new_cmd_data(new_cmd, cur);
+		cur = cur->next;	
 	}
-	get_new_cmd_data(*new_cmd, cur);
-	(*new_cmd)->next = NULL;	
-	while (cur && cur->type != PIPE)
-		cur = cur->next;
-	if (cur && cur->type == PIPE)
-		cur = cur->next;
-	return (cur);
+	return (new_cmd);
 }
 
 void	add_to_job(t_cmd **head_cmd, t_cmd *new_cmd)
@@ -137,13 +113,17 @@ t_cmd	*parser(t_data *d)
 	t_cmd	*job;
 	t_cmd	*new_cmd;
 	t_token	*cur;
+	int		i;
 
 	job = NULL;
+	i = 0;
 	cur = d->toks;
-	while (cur)
+	while (i < d->cmd_ct)
 	{
-		cur = init_new_cmd(&new_cmd, cur);	
+		new_cmd = init_new_cmd(cur);	
 		add_to_job(&job, new_cmd);
+		cur = cur->next;
+		i++;
 	}
 	return (job);
 }
@@ -152,7 +132,8 @@ void	minishell(t_data *d)
 {
 	while (1)
 	{		
-		d->input = readline("🐚");
+		//d->input = readline("🇲🇮🇳🇮🐚");
+		d->input = readline("minishell💲");
 		readline_config(d);
 		if (!d->input)
 			break ;

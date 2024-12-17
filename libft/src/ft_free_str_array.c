@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_str.h                                          :+:      :+:    :+:   */
+/*   ft_free_str_array.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Created: 2023/11/11 11:51:35 by smoore            #+#    #+#             */
+/*   Updated: 2024/11/25 16:36:17 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_STR_H
-# define ENV_STR_H
-# include "env.h"
+#include "../include/libft.h"
 
-int		count_str(char *str);
-void	get_idx_str(char *str, t_env *env);
+void	ft_free_str_arr(char **str_arr)
+{
+	char **tmp;
 
-#endif
+	tmp = str_arr;
+	while (*tmp)
+	{
+		free(*tmp);
+		tmp++;
+	}
+	free(str_arr);
+}

@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_unset.c                                    :+:      :+:    :+:   */
+/*   minishell_configs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 17:34:34 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/16 17:14:55 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cmd.h"
+#include "../inc/data.h"
 
-void	b_unset(t_mini *m, int idx)
+void	readline_config(t_data *d)
 {
-	int	i;
-
-	i = 1;
-	while (m->cmd[idx].args[i])
-	{
-		if (getenv(m->cmd[idx].args[i]))
-			m_unset(m, m->cmd[idx].args[i]);
-		else if (!(ft_isalpha(m->cmd[idx].args[i][0])
-			&& ft_isalnum_str(m->cmd[idx].args[i] + 1)))
-		{
-			ft_putstr_fd("minishell: unset: `", 2);
-			ft_putstr_fd(m->cmd[idx].args[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
-		}
-		i++;
-	}
-	if (m->job_size != 1)
-		exit(0);
+	add_history(d->input);
+	if (input_matches(d->input, "history -c"))
+		rl_clear_history();
+	else if (input_matches(d->input, "exit"))
+		exit(EXIT_SUCCESS);
 }

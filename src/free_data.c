@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_tok.h                                          :+:      :+:    :+:   */
+/*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/14 19:37:16 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_TOK_H
-# define ENV_TOK_H
-# include "env.h"
+#include "../inc/data.h"
 
-int		count(t_token *tok, bool is_div);
-void	get_idx(t_token *tok, t_env *env);
-#endif
+void	free_data(t_data *d)
+{
+	if (d->input)
+		free(d->input);
+	ft_free_str_arr(d->env);
+	free(d);
+}
