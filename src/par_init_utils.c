@@ -3,30 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   par_init_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/18 20:51:59 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:10:06 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
 
-int		find_cmdv_size(t_token *cur)
+int	find_cmdv_size(t_token *cur)
 {
 	t_token	*cur_cur;
-	int	size;
+	int		size;
 
 	size = 0;
 	cur_cur = cur;
-	while (cur_cur && (cur_cur->type == CMD || cur_cur->type == ARG)) 
+	while (cur_cur && (cur_cur->type == CMD || cur_cur->type == ARG))
 	{
 		size++;
 		cur_cur = cur_cur->next;
 	}
 	return (size);
 }
-
 
 void	set_new_cmd_nulls(t_cmd *new_cmd)
 {
@@ -54,9 +53,9 @@ void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur, t_data *d)
 			new_cmd->eof = cur->cont;
 			new_cmd->e_len = ft_strlen(cur->cont);
 		}
-		if (cur->type == EXIT_STAT) //
+		if (cur->type == EXIT_STAT)
 		{
-			cur->cont = ft_itoa(d->exit_stat); //
+			cur->cont = ft_itoa(d->exit_stat);
 			printf("->> %s\n", cur->cont);
 		}
 		cur = cur->next;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/17 16:30:06 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:01:39 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
 
-void	skyy_pwd()
+void	skyy_pwd(void)
 {
 	char	buf[256];
 

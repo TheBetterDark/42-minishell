@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/20 14:17:55 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:09:34 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,14 @@
 
 void	minishell(t_data *d)
 {
-	while (1)
+	while (true)
 	{
 		d->input = readline("minishell$ ");
 		readline_config(d);
 		if (!d->input)
 			break ;
 		d->toks = tokenizer(d);
-//		print_toks(d);
-
 		d->job = parser(d);
-//		print_job(d->job);
 		executor(d);
 		free_minishell(d);
 	}

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 18:41:04 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:13:18 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	skyy_export(t_data *d, char *export_str)
 		exit(EXIT_FAILURE);
 	}
 	ft_free_str_arr(d->env);
-	d->env = ft_str_arr_dup((const char **)new_env); // maybe do a direct reassignment
+	d->env = ft_str_arr_dup((const char **)new_env);
 	ft_free_str_arr(new_env);
-//	ft_str_arr_out((const char **)d->env);
 }

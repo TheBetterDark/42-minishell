@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 18:41:25 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:13:57 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	skyy_env(t_data *d)
 {
-	char **tmp;
+	char	**tmp;
 
 	tmp = d->env;
 	while (*tmp)

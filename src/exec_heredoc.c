@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/17 16:29:49 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:12:06 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	write_heredoc(int heredoc, t_cmd *cur)
 {
-	char *buf;
+	char	*buf;
 
 	ft_putstr_fd("> ", 1);
 	while ((buf = get_next_line(0)))
 	{
-		if (ft_strncmp(buf, cur->eof, cur->e_len) == 0 &&
-			buf[cur->e_len] == '\n')
+		if (ft_strncmp(buf, cur->eof, cur->e_len) == 0
+			&& buf[cur->e_len] == '\n')
 		{
 			free(buf);
 			break ;

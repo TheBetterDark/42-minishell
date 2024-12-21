@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   par_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/18 20:39:59 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:10:16 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_token	*init_new_cmd(t_cmd **new_cmd, t_token *cur, t_data *d)
 {
 	int		size;
-	
+
 	size = find_cmdv_size(cur);
 	*new_cmd = malloc(sizeof(t_cmd));
 	if (!*new_cmd)
@@ -27,7 +27,7 @@ t_token	*init_new_cmd(t_cmd **new_cmd, t_token *cur, t_data *d)
 		return (NULL);
 	}
 	get_new_cmd_data(*new_cmd, cur, d);
-	(*new_cmd)->next = NULL;	
+	(*new_cmd)->next = NULL;
 	while (cur && cur->type != PIPE)
 		cur = cur->next;
 	if (cur && cur->type == PIPE)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_tokenizer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/18 18:42:50 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:10:58 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ t_token	*tokenizer(t_data *d)
 	t_token	*new_tok;
 
 	toks = ft_split(d->input, ' ');
-//	ft_str_arr_out((const char **)toks);
 	head = NULL;
 	while (*toks)
 	{

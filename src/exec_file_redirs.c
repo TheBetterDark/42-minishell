@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_file_redirs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/17 16:29:39 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:13:08 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	direct_output(t_data *d, t_cmd *cur)
 	check_for_open_redirect(d, cur);
 	check_for_append_redirect(d, cur);
 }
-
 
 void	direct_input(t_data *d, t_cmd *cur)
 {

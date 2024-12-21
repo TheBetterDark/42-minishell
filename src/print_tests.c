@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_tests.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/18 20:47:45 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:10:47 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	print_job(t_cmd *job)
 {
 	t_cmd	*current;
 	char	**tmp;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	current = job;

@@ -6,12 +6,14 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 20:59:18 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:07:17 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DATA_H
 # define DATA_H
+
+// ------------------------------ INCLUDES ---------------------------------- //
 
 # include "../libft/include/libft.h"
 # include <sys/types.h>
@@ -32,8 +34,10 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
+// ------------------------------ STRUCTS ----------------------------------- //
+
 typedef struct s_data	t_data;
-typedef	struct s_token	t_token;
+typedef struct s_token	t_token;
 typedef struct s_cmd	t_cmd;
 
 typedef struct s_data
@@ -52,12 +56,14 @@ typedef struct s_data
 	t_cmd	*job;
 }	t_data;
 
+// ------------------------------ FUNCTIONS --------------------------------- //
+
 t_data	*init_data(char **environ);
 void	free_data(t_data *d);
 void	free_minishell(t_data *d);
 void	readline_config(t_data *d);
 
-//------------------------------------- TOKENIZER --------------------------------------------
+// ---------------------------- TOKENIZER ----------------------------------- //
 
 enum e_type
 {
@@ -76,7 +82,7 @@ enum e_type
 	ERROR
 };
 
-typedef	struct s_token
+typedef struct s_token
 {
 	char			*cont;
 	t_token			*next;
@@ -101,11 +107,10 @@ void	tok_lstclear(t_token **tok);
 void	print_toks(t_data *d);
 void	print_type(int type);
 
-char	**get_paths();
+char	**get_paths(void);
 bool	is_cmd(t_token *cur, bool first);
-bool	is_pipe(t_token *cur);
 
-//------------------------------------- PARSER -----------------------------------------------
+// ------------------------------ PARSER ------------------------------------ //
 
 typedef struct s_cmd
 {
@@ -130,17 +135,11 @@ char	*add_path_to_cmdv0(char *cmd);
 char	**get_paths(void);
 void	free_paths(char **paths);
 char	*search_paths(char *path, char *cmd);
-bool	is_builtin_cmd(char *cmd_name);
 
-//------------------------------------- EXECUTOR ---------------------------------------------
-
+// -------------------------------- EXECUTOR -------------------------------- //
 
 void	executor(t_data *d);
-//t_data	*init_data(int ac, char **av, char **env);
-t_cmd	*init_job(char **av);
-//t_cmd	*init_new_cmd(char *av);
 void	add_to_job(t_cmd **head_cmd, t_cmd *new_cmd);
-char	*check_null(char *av);
 void	add_to_job(t_cmd **head_cmd, t_cmd *new_cmd);
 void	print_job(t_cmd *job);
 void	free_job(t_cmd *job);
@@ -165,13 +164,12 @@ bool	check_for_builtins(t_data *d, t_cmd *cur);
 bool	input_matches(char *input, char *test);
 
 void	skyy_echo(t_cmd *cur);
-void	skyy_pwd();
+void	skyy_pwd(void);
 void	skyy_cd(t_cmd *cur);
 void	skyy_env(t_data *d);
 void	skyy_export(t_data *d, char *export_str);
 void	skyy_unset(t_data *d, char *unset_str);
 
-void	print_str_arr(char **str_arr);
 void	file_redirections(t_data *d, t_cmd *cur);
 void	catch_exit_status(pid_t pid, t_data *d);
 

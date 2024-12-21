@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/18 16:28:03 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:14:21 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,5 @@ bool	input_matches(char *input, char *test)
 		return (false);
 	if (ft_strncmp(input, test, ft_strlen(input)) == 0)
 		return (true);
-	return (false);	
+	return (false);
 }

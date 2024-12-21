@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 18:40:58 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:14:09 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ void	skyy_echo(t_cmd *cur)
 		echos++;
 	while (*echos)
 	{
-//		if (input_matches(*echos, "$?"))
-//			ft_putstr_fd(ft_itoa(d->exit_stat), 1);
-//		else
 		ft_putstr_fd(*echos, 1);
 		echos++;
 		if (*echos)
