@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/18 23:12:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/21 20:59:18 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ void	direct_pipe_input(t_data *d);
 void	direct_input(t_data *d, t_cmd *cur);
 void	write_heredoc(int heredoc, t_cmd *cur);
 void	direct_heredoc(t_data *d, t_cmd *cur);
-
+void	execute_parent_process(t_data *d, t_cmd *cur);
 
 bool	check_for_builtins(t_data *d, t_cmd *cur);
 bool	input_matches(char *input, char *test);
