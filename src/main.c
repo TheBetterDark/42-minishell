@@ -22,10 +22,11 @@ void	minishell(t_data *d)
 			break ;
 		d->toks = tokenizer(d);
 //		print_toks(d);
+
 		d->job = parser(d);
 //		print_job(d->job);
 		executor(d);
-		free_minishell(d);
+		free_min:minishell(d);
 	}
 }
 
