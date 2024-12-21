@@ -26,7 +26,7 @@ void	minishell(t_data *d)
 		d->job = parser(d);
 //		print_job(d->job);
 		executor(d);
-		free_min:minishell(d);
+		free_minishell(d);
 	}
 }
 
