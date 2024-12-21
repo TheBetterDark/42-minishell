@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:10:31 by muabdi            #+#    #+#             */
-/*   Updated: 2024/12/21 21:10:32 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:26:21 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@ char	*search_paths(char *path, char *cmd)
 	dir = opendir(path);
 	if (dir)
 	{
-		while ((entry = readdir(dir)))
+		while (true)
 		{
+			entry = readdir(dir);
+			if (!entry)
+				break ;
 			target_path = check_entry(entry->d_name, path, cmd);
 			if (target_path)
 			{

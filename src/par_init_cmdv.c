@@ -6,13 +6,28 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/20 14:49:54 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:25:46 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
 
-static bool	is_builtin_command(const char *command);
+static bool	is_builtin_command(const char *command)
+{
+	const char	*builtins[] = {
+		"echo", "cd", "pwd", "export", "unset", "env", "exit"
+	};
+	int			i;
+
+	i = 0;
+	while (i < 7)
+	{
+		if (strcmp(command, builtins[i]) == 0)
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
 char	*add_path_to_cmdv0(char *cmd)
 {
@@ -41,6 +56,8 @@ char	*add_path_to_cmdv0(char *cmd)
 	return (NULL);
 }
 
+static char	*duplicate_command(t_token *cur, int is_first);
+
 char	**init_cmdv(t_token *cur, int size)
 {
 	char	**cmdv;
@@ -54,32 +71,13 @@ char	**init_cmdv(t_token *cur, int size)
 	{
 		if (cur->type == CMD || cur->type == ARG)
 		{
-			if (i == 0)
-			{
-				if (is_builtin_command(cur->cont))
-					cmdv[0] = ft_strdup(cur->cont);
-				else
-				{
-					if (access(cur->cont, F_OK | X_OK) == 0)
-						cmdv[0] = ft_strdup(cur->cont);
-					else
-						cmdv[0] = add_path_to_cmdv0(cur->cont);
-					if (!cmdv[0])
-					{
-						ft_printf("%s: command not found\n", cur->cont);
-						exit(EXIT_FAILURE);
-					}
-				}
-			}
-			else
-				cmdv[i] = ft_strdup(cur->cont);
+			cmdv[i] = duplicate_command(cur, i == 0);
 			if (!cmdv[i])
 			{
 				perror("Cmdv strdup Error");
 				while (i > 0)
 					free(cmdv[--i]);
-				free(cmdv);
-				return (NULL);
+				return (free(cmdv), NULL);
 			}
 			i++;
 		}
@@ -89,19 +87,30 @@ char	**init_cmdv(t_token *cur, int size)
 	return (cmdv);
 }
 
-static bool	is_builtin_command(const char *command)
+static char	*duplicate_command(t_token *cur, int is_first)
 {
-	const char	*builtins[] = {
-		"echo", "cd", "pwd", "export", "unset", "env", "exit"
-	};
-	int			i;
+	char	*cmd;
 
-	i = 0;
-	while (i < 7)
+	if (is_first)
 	{
-		if (strcmp(command, builtins[i]) == 0)
-			return (true);
-		i++;
+		if (is_builtin_command(cur->cont))
+			cmd = ft_strdup(cur->cont);
+		else
+		{
+			if (access(cur->cont, F_OK | X_OK) == 0)
+				cmd = ft_strdup(cur->cont);
+			else
+				cmd = add_path_to_cmdv0(cur->cont);
+			if (!cmd)
+			{
+				ft_printf("%s: command not found\n", cur->cont);
+				exit(EXIT_FAILURE);
+			}
+		}
 	}
-	return (false);
+	else
+	{
+		cmd = ft_strdup(cur->cont);
+	}
+	return (cmd);
 }

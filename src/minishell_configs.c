@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_configs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/16 17:14:55 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:28:27 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,8 @@ void	readline_config(t_data *d)
 	if (input_matches(d->input, "history -c"))
 		rl_clear_history();
 	else if (input_matches(d->input, "exit"))
+	{
+		printf("exit\n");
 		exit(EXIT_SUCCESS);
+	}
 }

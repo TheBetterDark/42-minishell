@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:12:06 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:22:16 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	write_heredoc(int heredoc, t_cmd *cur)
 	char	*buf;
 
 	ft_putstr_fd("> ", 1);
-	while ((buf = get_next_line(0)))
+	buf = get_next_line(0);
+	while (buf)
 	{
 		if (ft_strncmp(buf, cur->eof, cur->e_len) == 0
 			&& buf[cur->e_len] == '\n')
@@ -28,6 +29,7 @@ void	write_heredoc(int heredoc, t_cmd *cur)
 		ft_putstr_fd(buf, heredoc);
 		free(buf);
 		ft_putstr_fd("> ", 1);
+		buf = get_next_line(0);
 	}
 }
 

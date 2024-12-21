@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_create_child_pipe.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/18 18:45:57 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:19:50 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,19 @@ void	create_child_pipe(t_data *d)
 		perror("pipe");
 		exit(EXIT_FAILURE);
 	}
+}
+
+void	close_pipe_ends(t_data *d)
+{
+	if (d->input_fd != 0)
+		close(d->input_fd);
+	if (d->output_fd != 1)
+		close(d->output_fd);
+}
+
+void	direct_pipe_input(t_data *d)
+{
+	close_pipe_ends(d);
+	d->input_fd = d->pipefd[0];
+	unlink("hd2sh9fd8F32");
 }

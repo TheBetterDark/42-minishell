@@ -6,11 +6,33 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:11:12 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:27:44 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
+
+static void	assign_token_type(t_token *cur, t_data *d, bool *first)
+{
+	if (is_cmd(cur, *first))
+	{
+		cur->type = CMD;
+		d->cmd_ct++;
+		*first = false;
+	}
+	else if (input_matches(cur->cont, "|"))
+		cur->type = PIPE;
+	else if (input_matches(cur->cont, "<"))
+		cur->type = RDR_IN;
+	else if (input_matches(cur->cont, "<<"))
+		cur->type = RDR_HEREDOC;
+	else if (input_matches(cur->cont, ">"))
+		cur->type = RDR_OUT;
+	else if (input_matches(cur->cont, ">>"))
+		cur->type = RDR_APPEND;
+	else
+		cur->type = ARG;
+}
 
 void	tok_preliminary_type_assigner(t_token *head, t_data *d)
 {
@@ -21,24 +43,7 @@ void	tok_preliminary_type_assigner(t_token *head, t_data *d)
 	first = true;
 	while (cur)
 	{
-		if (is_cmd(cur, first))
-		{
-			cur->type = CMD;
-			d->cmd_ct++;
-			first = false;
-		}
-		else if (input_matches(cur->cont, "|"))
-			cur->type = PIPE;
-		else if (input_matches(cur->cont, "<"))
-			cur->type = RDR_IN;
-		else if (input_matches(cur->cont, "<<"))
-			cur->type = RDR_HEREDOC;
-		else if (input_matches(cur->cont, ">"))
-			cur->type = RDR_OUT;
-		else if (input_matches(cur->cont, ">>"))
-			cur->type = RDR_APPEND;
-		else
-			cur->type = ARG;
+		assign_token_type(cur, d, &first);
 		cur = cur->next;
 	}
 }
