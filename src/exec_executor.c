@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 20:58:48 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:17:22 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	direct_pipe_input(t_data *d)
 static bool	is_builtin_command(const char *command)
 {
 	const char	*builtins[] = {
-		"export", "unset"};
+		"export", "unset", "cd"};
 	int			i;
 
 	i = 0;
-	while (i < 1)
+	while (i < 3)
 	{
 		if (strcmp(command, builtins[i]) == 0)
 			return (true);
