@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/18 18:43:12 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 18:41:04 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,4 @@ void	skyy_export(t_data *d, char *export_str)
 	d->env = ft_str_arr_dup((const char **)new_env); // maybe do a direct reassignment
 	ft_free_str_arr(new_env);
 //	ft_str_arr_out((const char **)d->env);
-	exit(EXIT_SUCCESS);
 }

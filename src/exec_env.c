@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/17 16:29:25 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 18:41:25 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,4 @@ void	skyy_env(t_data *d)
 		ft_putendl_fd(*tmp, 1);
 		tmp++;
 	}
-	exit(EXIT_SUCCESS);
 }

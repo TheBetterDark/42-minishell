@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/17 16:30:11 by smoore           ###   ########.fr       */
+/*   Updated: 2024/12/21 18:41:21 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,4 @@ void	skyy_unset(t_data *d, char *unset_str)
 //	d->env = ft_str_arr_dup((const char **)new_env);
 	d->env = new_env;
 //	fr_free_str_arr(new_env);
-	exit(EXIT_SUCCESS);
 }
