@@ -57,10 +57,7 @@ char	**init_cmdv(t_token *cur, int size)
 			if (i == 0)
 			{
 				if (is_builtin_command(cur->cont))
-				{
-					printf("IS_BUILTIN!!: %s\n", cur->cont);
 					cmdv[0] = ft_strdup(cur->cont);
-				}
 				else
 				{
 					if (access(cur->cont, F_OK | X_OK) == 0)
