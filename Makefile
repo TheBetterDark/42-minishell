@@ -1,39 +1,73 @@
-NAME	= minishell
-CC		= cc -Wall -Wextra -Werror -g #-fsanitize=address
-SRC		= $(wildcard src/*.c)
-OBJ		= $(SRC:.c=.o)
-OBJ		= $(patsubst src/%.c,obj/%.o,$(SRC))
-HEADER	= $(wildcard inc/*.h) libft/include/libft.h
-IFLAG	= -I./include
-LIBFT	= libft/libft.a
-LINKER	= -lreadline -ltermcap
-VALG	= valgrind --suppressions=valgrind.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/04/12 23:59:26 by muabdi            #+#    #+#              #
+#    Updated: 2024/12/21 21:42:09 by muabdi           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-all: $(NAME) $(LIBFT)
+NAME = minishell
 
-$(LIBFT):
-	@make -C libft/ all
+INCLUDES = ./inc
 
-$(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(OBJ) $(LIBFT) $(IFLAG) -o $(NAME) $(LINKER)
+LIBFT = libft
 
-obj/%.o: src/%.c $(HEADER)
-	@mkdir -p obj
-	@$(CC) -c $< -o $@ $(IFLAG)
+CC = cc
+CFLAGS = -Wall -Werror -Wextra -g3
+INCLUDEFLAGS = -I$(INCLUDES) -I$(LIBFT)/includes
 
-valgrind: $(NAME)
-	@$(VALG) ./$(NAME)
+RED = \033[0;31m
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+NC = \033[0m
 
+SRC_DIR = ./src
+OBJ_DIR = ./bin
+
+SRCS = $(shell find $(SRC_DIR) -name '*.c')
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+all: $(NAME) $(OBJ_DIR)
+
+$(OBJ_DIR):
+	@echo "${YELLOW}Creating object directory $(OBJ_DIR)...${NC}"
+	@mkdir -p $(OBJ_DIR)
+	@echo "${GREEN}Object directory $(OBJ_DIR) created.${NC}"
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) $(INCLUDEFLAGS) -c $< -o $@
+
+${NAME}: $(OBJS)
+	@make -C $(LIBFT)
+	@echo "${YELLOW}Creating $(NAME)...${NC}"
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -o $(NAME) -lreadline
+	@echo "${GREEN}$(NAME) created.${NC}"
+
+all: $(NAME) $(OBJ_DIR)
 
 clean:
-	@make -C ./libft clean
-	@rm -f src/*.o
-	@rm -rf obj
-	@rm	-f *.o
+	@make -C $(LIBFT) clean
+	@echo "${YELLOW}Removing object files...${NC}"
+	@rm -rf $(OBJ_DIR)
+	@echo "${GREEN}Object files removed.${NC}"
 
-fclean: clean
+fclean:
+	@make -C $(LIBFT) fclean
+	@echo "${YELLOW}Removing object files...${NC}"
+	@rm -rf $(OBJ_DIR)
+	@echo "${GREEN}Object files removed.${NC}"
+	@echo "${YELLOW}Removing $(Name) executable...${NC}"
 	@rm -f $(NAME)
+	@echo "${GREEN}$(NAME) executable removed.${NC}"
 
 re: fclean all
 
-.PHONY: all clean fclean re libft minishell
+leaks: all
+	valgrind --suppressions=valgrind.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+
+.PHONY: all clean fclean re leaks

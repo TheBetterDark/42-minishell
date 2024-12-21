@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:07:17 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/21 21:42:33 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	tok_secondary_type_assigner(t_token *head);
 char	**get_paths(void);
 
 t_token	*tok_lstnew(char *word);
-void	tok_lstadd_back(t_token **head, t_token *new); // new_tok
+void	tok_lstadd_back(t_token **head, t_token *new);
 int		tok_lstsize(t_token *tok);
 t_token	*tok_lstlast(t_token *tok);
 void	tok_lstclear(t_token **tok);
