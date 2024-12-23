@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:42:33 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/23 23:32:25 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_data
 t_data	*init_data(char **environ);
 void	free_data(t_data *d);
 void	free_minishell(t_data *d);
-void	readline_config(t_data *d);
 
 // ---------------------------- TOKENIZER ----------------------------------- //
 
@@ -123,8 +122,7 @@ typedef struct s_cmd
 	t_cmd	*next;
 }	t_cmd;
 
-void	print_job(t_cmd *job);
-t_token	*init_new_cmd(t_cmd **new_cmd, t_token *cur, t_data *d);
+t_cmd	*init_new_cmd(t_token **cur, t_data *d);
 void	add_to_job(t_cmd **head_cmd, t_cmd *new_cmd);
 t_cmd	*parser(t_data *d);
 int		find_cmdv_size(t_token *cur);
@@ -135,14 +133,12 @@ char	*add_path_to_cmdv0(char *cmd);
 char	**get_paths(void);
 void	free_paths(char **paths);
 char	*search_paths(char *path, char *cmd);
+void	cleanup_job(t_cmd *job);
 
 // -------------------------------- EXECUTOR -------------------------------- //
 
 void	executor(t_data *d);
 void	add_to_job(t_cmd **head_cmd, t_cmd *new_cmd);
-void	add_to_job(t_cmd **head_cmd, t_cmd *new_cmd);
-void	print_job(t_cmd *job);
-void	free_job(t_cmd *job);
 
 void	redirect_child_fds(t_data *d);
 void	fork_child_process(t_data *d, t_cmd *cur);

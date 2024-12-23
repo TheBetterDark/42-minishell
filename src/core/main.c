@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/23 21:55:08 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/23 23:33:18 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,16 @@ void	minishell(t_data *d)
 void	free_minishell(t_data *d)
 {
 	if (d->input)
+	{
 		free(d->input);
+		d->input = NULL;
+	}
+	if (d->toks)
+		tok_lstclear(&d->toks);
+	if (d->job)
+		cleanup_job(d->job);
 	d->cmd_ct = 0;
-	tok_lstclear(&d->toks);
-	free(d->job);
+	d->job = NULL;
 	d->input_fd = 0;
 	d->output_fd = 1;
 	d->r_input_fd = -1;
