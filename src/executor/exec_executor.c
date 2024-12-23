@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:41:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/23 21:47:12 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	executor(t_data *d)
 	cur = d->job;
 	save_stdout = dup(1);
 	save_stdin = dup(0);
+	if (!cur)
+		return ;
 	if (cur->next == NULL && is_builtin_command(cur->cmdv[0]))
 		handle_builtin_command(d, cur);
 	else

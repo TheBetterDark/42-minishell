@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:41:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/23 21:56:54 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ char	**init_cmdv(t_token *cur, int size)
 			cmdv[i] = duplicate_command(cur, i == 0);
 			if (!cmdv[i])
 			{
-				perror("Cmdv strdup Error");
 				while (i > 0)
 					free(cmdv[--i]);
 				return (free(cmdv), NULL);
@@ -104,7 +103,7 @@ static char	*duplicate_command(t_token *cur, int is_first)
 			if (!cmd)
 			{
 				ft_printf("%s: command not found\n", cur->cont);
-				exit(EXIT_FAILURE);
+				return (NULL);
 			}
 		}
 	}

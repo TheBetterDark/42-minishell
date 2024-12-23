@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/23 17:11:51 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/23 21:55:08 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	minishell(t_data *d)
 		else if (input_matches(d->input, "exit"))
 			return ;
 		if (!d->input)
-			break ;
+			continue ;
 		d->toks = tokenizer(d);
 		d->job = parser(d);
 		executor(d);
@@ -53,7 +53,8 @@ void	minishell(t_data *d)
 
 void	free_minishell(t_data *d)
 {
-	free(d->input);
+	if (d->input)
+		free(d->input);
 	d->cmd_ct = 0;
 	tok_lstclear(&d->toks);
 	free(d->job);

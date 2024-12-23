@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:41:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/23 21:59:26 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ t_token	*init_new_cmd(t_cmd **new_cmd, t_token *cur, t_data *d)
 		return (NULL);
 	(*new_cmd)->cmdv = init_cmdv(cur, size);
 	if (!(*new_cmd)->cmdv)
-	{
-		perror("Cmdv Error");
-		return (NULL);
-	}
+		return (free(*new_cmd), NULL);
 	get_new_cmd_data(*new_cmd, cur, d);
 	(*new_cmd)->next = NULL;
 	while (cur && cur->type != PIPE)
@@ -61,6 +58,8 @@ t_cmd	*parser(t_data *d)
 	while (cur)
 	{
 		cur = init_new_cmd(&new_cmd, cur, d);
+		if (!cur)
+			continue ;
 		add_to_job(&job, new_cmd);
 	}
 	return (job);
