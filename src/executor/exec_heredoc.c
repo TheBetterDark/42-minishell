@@ -6,30 +6,29 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:41:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/23 18:14:44 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
+// TODO: Change to use readline & handle signals
 void	write_heredoc(int heredoc, t_cmd *cur)
 {
 	char	*buf;
 
-	ft_putstr_fd("> ", 1);
-	buf = get_next_line(0);
+	buf = readline("> ");
 	while (buf)
 	{
-		if (ft_strncmp(buf, cur->eof, cur->e_len) == 0
-			&& buf[cur->e_len] == '\n')
+		if (ft_strncmp(buf, cur->eof, cur->e_len) == 0)
 		{
 			free(buf);
 			break ;
 		}
 		ft_putstr_fd(buf, heredoc);
+		ft_putchar_fd('\n', heredoc);
 		free(buf);
-		ft_putstr_fd("> ", 1);
-		buf = get_next_line(0);
+		buf = readline("> ");
 	}
 }
 
@@ -46,5 +45,6 @@ void	direct_heredoc(t_data *d, t_cmd *cur)
 		write_heredoc(d->r_input_fd, cur);
 		cur->input_fn = ft_strdup("hd2sh9fd8F32");
 		close(d->r_input_fd);
+		d->r_input_fd = -1;
 	}
 }

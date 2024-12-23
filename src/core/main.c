@@ -6,11 +6,31 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:41:29 by muabdi           ###   ########.fr       */
+/*   Updated: 2024/12/23 17:11:51 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
+
+static void	handle_sigint(int sig)
+{
+	(void)sig;
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
+
+static int	initalize_signals(void)
+{
+	if (signal(SIGINT, handle_sigint) == SIG_ERR)
+		return (perror("Error setting SIGINT handler"), -1);
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		return (perror("Error setting SIGQUIT handler"), -1);
+	if (signal(SIGTSTP, SIG_IGN) == SIG_ERR)
+		return (perror("Error setting SIGTSTP handler"), -1);
+	return (0);
+}
 
 void	minishell(t_data *d)
 {
@@ -21,10 +41,7 @@ void	minishell(t_data *d)
 		if (input_matches(d->input, "history -c"))
 			rl_clear_history();
 		else if (input_matches(d->input, "exit"))
-		{
-			printf("exit\n");
-			exit(EXIT_SUCCESS);
-		}
+			return ;
 		if (!d->input)
 			break ;
 		d->toks = tokenizer(d);
@@ -52,6 +69,10 @@ int	main(void)
 	extern char	**environ;
 
 	d = init_data(environ);
+	if (initalize_signals() == -1)
+		return (free_data(d), EXIT_FAILURE);
 	minishell(d);
 	free_data(d);
+	printf("exit\n");
+	return (EXIT_SUCCESS);
 }
