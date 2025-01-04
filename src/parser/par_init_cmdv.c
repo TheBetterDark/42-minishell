@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/23 23:27:58 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/04 16:39:09 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,47 +47,16 @@ char	*add_path_to_cmdv0(char *cmd)
 		{
 			cmdv0 = ft_strdup(target_path);
 			free(target_path);
-			ft_free_str_arr(paths);
+			ft_free_str_arr(&paths);
 			return (cmdv0);
 		}
 		tmp++;
 	}
-	ft_free_str_arr(paths);
+	ft_free_str_arr(&paths);
 	return (NULL);
 }
 
-static char	*duplicate_command(t_token *cur, int is_first);
-
-char	**init_cmdv(t_token *cur, int size)
-{
-	char	**cmdv;
-	int		i;
-
-	cmdv = malloc(sizeof(char *) * (size + 1));
-	if (!cmdv)
-		return (NULL);
-	i = 0;
-	while (i < size && cur)
-	{
-		if (cur->type == CMD || cur->type == ARG)
-		{
-			cmdv[i] = duplicate_command(cur, i == 0);
-			if (!cmdv[i])
-			{
-				while (i > 0)
-					free(cmdv[--i]);
-				free(cmdv);
-				return (NULL);
-			}
-			i++;
-		}
-		cur = cur->next;
-	}
-	cmdv[i] = NULL;
-	return (cmdv);
-}
-
-static char	*duplicate_command(t_token *cur, int is_first)
+static char	*duplicate_command(t_token *cur, int is_first, t_data *d)
 {
 	char	*cmd;
 
@@ -110,7 +79,41 @@ static char	*duplicate_command(t_token *cur, int is_first)
 	}
 	else
 	{
-		cmd = ft_strdup(cur->cont);
+		if (cur->type == ARG && cur->cont[0] == '\"')
+			cmd = dup_double_quotes(ft_strtrim(cur->cont,"\"" ), d);
+		else if (cur->type == ARG && cur->cont[0] == '\'')
+			cmd = ft_strdup(ft_strtrim(cur->cont,"\'"));
+		else
+			cmd = ft_strdup(cur->cont);
 	}
 	return (cmd);
+}
+
+char	**init_cmdv(t_token *cur, int size, t_data *d)
+{
+	char	**cmdv;
+	int		i;
+
+	cmdv = malloc(sizeof(char *) * (size + 1));
+	if (!cmdv)
+		return (NULL);
+	i = 0;
+	while (i < size && cur)
+	{
+		if (cur->type == CMD || cur->type == ARG)
+		{
+			cmdv[i] = duplicate_command(cur, i == 0, d);
+			if (!cmdv[i])
+			{
+				while (i > 0)
+					free(cmdv[--i]);
+				free(cmdv);
+				return (NULL);
+			}
+			i++;
+		}
+		cur = cur->next;
+	}
+	cmdv[i] = NULL;
+	return (cmdv);
 }

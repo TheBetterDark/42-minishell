@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/23 23:33:18 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/03 19:17:03 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static int	initalize_signals(void)
 		return (perror("Error setting SIGINT handler"), -1);
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
 		return (perror("Error setting SIGQUIT handler"), -1);
-	if (signal(SIGTSTP, SIG_IGN) == SIG_ERR)
-		return (perror("Error setting SIGTSTP handler"), -1);
+//	if (signal(SIGTSTP, SIG_IGN) == SIG_ERR)
+//		return (perror("Error setting SIGTSTP handler"), -1);
 	return (0);
 }
 
@@ -40,7 +40,7 @@ void	minishell(t_data *d)
 		add_history(d->input);
 		if (input_matches(d->input, "history -c"))
 			rl_clear_history();
-		else if (input_matches(d->input, "exit"))
+		else if (d->input == NULL || input_matches(d->input, "exit"))
 			return ;
 		if (!d->input)
 			continue ;
@@ -59,11 +59,16 @@ void	free_minishell(t_data *d)
 		d->input = NULL;
 	}
 	if (d->toks)
+	{
 		tok_lstclear(&d->toks);
+		d->toks = NULL;
+	}
 	if (d->job)
+	{
 		cleanup_job(d->job);
+		d->job = NULL;
+	}
 	d->cmd_ct = 0;
-	d->job = NULL;
 	d->input_fd = 0;
 	d->output_fd = 1;
 	d->r_input_fd = -1;

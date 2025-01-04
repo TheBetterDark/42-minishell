@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/23 21:52:37 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/04 16:38:19 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ t_data	*init_data(char **environ)
 
 void	free_data(t_data *d)
 {
-	ft_free_str_arr(d->env);
+	ft_free_str_arr(&d->env);
 	free(d);
 }

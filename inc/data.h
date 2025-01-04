@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/23 23:32:25 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/04 16:27:56 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,12 @@ void	print_type(int type);
 
 char	**get_paths(void);
 bool	is_cmd(t_token *cur, bool first);
+char	**command_line_split(char *input);
+int		find_char_pos(const char *str, char target);
+bool	is_quote(const char c, const char quote);
+bool	is_blank(const char c);
+int		handle_quote(const char *str, char quote);
+int		count_words(const char *str);
 
 // ------------------------------ PARSER ------------------------------------ //
 
@@ -126,7 +132,7 @@ t_cmd	*init_new_cmd(t_token **cur, t_data *d);
 void	add_to_job(t_cmd **head_cmd, t_cmd *new_cmd);
 t_cmd	*parser(t_data *d);
 int		find_cmdv_size(t_token *cur);
-char	**init_cmdv(t_token *cur, int size);
+char	**init_cmdv(t_token *cur, int size, t_data *d);
 void	set_new_cmd_nulls(t_cmd *new_cmd);
 void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur, t_data *d);
 char	*add_path_to_cmdv0(char *cmd);
@@ -134,6 +140,8 @@ char	**get_paths(void);
 void	free_paths(char **paths);
 char	*search_paths(char *path, char *cmd);
 void	cleanup_job(t_cmd *job);
+char	*dup_double_quotes(char *str, t_data *d);
+void	safe_free(void **ptr);
 
 // -------------------------------- EXECUTOR -------------------------------- //
 

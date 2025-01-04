@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:41:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/04 18:32:52 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur, t_data *d)
 	while (cur)
 	{
 		if (cur->type == APPEND_FILE)
-			new_cmd->append_fn = cur->cont;
+			new_cmd->append_fn = ft_strdup(cur->cont);
 		if (cur->type == OUT_FILE)
-			new_cmd->open_fn = cur->cont;
+			new_cmd->open_fn = ft_strdup(cur->cont);
 		if (cur->type == IN_FILE)
-			new_cmd->input_fn = cur->cont;
+			new_cmd->input_fn = ft_strdup(cur->cont);
 		if (cur->type == DELIM)
 		{
 			new_cmd->eof = cur->cont;

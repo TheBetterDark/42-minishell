@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:10:31 by muabdi            #+#    #+#             */
-/*   Updated: 2024/12/21 21:41:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/04 16:35:09 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*join_path_and_cmd(char *path, char *cmd)
 
 	tmp_path = ft_strjoin(path, "/");
 	target_path = ft_strjoin(tmp_path, cmd);
-	free(tmp_path);
+	safe_free((void **)&tmp_path);
 	if (!target_path)
 		return (NULL);
 	return (target_path);
@@ -72,6 +72,7 @@ char	*search_paths(char *path, char *cmd)
 			}
 		}
 	}
-	closedir(dir);
+	if (dir)
+		closedir(dir);
 	return (NULL);
 }

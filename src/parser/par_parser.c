@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/23 23:31:39 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/04 18:39:21 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_cmd	*init_new_cmd(t_token **cur, t_data *d)
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		return (NULL);
-	(new_cmd)->cmdv = init_cmdv(*cur, size);
+	(new_cmd)->cmdv = init_cmdv(*cur, size, d);
 	if (!(new_cmd)->cmdv)
 	{
 		free(new_cmd);
@@ -59,11 +59,18 @@ void	cleanup_job(t_cmd *job)
 	{
 		tmp = job;
 		job = job->next;
-		ft_free_str_arr(tmp->cmdv);
-		free(tmp->open_fn);
-		free(tmp->append_fn);
-		free(tmp->input_fn);
+		ft_free_str_arr(&tmp->cmdv);
+		if (tmp->open_fn)
+			free(tmp->open_fn);
+		tmp->open_fn = NULL;
+		if (tmp->append_fn)
+			free(tmp->append_fn);
+		tmp->append_fn = NULL;
+		if (tmp->input_fn)
+			free(tmp->input_fn);
+		tmp->input_fn = NULL;
 		free(tmp);
+		tmp = NULL;
 	}
 }
 

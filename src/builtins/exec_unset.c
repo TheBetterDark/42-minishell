@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:41:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/04 16:37:50 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ void	skyy_unset(t_data *d, char *unset_str)
 		perror("unset failed");
 		exit(EXIT_FAILURE);
 	}
-	ft_free_str_arr(d->env);
+	ft_free_str_arr(&d->env);
 	d->env = new_env;
 }

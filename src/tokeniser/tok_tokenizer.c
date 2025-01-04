@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/23 23:46:28 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/04 18:28:19 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_token	*tok_lstnew(char *word)
 {
 	t_token	*new_tok;
 
-	new_tok = malloc(sizeof(t_token));
+	new_tok = (t_token *)malloc(sizeof(t_token));
 	if (!new_tok)
 		return (NULL);
 	new_tok->cont = ft_strdup(word);
@@ -63,7 +63,8 @@ t_token	*tokenizer(t_data *d)
 	t_token	*head;
 	t_token	*new_tok;
 
-	toks = ft_split(d->input, ' ');
+//	toks = ft_split(d->input, ' ');
+	toks = command_line_split(d->input);
 	if (!toks)
 		return (NULL);
 	toks_start = toks;

@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:06:50 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/16 15:39:51 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/04 16:32:26 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ int	print_unsigned(unsigned int num);
 void	*ft_malloc(size_t size, t_list *mem);
 void	ft_free_all(t_list *mem);
 void	ft_free(void *ptr, t_list *mem);
-void	ft_free_str_arr(char **str_arr);
+//void	ft_free_str_arr(char **str_arr);
+void	ft_free_str_arr(char ***str_arr_ptr);
 char	**ft_str_arr_add(const char **str_arr, const char *str);
 char	**ft_str_arr_minus(const char **str_arr, const char *str);
 char	**ft_str_arr_dup(const char **str_arr);

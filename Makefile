@@ -6,7 +6,7 @@
 #    By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/12 23:59:26 by muabdi            #+#    #+#              #
-#    Updated: 2024/12/23 23:48:34 by muabdi           ###   ########.fr        #
+#    Updated: 2025/01/04 18:38:17 by smoore           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ INCLUDES = ./inc
 LIBFT = libft
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3# -gdwarf-3 -O0 -fsanitize=address -fsanitize=undefined
+
 INCLUDEFLAGS = -I$(INCLUDES) -I$(LIBFT)/includes
 
 RED = \033[0;31m
