@@ -6,13 +6,17 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 10:29:07 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/05 15:33:58 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-static char	*get_key(char *str)
+char	*get_key(char *str);
+char	*find_env_var(char *str, char **env);
+char	*try_env_value(char *subquote, char **env, int exit_stat);
+
+char	*get_key(char *str)
 {
 	int		pos;
 	char	*key;
@@ -35,7 +39,7 @@ static char	*get_key(char *str)
 	return (NULL);
 }
 
-static char	*find_env_var(char *str, char **env)
+char	*find_env_var(char *str, char **env)
 {
 	char	**tmp;
 	char	*key;
@@ -57,7 +61,7 @@ static char	*find_env_var(char *str, char **env)
 	return ("");
 }
 
-static char	*try_env_value(char *subquote, char **env, int exit_stat)
+char	*try_env_value(char *subquote, char **env, int exit_stat)
 {
 	char	*env_value;
 

@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/03 19:02:28 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/05 15:37:43 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	discern_words(const char *str, int *pos)
 			(*pos)++;
 }
 
-static void	write_words(char **toks, const char *str)
+static void	write_words(char **toks, const char *str, t_data *d)
 {
 	int	pos;
 	int	start;
@@ -60,11 +60,13 @@ static void	write_words(char **toks, const char *str)
 				exit(1);
 			}
 		}
+		if (*toks[0] == '$')
+			*toks = try_env_value(*toks, d->env, d->exit_stat);
 		toks++;
 	}
 }
 
-char	**command_line_split(char *input)
+char	**command_line_split(char *input, t_data *d)
 {
 	char	**toks;
 	int		count;
@@ -76,7 +78,7 @@ char	**command_line_split(char *input)
 		perror("toks malloc");
 		return (NULL);
 	}
-	write_words(toks, input);
+	write_words(toks, input, d);
 	toks[count] = NULL;
 	return (toks);
 }

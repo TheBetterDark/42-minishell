@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 10:48:24 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/05 15:35:54 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void					tok_lstclear(t_token **tok);
 
 char					**get_paths(void);
 bool					is_cmd(t_token *cur, bool first);
-char					**command_line_split(char *input);
+char					**command_line_split(char *input, t_data *d);
 int						find_char_pos(const char *str, char target);
 bool					is_quote(const char c, const char quote);
 bool					is_blank(const char c);
@@ -137,6 +137,10 @@ char					*search_paths(char *path, char *cmd);
 char					*dup_double_quotes(char *str, t_data *d);
 bool					terms_match(char *str1, char *str2);
 void					cleanup_job(t_cmd *job);
+char					*get_key(char *str);
+char					*find_env_var(char *str, char **env);
+char					*try_env_value(char *subquote, char **env, int exit_stat);
+
 
 // -------------------------------- EXECUTOR -------------------------------- //
 

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 07:56:54 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/05 15:35:16 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_token	*tokenizer(t_data *d)
 	t_token	*head;
 	t_token	*new_tok;
 
-	toks = command_line_split(d->input);
+	toks = command_line_split(d->input, d);
 	if (!toks)
 		return (NULL);
 	toks_start = toks;
