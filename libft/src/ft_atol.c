@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/03 17:31:17 by smoore            #+#    #+#             */
+/*   Updated: 2025/01/05 07:54:11 by muabdi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/libft.h"
 
 static int	ft_count_sign(const char *str, int *ptr_i)
 {
-	int count;
-	int i;
+	int	count;
+	int	i;
 
 	i = 0;
 	count = 1;

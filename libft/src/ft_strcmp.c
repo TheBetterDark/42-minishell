@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_str_array.c                                :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 11:51:35 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 07:53:55 by muabdi           ###   ########.fr       */
+/*   Created: 2023/11/03 16:33:49 by smoore            #+#    #+#             */
+/*   Updated: 2025/01/05 07:52:26 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_free_str_arr(char ***str_arr_ptr)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char	**str_arr;
-	char	**tmp;
+	unsigned int	i;
+	int				n;
 
-	str_arr = *str_arr_ptr;
-	if (!str_arr)
-		return ;
-	tmp = str_arr;
-	while (*tmp)
+	i = 0;
+	n = ft_strlen(s1);
+	if (n == 0)
+		return (0);
+	while (s1[i] != '\0' && s2[i] != '\0')
 	{
-		free(*tmp);
-		*tmp = NULL;
-		tmp++;
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
 	}
-	free(str_arr);
-	*str_arr_ptr = NULL;
+	return (s1[i] - s2[i]);
 }
