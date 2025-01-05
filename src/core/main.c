@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 16:40:40 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/05 16:44:38 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ void	minishell(t_data *d)
 	while (true)
 	{
 		d->input = readline("minishell$ ");
-		if (ft_strcmp(d->input, "exit") == 0)
+		if (!d->input || ft_strcmp(d->input, "exit") == 0)
 			return ;
-		if (!d->input)
-			continue ;
 		if (d->input[0] != '\0')
 			add_history(d->input);
 		if (input_matches(d->input, "history -c"))
