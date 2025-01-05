@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 15:10:05 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/05 15:18:42 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,4 @@ void	skyy_env(t_data *d)
 		ft_putendl_fd(*tmp, 1);
 		tmp++;
 	}
-	exit(EXIT_SUCCESS);
 }

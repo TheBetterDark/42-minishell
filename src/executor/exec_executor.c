@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/23 21:47:12 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/05 15:17:55 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 static bool	is_builtin_command(const char *command)
 {
 	const char	*builtins[] = {
-		"export", "unset", "cd"
+		"export", "unset", "cd", "echo", "pwd", "env"
 	};
 	int			i;
 
 	i = 0;
-	while (i < 3)
+	while (i < 6)
 	{
 		if (strcmp(command, builtins[i]) == 0)
 			return (true);

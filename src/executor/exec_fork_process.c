@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 12:47:27 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/05 15:23:10 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ void	fork_child_process(t_data *d, t_cmd *cur)
 		if (check_for_builtins(d, cur))
 			exit(d->exit_stat);
 		execute_child_program(d, cur);
+		free_minishell(d);
+		free_data(d);
+		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)
 		catch_exit_status(pid, d);

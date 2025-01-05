@@ -6,13 +6,12 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 15:15:20 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/05 15:18:03 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-//void	skyy_echo(t_data *d, t_cmd *cur)
 void	skyy_echo(t_cmd *cur)
 {
 	char	**echos;
@@ -32,5 +31,4 @@ void	skyy_echo(t_cmd *cur)
 	}
 	if (!no_endl)
 		ft_putstr_fd("\n", 1);
-	exit(EXIT_SUCCESS);
 }
