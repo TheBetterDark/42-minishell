@@ -12,6 +12,8 @@
 
 #include "../inc/data.h"
 
+volatile sig_atomic_t	g_sigint_received = false;
+
 static void	handle_sigint(int sig)
 {
 	(void)sig;
@@ -36,12 +38,18 @@ void	minishell(t_data *d)
 {
 	while (true)
 	{
+		if (g_sigint_received)
+		{
+			g_sigint_received = false;
+			continue ;
+		}
 		d->input = readline("minishell$ ");
-		add_history(d->input);
+		if (d->input == NULL || ft_strcmp(d->input, "exit") == 0)
+			return ;
+		if (d->input[0] != '\0')
+			add_history(d->input);
 		if (input_matches(d->input, "history -c"))
 			rl_clear_history();
-		else if (d->input == NULL || ft_strcmp(d->input, "exit") == 0)
-			return ;
 		if (!d->input)
 			continue ;
 		d->toks = tokenizer(d);
