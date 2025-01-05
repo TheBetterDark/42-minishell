@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   par_safe_free.c                                    :+:      :+:    :+:   */
+/*   par_terms_match.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/04 16:27:14 by smoore           ###   ########.fr       */
+/*   Created: 2025/01/05 08:10:13 by muabdi            #+#    #+#             */
+/*   Updated: 2025/01/05 08:10:25 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-void safe_free(void **ptr)
+bool	terms_match(char *str1, char *str2)
 {
-	if (ptr && *ptr)
-	{
-		free(*ptr);
-		*ptr = NULL;
-	}
+	if (!str1 || !str2)
+		return (false);
+	if (ft_strncmp(str1, str2, ft_strlen(str2)))
+		return (false);
+	return (true);
 }

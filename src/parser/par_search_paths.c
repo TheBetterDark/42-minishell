@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:10:31 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/04 16:35:09 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/05 08:08:14 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ static char	*join_path_and_cmd(char *path, char *cmd)
 
 	tmp_path = ft_strjoin(path, "/");
 	target_path = ft_strjoin(tmp_path, cmd);
-	safe_free((void **)&tmp_path);
+	if ((void **)&tmp_path && *(void **)&tmp_path)
+	{
+		free(*(void **)&tmp_path);
+		*(void **)&tmp_path = NULL;
+	}
 	if (!target_path)
 		return (NULL);
 	return (target_path);

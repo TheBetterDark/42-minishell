@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/04 16:39:09 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/05 08:05:01 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static bool	is_builtin_command(const char *command)
 {
+	int			i;
 	const char	*builtins[] = {
 		"echo", "cd", "pwd", "export", "unset", "env", "exit"
 	};
-	int			i;
 
 	i = 0;
 	while (i < 7)
@@ -56,33 +56,41 @@ char	*add_path_to_cmdv0(char *cmd)
 	return (NULL);
 }
 
+static char	*handle_first_command(t_token *cur)
+{
+	char	*cmd;
+
+	if (is_builtin_command(cur->cont))
+		cmd = ft_strdup(cur->cont);
+	else
+	{
+		if (access(cur->cont, F_OK | X_OK) == 0)
+			cmd = ft_strdup(cur->cont);
+		else
+			cmd = add_path_to_cmdv0(cur->cont);
+		if (!cmd)
+		{
+			ft_printf("%s: command not found\n", cur->cont);
+			return (NULL);
+		}
+	}
+	return (cmd);
+}
+
 static char	*duplicate_command(t_token *cur, int is_first, t_data *d)
 {
 	char	*cmd;
 
 	if (is_first)
 	{
-		if (is_builtin_command(cur->cont))
-			cmd = ft_strdup(cur->cont);
-		else
-		{
-			if (access(cur->cont, F_OK | X_OK) == 0)
-				cmd = ft_strdup(cur->cont);
-			else
-				cmd = add_path_to_cmdv0(cur->cont);
-			if (!cmd)
-			{
-				ft_printf("%s: command not found\n", cur->cont);
-				return (NULL);
-			}
-		}
+		cmd = handle_first_command(cur);
 	}
 	else
 	{
 		if (cur->type == ARG && cur->cont[0] == '\"')
-			cmd = dup_double_quotes(ft_strtrim(cur->cont,"\"" ), d);
+			cmd = dup_double_quotes(ft_strtrim(cur->cont, "\""), d);
 		else if (cur->type == ARG && cur->cont[0] == '\'')
-			cmd = ft_strdup(ft_strtrim(cur->cont,"\'"));
+			cmd = ft_strdup(ft_strtrim(cur->cont, "\'"));
 		else
 			cmd = ft_strdup(cur->cont);
 	}
