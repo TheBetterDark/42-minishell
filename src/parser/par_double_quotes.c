@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 08:12:43 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/05 10:29:07 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,17 @@ static char	*find_env_var(char *str, char **env)
 	return ("");
 }
 
-static char	*try_env_value(char *subquote, char **env)
+static char	*try_env_value(char *subquote, char **env, int exit_stat)
 {
 	char	*env_value;
 
 	env_value = NULL;
-	if (subquote[0] == '$')
+	if (terms_match(subquote, "$?"))
+	{
+		free(subquote);
+		subquote = ft_itoa(exit_stat);
+	}
+	else if (subquote[0] == '$')
 	{
 		env_value = find_env_var(subquote + 1, env);
 		if (env_value)
@@ -117,7 +122,7 @@ char	*dup_double_quotes(char *str, t_data *d)
 	while (str[pos])
 	{
 		subquote = get_subquote(str, &start, &pos);
-		subquote = try_env_value(subquote, d->env);
+		subquote = try_env_value(subquote, d->env, d->exit_stat);
 		prev = result;
 		result = ft_strjoin(result, subquote);
 		free(subquote);

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 08:05:01 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/05 13:47:55 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*add_path_to_cmdv0(char *cmd)
 	return (NULL);
 }
 
-static char	*handle_first_command(t_token *cur)
+static char	*handle_first_command(t_token *cur, t_data *d)
 {
 	char	*cmd;
 
@@ -71,6 +71,7 @@ static char	*handle_first_command(t_token *cur)
 		if (!cmd)
 		{
 			ft_printf("%s: command not found\n", cur->cont);
+			d->exit_stat = 127;
 			return (NULL);
 		}
 	}
@@ -81,9 +82,9 @@ static char	*duplicate_command(t_token *cur, int is_first, t_data *d)
 {
 	char	*cmd;
 
-	if (is_first)
+	if (is_first == 0)
 	{
-		cmd = handle_first_command(cur);
+		cmd = handle_first_command(cur, d);
 	}
 	else
 	{
@@ -91,6 +92,8 @@ static char	*duplicate_command(t_token *cur, int is_first, t_data *d)
 			cmd = dup_double_quotes(ft_strtrim(cur->cont, "\""), d);
 		else if (cur->type == ARG && cur->cont[0] == '\'')
 			cmd = ft_strdup(ft_strtrim(cur->cont, "\'"));
+		else if (cur->type == EXIT_STAT)
+			cmd = ft_itoa(d->exit_stat);
 		else
 			cmd = ft_strdup(cur->cont);
 	}
@@ -108,9 +111,9 @@ char	**init_cmdv(t_token *cur, int size, t_data *d)
 	i = 0;
 	while (i < size && cur)
 	{
-		if (cur->type == CMD || cur->type == ARG)
+		if (cur->type == CMD || cur->type == ARG || cur->type == EXIT_STAT)
 		{
-			cmdv[i] = duplicate_command(cur, i == 0, d);
+			cmdv[i] = duplicate_command(cur, i, d);
 			if (!cmdv[i])
 			{
 				while (i > 0)
