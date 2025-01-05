@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 13:47:55 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/05 16:30:26 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*add_path_to_cmdv0(char *cmd)
 	char	*target_path;
 	char	*cmdv0;
 
-	paths = get_paths();
+	paths = get_paths(); 
 	if (!paths)
 		return (NULL);
 	tmp = paths;
