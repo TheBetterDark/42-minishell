@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 10:42:09 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/05 15:00:55 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ void	free_minishell(t_data *d)
 		d->input = NULL;
 	}
 	if (d->toks)
-	{
 		tok_lstclear(&d->toks);
-		d->toks = NULL;
-	}
 	if (d->job)
 	{
 		cleanup_job(d->job);

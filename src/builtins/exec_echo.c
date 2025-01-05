@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:41:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/05 15:10:16 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void	skyy_echo(t_cmd *cur)
 	}
 	if (!no_endl)
 		ft_putstr_fd("\n", 1);
+	exit(EXIT_SUCCESS);
 }
