@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 15:37:43 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/05 16:38:05 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	write_words(char **toks, const char *str, t_data *d)
 				exit(1);
 			}
 		}
-		if (*toks[0] == '$')
+		if (*toks[0] == '$' && ft_strlen(*toks) > 1)
 			*toks = try_env_value(*toks, d->env, d->exit_stat);
 		toks++;
 	}
