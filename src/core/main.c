@@ -6,20 +6,11 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 16:44:38 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/07 22:57:04 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
-
-static void	handle_sigint(int sig)
-{
-	(void)sig;
-	ft_putchar_fd('\n', STDOUT_FILENO);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
 
 static int	initalize_signals(void)
 {
@@ -32,10 +23,21 @@ static int	initalize_signals(void)
 	return (0);
 }
 
+void	handle_sigint(int sig)
+{
+	(void)sig;
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 void	minishell(t_data *d)
 {
 	while (true)
 	{
+		if (initalize_signals() == -1)
+			return ;
 		d->input = readline("minishell$ ");
 		if (!d->input || ft_strcmp(d->input, "exit") == 0)
 			return ;
@@ -77,8 +79,6 @@ int	main(void)
 	extern char	**environ;
 
 	d = init_data(environ);
-	if (initalize_signals() == -1)
-		return (free_data(d), EXIT_FAILURE);
 	minishell(d);
 	free_data(d);
 	printf("exit\n");

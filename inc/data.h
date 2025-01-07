@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/07 19:26:48 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/07 22:55:27 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_data
 t_data					*init_data(char **environ);
 void					free_data(t_data *d);
 void					free_minishell(t_data *d);
+void					handle_sigint(int sig);
 
 // ---------------------------- TOKENIZER ----------------------------------- //
 

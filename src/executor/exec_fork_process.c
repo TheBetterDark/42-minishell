@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/07 18:47:51 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/07 22:55:59 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ void	execute_parent_process(t_data *d, t_cmd *cur)
 void	fork_child_process(t_data *d, t_cmd *cur)
 {
 	cur->pid = fork();
+	signal(SIGINT, SIG_IGN);
 	if (cur->pid == 0)
 	{
+		signal(SIGINT, handle_sigint);
 		redirect_child_fds(d);
 		if (check_for_builtins(d, cur))
 			exit(d->exit_stat);
