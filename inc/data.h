@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/07 18:44:52 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/07 19:26:48 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_token					*tokenizer(t_data *d);
 void					tok_preliminary_type_assigner(t_token *head, t_data *d);
 void					tok_secondary_type_assigner(t_token *head);
 
-char					**get_paths(void);
+char					**get_paths(t_data *d);
 
 t_token					*tok_lstnew(char *word);
 void					tok_lstadd_back(t_token **head, t_token *new);
@@ -101,7 +101,6 @@ int						tok_lstsize(t_token *tok);
 t_token					*tok_lstlast(t_token *tok);
 void					tok_lstclear(t_token **tok);
 
-char					**get_paths(void);
 bool					is_cmd(t_token *cur, bool first);
 char					**command_line_split(char *input, t_data *d);
 int						find_char_pos(const char *str, char target);
@@ -132,7 +131,6 @@ char					**init_cmdv(t_token *cur, int size, t_data *d);
 void					set_new_cmd_nulls(t_cmd *new_cmd);
 void					get_new_cmd_data(t_cmd *new_cmd, t_token *cur,
 							t_data *d);
-char					**get_paths(void);
 void					free_paths(char **paths);
 char					*search_paths(char *path, char *cmd);
 char					*dup_double_quotes(char *str, t_data *d);

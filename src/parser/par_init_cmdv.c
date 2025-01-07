@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/07 18:43:37 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/07 19:27:45 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ static bool	is_builtin_command(const char *command)
 	return (false);
 }
 
-char	*add_path_to_cmdv0(char *cmd)
+static char	*add_path_to_cmdv0(t_data *d, char *cmd)
 {
 	char	**paths;
 	char	**tmp;
 	char	*target_path;
 	char	*cmdv0;
 
-	paths = get_paths();
+	paths = get_paths(d);
 	if (!paths)
 		return (NULL);
 	tmp = paths;
@@ -67,7 +67,7 @@ static char	*handle_first_command(t_token *cur, t_data *d)
 		if (access(cur->cont, F_OK | X_OK) == 0)
 			cmd = ft_strdup(cur->cont);
 		else
-			cmd = add_path_to_cmdv0(cur->cont);
+			cmd = add_path_to_cmdv0(d, cur->cont);
 		if (!cmd)
 		{
 			ft_printf("%s: command not found\n", cur->cont);

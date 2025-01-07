@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:06:50 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 07:53:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/07 19:25:58 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ char					**ft_str_arr_add(const char **str_arr, const char *str);
 char					**ft_str_arr_minus(const char **str_arr,
 							const char *str);
 char					**ft_str_arr_dup(const char **str_arr);
-bool					ft_str_arr_has(const char **str_arr, const char *str);
+char					*ft_str_arr_has(const char **str_arr, const char *str);
 void					ft_str_arr_out(const char **str_arr);
 
 #endif
