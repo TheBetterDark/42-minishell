@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 15:35:54 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/07 18:44:52 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct s_cmd
 	char				*open_fn; // input file
 	char				*append_fn; // append file
 	char				*input_fn; // output file
+	pid_t				pid; // process id
 	t_cmd				*next; // next command
 }						t_cmd;
 
@@ -139,8 +140,8 @@ bool					terms_match(char *str1, char *str2);
 void					cleanup_job(t_cmd *job);
 char					*get_key(char *str);
 char					*find_env_var(char *str, char **env);
-char					*try_env_value(char *subquote, char **env, int exit_stat);
-
+char					*try_env_value(char *subquote, char **env,
+							int exit_stat);
 
 // -------------------------------- EXECUTOR -------------------------------- //
 

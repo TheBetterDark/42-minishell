@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 13:32:12 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/07 18:43:41 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	find_cmdv_size(t_token *cur)
 	size = 0;
 	cur_cur = cur;
 	while (cur_cur && (cur_cur->type == CMD || cur_cur->type == ARG
-		|| cur_cur->type == EXIT_STAT))
+			|| cur_cur->type == EXIT_STAT))
 	{
 		size++;
 		cur_cur = cur_cur->next;

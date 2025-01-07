@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_command_line_split.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 16:38:05 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/07 18:43:26 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ static void	write_words(char **toks, const char *str, t_data *d)
 		{
 			*toks = ft_substr(str, start, len);
 			if (!*toks)
-			{
-				perror("ft_substr failed");
 				exit(1);
-			}
 		}
 		if (*toks[0] == '$' && ft_strlen(*toks) > 1)
 			*toks = try_env_value(*toks, d->env, d->exit_stat);

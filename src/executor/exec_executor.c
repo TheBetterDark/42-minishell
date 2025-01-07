@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 15:17:55 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/07 18:47:20 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ static void	execute_commands(t_data *d)
 		file_redirections(d, cur);
 		fork_child_process(d, cur);
 		direct_pipe_input(d);
+		cur = cur->next;
+	}
+	cur = d->job;
+	while (cur)
+	{
+		if (cur->pid != 0)
+			catch_exit_status(cur->pid, d);
 		cur = cur->next;
 	}
 }
