@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/07 18:43:26 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/08 16:23:10 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@ static void	discern_words(const char *str, int *pos)
 		while (str[*pos] && str[*pos] != '\"')
 			(*pos)++;
 		if (str[*pos] == '\"')
+			(*pos)++;
+	}
+	else if (str[*pos] && (str[*pos] == '>' || str[*pos] == '<')) //rdr
+	{
+		char tmp;
+
+		tmp = str[*pos];
+		(*pos)++;
+		if (str[*pos] && str[*pos] == tmp)
 			(*pos)++;
 	}
 	else

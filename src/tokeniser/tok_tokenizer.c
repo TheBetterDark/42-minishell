@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 15:35:16 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/08 18:28:16 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ t_token	*tokenizer(t_data *d)
 		toks++;
 	}
 	free_split(toks_start);
-	tok_preliminary_type_assigner(head, d);
-	tok_secondary_type_assigner(head);
+	tok_redir_operator_type_assigner(head);
+	tok_redir_file_type_assigner(head);
+	tok_cmd_type_assigner(head);
 	return (head);
 }

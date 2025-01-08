@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/07 22:55:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/08 18:22:31 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,9 @@ typedef struct s_token
 }						t_token;
 
 t_token					*tokenizer(t_data *d);
-void					tok_preliminary_type_assigner(t_token *head, t_data *d);
-void					tok_secondary_type_assigner(t_token *head);
+void					tok_redir_operator_type_assigner(t_token *head);
+void					tok_redir_file_type_assigner(t_token *head);
+void					tok_cmd_type_assigner(t_token *head);
 
 char					**get_paths(t_data *d);
 

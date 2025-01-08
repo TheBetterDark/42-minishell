@@ -6,15 +6,33 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:41:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/08 19:36:28 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-bool	is_cmd(t_token *cur, bool first)
+static void	assign_cmd_toks(t_token *cur, bool *first) //, t_data *d
 {
-	if (first || cur->prev->type == PIPE)
-		return (true);
-	return (false);
+	if (*first && cur->type == ARG)	
+	{
+		cur->type = CMD;
+		*first = false;
+	}
+	else if (cur->type == PIPE)
+		*first = true;
+}
+
+void	tok_cmd_type_assigner(t_token *head)
+{
+	t_token	*cur;
+	bool	first;
+
+	cur = head;
+	first = true;
+	while (cur)
+	{
+		assign_cmd_toks(cur, &first); //, d
+		cur = cur->next;
+	}
 }

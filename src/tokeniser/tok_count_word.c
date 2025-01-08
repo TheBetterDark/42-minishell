@@ -6,13 +6,11 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/03 19:00:37 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/08 16:37:28 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
-
-int		count_words(const char *str);
 
 static void	discern_delim(const char *str, int *pos)
 {
@@ -25,6 +23,15 @@ static void	discern_delim(const char *str, int *pos)
 	{
 		(*pos)++;
 		*pos += handle_quote(&str[*pos], '\"' );
+	}
+	else if (str[*pos] && (str[*pos] == '>' || str[*pos] == '<')) //rdr
+	{
+		char tmp; //
+
+		tmp = str[*pos];
+		(*pos)++;
+		if (str[*pos] && str[*pos] == tmp)
+			(*pos)++;
 	}
 	else
 	{

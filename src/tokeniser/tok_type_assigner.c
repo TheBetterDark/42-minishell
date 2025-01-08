@@ -6,21 +6,15 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/21 21:41:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/08 18:48:01 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-static void	assign_token_type(t_token *cur, t_data *d, bool *first)
+static void	assign_redir_toks(t_token *cur)
 {
-	if (is_cmd(cur, *first))
-	{
-		cur->type = CMD;
-		d->cmd_ct++;
-		*first = false;
-	}
-	else if (input_matches(cur->cont, "|"))
+	if (input_matches(cur->cont, "|"))
 		cur->type = PIPE;
 	else if (input_matches(cur->cont, "<"))
 		cur->type = RDR_IN;
@@ -34,7 +28,7 @@ static void	assign_token_type(t_token *cur, t_data *d, bool *first)
 		cur->type = ARG;
 }
 
-void	tok_preliminary_type_assigner(t_token *head, t_data *d)
+void	tok_redir_operator_type_assigner(t_token *head)
 {
 	t_token	*cur;
 	bool	first;
@@ -43,34 +37,34 @@ void	tok_preliminary_type_assigner(t_token *head, t_data *d)
 	first = true;
 	while (cur)
 	{
-		assign_token_type(cur, d, &first);
+		assign_redir_toks(cur);
 		cur = cur->next;
 	}
 }
 
-static void	double_check_arg(t_token *cur)
+static void	assign_redir_file_toks(t_token *cur)
 {
-	if (cur->prev->type == RDR_IN)
+	if (cur->prev && cur->type == ARG && cur->prev->type == RDR_IN)
 		cur->type = IN_FILE;
-	else if (cur->prev->type == RDR_HEREDOC)
+	else if (cur->prev && cur->type == ARG && cur->prev->type == RDR_HEREDOC)
 		cur->type = DELIM;
-	else if (cur->prev->type == RDR_OUT)
+	else if (cur->prev && cur->type == ARG && cur->prev->type == RDR_OUT)
 		cur->type = OUT_FILE;
-	else if (cur->prev->type == RDR_APPEND)
+	else if (cur->prev && cur->type == ARG && cur->prev->type == RDR_APPEND)
 		cur->type = APPEND_FILE;
 	else if (input_matches(cur->cont, "$?"))
 		cur->type = EXIT_STAT;
 }
 
-void	tok_secondary_type_assigner(t_token *head)
+void	tok_redir_file_type_assigner(t_token *head)
 {
 	t_token	*cur;
 
 	cur = head;
 	while (cur)
 	{
-		if (cur->type == ARG)
-			double_check_arg(cur);
+		if (cur->type >= RDR_IN && cur->type <= ARG)
+			assign_redir_file_toks(cur);
 		cur = cur->next;
 	}
 }
