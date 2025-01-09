@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/08 18:22:31 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/09 19:17:13 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_data
 	int					output_fd;
 	int					r_input_fd;
 	int					r_output_fd;
-	int					pipefd[2];
+	int					prev_pipefd[2];
 	int					exit_stat;
 	t_cmd				*job;
 }						t_data;
@@ -121,6 +121,7 @@ typedef struct s_cmd
 	char				*open_fn; // input file
 	char				*append_fn; // append file
 	char				*input_fn; // output file
+	int					pipefd[2]; // pipe fds
 	pid_t				pid; // process id
 	t_cmd				*next; // next command
 }						t_cmd;
@@ -148,9 +149,10 @@ char					*try_env_value(char *subquote, char **env,
 void					executor(t_data *d);
 void					add_to_job(t_cmd **head_cmd, t_cmd *new_cmd);
 
-void					redirect_child_fds(t_data *d);
+void					redirect_child_fds(t_data *d, t_cmd *cur);
 void					fork_child_process(t_data *d, t_cmd *cur);
-void					create_child_pipe(t_data *d);
+//void					create_child_pipe(t_data *d);
+void					create_child_pipe(t_cmd *cur);
 void					execute_child_program(t_data *d, t_cmd *cur);
 
 void					close_pipe_ends(t_data *d);
@@ -158,7 +160,7 @@ void					check_for_open_redirect(t_data *d, t_cmd *cur);
 void					check_for_append_redirect(t_data *d, t_cmd *cur);
 
 void					direct_output(t_data *d, t_cmd *cur);
-void					direct_pipe_input(t_data *d);
+void					direct_pipe_input(t_data *d, t_cmd *cur);
 void					direct_input(t_data *d, t_cmd *cur);
 void					write_heredoc(int heredoc, t_cmd *cur);
 void					direct_heredoc(t_data *d, t_cmd *cur);

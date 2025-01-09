@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/04 16:38:19 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/09 17:27:19 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_data	*init_data(char **environ)
 	d->output_fd = 1;
 	d->r_input_fd = 0;
 	d->r_output_fd = 1;
-	d->pipefd[0] = 0;
-	d->pipefd[1] = 1;
+	d->prev_pipefd[0] = -1;
+	d->prev_pipefd[1] = -1;
 	d->toks = NULL;
 	d->job = NULL;
 	return (d);

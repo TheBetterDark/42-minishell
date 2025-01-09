@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/07 22:55:59 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/09 19:02:14 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	execute_child_program(t_data *d, t_cmd *cur)
 {
+	
 	if (execve(cur->cmdv[0], cur->cmdv, d->env))
 	{
 		perror("execve");
@@ -21,31 +22,31 @@ void	execute_child_program(t_data *d, t_cmd *cur)
 	}
 }
 
-void	redirect_child_fds(t_data *d)
+void	redirect_child_fds(t_data *d, t_cmd *cur)
 {
-	if (d->input_fd != 0)
+	if (d->prev_pipefd[0] != -1)
 	{
-		if (dup2(d->input_fd, 0) == -1)
+		if (dup2(d->prev_pipefd[0], STDIN_FILENO) == -1)
 		{
-			perror("dup2 d->input_fd");
+			perror("dup2 d->prev_pipefd[0]");
 			exit(EXIT_FAILURE);
 		}
-		close(d->input_fd);
+		close(d->prev_pipefd[0]);
 	}
-	if (d->output_fd != 1)
+	if (cur->next)
 	{
-		if (dup2(d->output_fd, 1) == -1)
+		if (dup2(cur->pipefd[1], STDOUT_FILENO) == -1)
 		{
-			perror("dup2 d->output_fd");
+			perror("dup2 cur->pipefd[1]");
 			exit(EXIT_FAILURE);
 		}
-		close(d->output_fd);
+		close(cur->pipefd[1]);
 	}
 }
 
 void	execute_parent_process(t_data *d, t_cmd *cur)
 {
-	redirect_child_fds(d);
+	redirect_child_fds(d, cur);
 	check_for_builtins(d, cur);
 }
 
@@ -56,7 +57,7 @@ void	fork_child_process(t_data *d, t_cmd *cur)
 	if (cur->pid == 0)
 	{
 		signal(SIGINT, handle_sigint);
-		redirect_child_fds(d);
+		redirect_child_fds(d, cur);
 		if (check_for_builtins(d, cur))
 			exit(d->exit_stat);
 		execute_child_program(d, cur);

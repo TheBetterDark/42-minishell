@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/08 20:00:32 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/09 19:52:18 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ int	find_cmdv_size(t_token *cur)
 	tmp = cur;
 	while (tmp)
 	{
-		if (tmp->type == CMD || tmp->type == ARG
-			|| tmp->type == EXIT_STAT)
+		if (tmp->type == PIPE)
+			break ;
+		if (tmp->type == CMD || tmp->type == ARG || tmp->type == EXIT_STAT)
 			size++;
 		tmp = tmp->next;
 	}
@@ -70,6 +71,8 @@ void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur, t_data *d)
 		handle_filename(&new_cmd->append_fn, cur, APPEND_FILE, ">>");
 		handle_filename(&new_cmd->open_fn, cur, OUT_FILE, ">");
 		handle_filename(&new_cmd->input_fn, cur, IN_FILE, "<");
+		if (cur->type == CMD)
+			create_child_pipe(new_cmd); // added for pipeline
 		if (cur->type == DELIM)
 		{
 			new_cmd->eof = cur->cont;

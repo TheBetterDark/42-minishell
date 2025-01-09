@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/23 22:06:07 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/09 19:04:16 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 
 void	direct_output(t_data *d, t_cmd *cur)
 {
-	if (cur->next)
-	{
-		create_child_pipe(d);
-		d->output_fd = d->pipefd[1];
-	}
-	else
-		d->output_fd = 1;
 	check_for_open_redirect(d, cur);
 	check_for_append_redirect(d, cur);
 }

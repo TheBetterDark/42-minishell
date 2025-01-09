@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/08 13:53:36 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/09 20:20:59 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	free_minishell(t_data *d)
 	d->output_fd = 1;
 	d->r_input_fd = -1;
 	d->r_output_fd = -1;
+	d->prev_pipefd[0] = -1;
+	d->prev_pipefd[1] = -1;
 }
 
 int	main(void)

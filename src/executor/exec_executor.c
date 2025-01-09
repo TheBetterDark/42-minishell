@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/07 18:47:20 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/09 19:17:41 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	handle_builtin_command(t_data *d, t_cmd *cur)
 {
 	file_redirections(d, cur);
 	execute_parent_process(d, cur);
-	direct_pipe_input(d);
+	direct_pipe_input(d, cur);
 }
 
 static void	execute_commands(t_data *d)
@@ -45,12 +45,17 @@ static void	execute_commands(t_data *d)
 	{
 		file_redirections(d, cur);
 		fork_child_process(d, cur);
-		direct_pipe_input(d);
+		direct_pipe_input(d, cur);
 		cur = cur->next;
 	}
 	cur = d->job;
 	while (cur)
 	{
+		if (d->prev_pipefd[0] != -1)
+			close(d->prev_pipefd[0]);
+		if (d->prev_pipefd[1] != -1)
+			close(d->prev_pipefd[1]);
+
 		if (cur->pid != 0)
 			catch_exit_status(cur->pid, d);
 		cur = cur->next;
