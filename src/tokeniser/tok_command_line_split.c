@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/08 16:23:10 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/09 15:54:03 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	write_words(char **toks, const char *str, t_data *d)
 			if (!*toks)
 				exit(1);
 		}
-		if (*toks[0] == '$' && ft_strlen(*toks) > 1)
+		if (str[pos] && *toks[0] == '$' && ft_strlen(*toks) > 1)
 			*toks = try_env_value(*toks, d->env, d->exit_stat);
 		toks++;
 	}
