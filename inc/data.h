@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/09 19:17:13 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/10 20:35:09 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ typedef struct s_data
 	t_token				*toks;
 	//
 	char				**env;
-	int					input_fd;
-	int					output_fd;
+//	int					input_fd;
+//	int					output_fd;
 	int					r_input_fd;
 	int					r_output_fd;
 	int					prev_pipefd[2];
@@ -121,6 +121,8 @@ typedef struct s_cmd
 	char				*open_fn; // input file
 	char				*append_fn; // append file
 	char				*input_fn; // output file
+	int					input_fd; // exec's input
+	int					output_fd; // exec's output
 	int					pipefd[2]; // pipe fds
 	pid_t				pid; // process id
 	t_cmd				*next; // next command
@@ -149,18 +151,18 @@ char					*try_env_value(char *subquote, char **env,
 void					executor(t_data *d);
 void					add_to_job(t_cmd **head_cmd, t_cmd *new_cmd);
 
-void					redirect_child_fds(t_data *d, t_cmd *cur);
+//void					redirect_child_fds(t_data *d, t_cmd *cur);
 void					fork_child_process(t_data *d, t_cmd *cur);
 //void					create_child_pipe(t_data *d);
-void					create_child_pipe(t_cmd *cur);
+//void					create_child_pipe(t_cmd *cur);
 void					execute_child_program(t_data *d, t_cmd *cur);
 
-void					close_pipe_ends(t_data *d);
+//void					close_pipe_ends(t_data *d);
 void					check_for_open_redirect(t_data *d, t_cmd *cur);
 void					check_for_append_redirect(t_data *d, t_cmd *cur);
 
 void					direct_output(t_data *d, t_cmd *cur);
-void					direct_pipe_input(t_data *d, t_cmd *cur);
+//void					direct_pipe_input(t_data *d, t_cmd *cur);
 void					direct_input(t_data *d, t_cmd *cur);
 void					write_heredoc(int heredoc, t_cmd *cur);
 void					direct_heredoc(t_data *d, t_cmd *cur);
@@ -178,5 +180,13 @@ void					skyy_unset(t_data *d, char *unset_str);
 
 void					file_redirections(t_data *d, t_cmd *cur);
 void					catch_exit_status(pid_t pid, t_data *d);
+
+void					create_cmd_pipe(t_cmd *cur);
+void					close_pipe_ends(t_cmd *job);
+void					direct_pipe_input(void);
+void					safe_dup2(int old_fd, int new_fd);
+void					redirect_child_fds(int input_fd, int output_fd);
+void					connect_pipeline(t_cmd *cur);
+
 
 #endif

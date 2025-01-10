@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/09 19:04:16 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/10 19:33:03 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,7 @@ void	direct_input(t_data *d, t_cmd *cur)
 			perror("input_fd open");
 			exit(EXIT_FAILURE);
 		}
-		if (dup2(d->r_input_fd, 0) == -1)
-		{
-			perror("input_fd open");
-			exit(EXIT_FAILURE);
-		}
+		safe_dup2(d->r_input_fd, STDIN_FILENO);
 	}
 }
 

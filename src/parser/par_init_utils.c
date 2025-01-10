@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/09 19:52:18 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/10 20:35:55 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur, t_data *d)
 		handle_filename(&new_cmd->open_fn, cur, OUT_FILE, ">");
 		handle_filename(&new_cmd->input_fn, cur, IN_FILE, "<");
 		if (cur->type == CMD)
-			create_child_pipe(new_cmd); // added for pipeline
+			create_cmd_pipe(new_cmd); // added for pipeline
 		if (cur->type == DELIM)
 		{
 			new_cmd->eof = cur->cont;
@@ -82,6 +82,8 @@ void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur, t_data *d)
 		{
 			cur->cont = ft_itoa(d->exit_stat);
 		}
+		new_cmd->input_fd = STDIN_FILENO;
+		new_cmd->output_fd = STDOUT_FILENO;
 		cur = cur->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/09 19:17:41 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/10 20:20:12 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	executor(t_data *d)
 	cur = d->job;
 	save_stdout = dup(1);
 	save_stdin = dup(0);
+	if (d->job->next)
+		connect_pipeline(d, cur);
 	if (!cur)
 		return ;
 	if (cur->next == NULL && is_builtin_command(cur->cmdv[0]))
@@ -94,6 +96,5 @@ void	executor(t_data *d)
 	else
 		execute_commands(d);
 	restore_file_descriptors(save_stdout, save_stdin);
-	if (d->input_fd != 0)
-		close(d->input_fd);
+	close_pipe_ends(d->job);
 }

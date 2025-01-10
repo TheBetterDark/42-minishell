@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/09 19:02:14 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/10 20:23:05 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,10 @@ void	execute_child_program(t_data *d, t_cmd *cur)
 	}
 }
 
-void	redirect_child_fds(t_data *d, t_cmd *cur)
-{
-	if (d->prev_pipefd[0] != -1)
-	{
-		if (dup2(d->prev_pipefd[0], STDIN_FILENO) == -1)
-		{
-			perror("dup2 d->prev_pipefd[0]");
-			exit(EXIT_FAILURE);
-		}
-		close(d->prev_pipefd[0]);
-	}
-	if (cur->next)
-	{
-		if (dup2(cur->pipefd[1], STDOUT_FILENO) == -1)
-		{
-			perror("dup2 cur->pipefd[1]");
-			exit(EXIT_FAILURE);
-		}
-		close(cur->pipefd[1]);
-	}
-}
 
 void	execute_parent_process(t_data *d, t_cmd *cur)
 {
-	redirect_child_fds(d, cur);
+	redirect_child_fds(cur->input_fd, cur->output_fd);
 	check_for_builtins(d, cur);
 }
 
@@ -57,7 +36,7 @@ void	fork_child_process(t_data *d, t_cmd *cur)
 	if (cur->pid == 0)
 	{
 		signal(SIGINT, handle_sigint);
-		redirect_child_fds(d, cur);
+		redirect_child_fds(cur->input_fd, cur->output_fd);
 		if (check_for_builtins(d, cur))
 			exit(d->exit_stat);
 		execute_child_program(d, cur);
