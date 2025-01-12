@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/08 19:36:28 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:10:45 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	assign_cmd_toks(t_token *cur, bool *first) //, t_data *d
 {
-	if (*first && cur->type == ARG)	
+	if (*first && cur->type == ARG)
 	{
 		cur->type = CMD;
 		*first = false;
@@ -32,7 +32,7 @@ void	tok_cmd_type_assigner(t_token *head)
 	first = true;
 	while (cur)
 	{
-		assign_cmd_toks(cur, &first); //, d
+		assign_cmd_toks(cur, &first);
 		cur = cur->next;
 	}
 }

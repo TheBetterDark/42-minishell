@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/10 20:26:01 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:10:23 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ t_data	*init_data(char **environ)
 		return (NULL);
 	}
 	d->exit_stat = 0;
-//	d->input_fd = 0;
-//	d->output_fd = 1;
 	d->r_input_fd = 0;
 	d->r_output_fd = 1;
 	d->prev_pipefd[0] = -1;

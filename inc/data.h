@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/10 20:35:09 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:07:44 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,5 @@ void					direct_pipe_input(void);
 void					safe_dup2(int old_fd, int new_fd);
 void					redirect_child_fds(int input_fd, int output_fd);
 void					connect_pipeline(t_cmd *cur);
-
 
 #endif

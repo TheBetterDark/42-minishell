@@ -6,13 +6,13 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/10 20:26:25 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:05:58 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
 
-volatile sig_atomic_t g_signal;
+volatile sig_atomic_t	g_signal;
 
 static int	initalize_signals(void)
 {
@@ -70,8 +70,6 @@ void	free_minishell(t_data *d)
 		d->job = NULL;
 	}
 	d->cmd_ct = 0;
-//	d->input_fd = 0;
-//	d->output_fd = 1;
 	d->r_input_fd = -1;
 	d->r_output_fd = -1;
 	d->prev_pipefd[0] = -1;

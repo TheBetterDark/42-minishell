@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tok_count_word.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/08 16:37:28 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:33:19 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	discern_delim(const char *str, int *pos)
 {
+	char	tmp;
+
 	if (is_quote(str[*pos], '\''))
 	{
 		(*pos)++;
@@ -24,10 +26,8 @@ static void	discern_delim(const char *str, int *pos)
 		(*pos)++;
 		*pos += handle_quote(&str[*pos], '\"' );
 	}
-	else if (str[*pos] && (str[*pos] == '>' || str[*pos] == '<')) //rdr
+	else if (str[*pos] && (str[*pos] == '>' || str[*pos] == '<'))
 	{
-		char tmp; //
-
 		tmp = str[*pos];
 		(*pos)++;
 		if (str[*pos] && str[*pos] == tmp)
@@ -36,8 +36,7 @@ static void	discern_delim(const char *str, int *pos)
 	else
 	{
 		while (str[*pos] && !is_blank(str[*pos])
-			&& !is_quote(str[*pos], '\'')
-			&& !is_quote(str[*pos], '\"'))
+			&& !is_quote(str[*pos], '\'') && !is_quote(str[*pos], '\"'))
 			(*pos)++;
 	}
 }

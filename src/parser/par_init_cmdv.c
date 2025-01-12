@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/09 19:18:43 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:34:56 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	**init_cmdv(t_token *cur, int size, t_data *d)
 	while (i < size && cur)
 	{
 		if ((cur->type == CMD || cur->type == ARG
-			|| cur->type == EXIT_STAT) && cur->type != PIPE)
+				|| cur->type == EXIT_STAT) && cur->type != PIPE)
 		{
 			cmdv[i] = duplicate_command(cur, i, d);
 			if (!cmdv[i])

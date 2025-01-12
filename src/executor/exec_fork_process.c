@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/10 20:23:05 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:10:32 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 void	execute_child_program(t_data *d, t_cmd *cur)
 {
-	
 	if (execve(cur->cmdv[0], cur->cmdv, d->env))
 	{
 		perror("execve");
 		exit(EXIT_FAILURE);
 	}
 }
-
 
 void	execute_parent_process(t_data *d, t_cmd *cur)
 {

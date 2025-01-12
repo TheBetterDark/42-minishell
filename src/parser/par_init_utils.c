@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/10 20:35:55 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:34:41 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*strdup_redir(char *cont, char *rdr)
 
 static void	handle_filename(char **file_name, t_token *cur, int type, char *rdr)
 {
-	char c;
+	char	c;
 
 	c = rdr[0];
 	if (cur->type == type)
@@ -72,7 +72,7 @@ void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur, t_data *d)
 		handle_filename(&new_cmd->open_fn, cur, OUT_FILE, ">");
 		handle_filename(&new_cmd->input_fn, cur, IN_FILE, "<");
 		if (cur->type == CMD)
-			create_cmd_pipe(new_cmd); // added for pipeline
+			create_cmd_pipe(new_cmd);
 		if (cur->type == DELIM)
 		{
 			new_cmd->eof = cur->cont;

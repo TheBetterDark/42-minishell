@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/10 20:20:12 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:08:16 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	handle_builtin_command(t_data *d, t_cmd *cur)
 {
 	file_redirections(d, cur);
 	execute_parent_process(d, cur);
-	direct_pipe_input(d, cur);
+	direct_pipe_input();
 }
 
 static void	execute_commands(t_data *d)
@@ -45,7 +45,7 @@ static void	execute_commands(t_data *d)
 	{
 		file_redirections(d, cur);
 		fork_child_process(d, cur);
-		direct_pipe_input(d, cur);
+		direct_pipe_input();
 		cur = cur->next;
 	}
 	cur = d->job;
@@ -55,7 +55,6 @@ static void	execute_commands(t_data *d)
 			close(d->prev_pipefd[0]);
 		if (d->prev_pipefd[1] != -1)
 			close(d->prev_pipefd[1]);
-
 		if (cur->pid != 0)
 			catch_exit_status(cur->pid, d);
 		cur = cur->next;
@@ -88,7 +87,7 @@ void	executor(t_data *d)
 	save_stdout = dup(1);
 	save_stdin = dup(0);
 	if (d->job->next)
-		connect_pipeline(d, cur);
+		connect_pipeline(d->job);
 	if (!cur)
 		return ;
 	if (cur->next == NULL && is_builtin_command(cur->cmdv[0]))

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/09 15:54:03 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:34:32 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	discern_words(const char *str, int *pos)
 {
+	char	tmp;
+
 	if (str[*pos] && str[*pos] == '\'')
 	{
 		(*pos)++;
@@ -30,10 +32,8 @@ static void	discern_words(const char *str, int *pos)
 		if (str[*pos] == '\"')
 			(*pos)++;
 	}
-	else if (str[*pos] && (str[*pos] == '>' || str[*pos] == '<')) //rdr
+	else if (str[*pos] && (str[*pos] == '>' || str[*pos] == '<'))
 	{
-		char tmp;
-
 		tmp = str[*pos];
 		(*pos)++;
 		if (str[*pos] && str[*pos] == tmp)
