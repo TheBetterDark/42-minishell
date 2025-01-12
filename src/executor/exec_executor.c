@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 11:42:13 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 13:19:23 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	execute_commands(t_data *d)
 		direct_pipe_input();
 		cur = cur->next;
 	}
-	close_pipe_ends(d->job);
 	cur = d->job;
 	while (cur)
 	{
@@ -95,4 +94,5 @@ void	executor(t_data *d)
 	else
 		execute_commands(d);
 	restore_file_descriptors(save_stdout, save_stdin);
+	close_pipe_ends(d->job);
 }

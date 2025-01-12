@@ -6,20 +6,11 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 10:10:32 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 14:23:30 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
-
-void	execute_child_program(t_data *d, t_cmd *cur)
-{
-	if (execve(cur->cmdv[0], cur->cmdv, d->env))
-	{
-		perror("execve");
-		exit(EXIT_FAILURE);
-	}
-}
 
 void	execute_parent_process(t_data *d, t_cmd *cur)
 {
@@ -37,7 +28,8 @@ void	fork_child_process(t_data *d, t_cmd *cur)
 		redirect_child_fds(cur->input_fd, cur->output_fd);
 		if (check_for_builtins(d, cur))
 			exit(d->exit_stat);
-		execute_child_program(d, cur);
+		if (execve(cur->cmdv[0], cur->cmdv, d->env))
+			exit(EXIT_FAILURE);
 		free_minishell(d);
 		free_data(d);
 		exit(EXIT_SUCCESS);
@@ -46,5 +38,10 @@ void	fork_child_process(t_data *d, t_cmd *cur)
 	{
 		perror("fork");
 		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		cur->pid = cur->pid;
+		close(cur->pipefd[1]);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 11:43:01 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 14:21:37 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ void					executor(t_data *d);
 void					add_to_job(t_cmd **head_cmd, t_cmd *new_cmd);
 
 void					fork_child_process(t_data *d, t_cmd *cur);
-void					execute_child_program(t_data *d, t_cmd *cur);
 
 void					check_for_open_redirect(t_data *d, t_cmd *cur);
 void					check_for_append_redirect(t_data *d, t_cmd *cur);
