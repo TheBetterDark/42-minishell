@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 14:23:46 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 14:25:24 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,7 @@ char	**init_cmdv(t_token *cur, int size, t_data *d)
 			{
 				while (i > 0)
 					free(cmdv[--i]);
-				free(cmdv);
-				return (NULL);
+				return (free(cmdv), NULL);
 			}
 			i++;
 		}
