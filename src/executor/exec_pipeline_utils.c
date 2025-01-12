@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 10:09:34 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:58:56 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	safe_dup2(int old_fd, int new_fd)
 		perror("dup2");
 		exit(EXIT_FAILURE);
 	}
-	close(old_fd);
+	if (old_fd != new_fd)
+		close(old_fd);
 }
 
 void	redirect_child_fds(int input_fd, int output_fd)

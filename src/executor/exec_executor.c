@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 10:08:16 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 11:42:13 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ static void	execute_commands(t_data *d)
 		direct_pipe_input();
 		cur = cur->next;
 	}
+	close_pipe_ends(d->job);
 	cur = d->job;
 	while (cur)
 	{
-		if (d->prev_pipefd[0] != -1)
-			close(d->prev_pipefd[0]);
-		if (d->prev_pipefd[1] != -1)
-			close(d->prev_pipefd[1]);
 		if (cur->pid != 0)
-			catch_exit_status(cur->pid, d);
+		{
+			waitpid(cur->pid, &d->exit_stat, 0);
+			d->exit_stat = WEXITSTATUS(d->exit_stat);
+		}
 		cur = cur->next;
 	}
 }
@@ -84,16 +84,15 @@ void	executor(t_data *d)
 	int		save_stdin;
 
 	cur = d->job;
-	save_stdout = dup(1);
-	save_stdin = dup(0);
-	if (d->job->next)
-		connect_pipeline(d->job);
 	if (!cur)
 		return ;
+	save_stdout = dup(1);
+	save_stdin = dup(0);
+	if (cur->next)
+		connect_pipeline(d->job);
 	if (cur->next == NULL && is_builtin_command(cur->cmdv[0]))
 		handle_builtin_command(d, cur);
 	else
 		execute_commands(d);
 	restore_file_descriptors(save_stdout, save_stdin);
-	close_pipe_ends(d->job);
 }

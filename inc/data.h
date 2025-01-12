@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 10:07:44 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 11:43:01 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,8 @@ typedef struct s_data
 	t_token				*toks;
 	//
 	char				**env;
-//	int					input_fd;
-//	int					output_fd;
 	int					r_input_fd;
 	int					r_output_fd;
-	int					prev_pipefd[2];
 	int					exit_stat;
 	t_cmd				*job;
 }						t_data;
@@ -103,7 +100,6 @@ int						tok_lstsize(t_token *tok);
 t_token					*tok_lstlast(t_token *tok);
 void					tok_lstclear(t_token **tok);
 
-bool					is_cmd(t_token *cur, bool first);
 char					**command_line_split(char *input, t_data *d);
 int						find_char_pos(const char *str, char target);
 bool					is_quote(const char c, const char quote);
@@ -151,18 +147,13 @@ char					*try_env_value(char *subquote, char **env,
 void					executor(t_data *d);
 void					add_to_job(t_cmd **head_cmd, t_cmd *new_cmd);
 
-//void					redirect_child_fds(t_data *d, t_cmd *cur);
 void					fork_child_process(t_data *d, t_cmd *cur);
-//void					create_child_pipe(t_data *d);
-//void					create_child_pipe(t_cmd *cur);
 void					execute_child_program(t_data *d, t_cmd *cur);
 
-//void					close_pipe_ends(t_data *d);
 void					check_for_open_redirect(t_data *d, t_cmd *cur);
 void					check_for_append_redirect(t_data *d, t_cmd *cur);
 
 void					direct_output(t_data *d, t_cmd *cur);
-//void					direct_pipe_input(t_data *d, t_cmd *cur);
 void					direct_input(t_data *d, t_cmd *cur);
 void					write_heredoc(int heredoc, t_cmd *cur);
 void					direct_heredoc(t_data *d, t_cmd *cur);
@@ -179,7 +170,6 @@ void					skyy_export(t_data *d, char *export_str);
 void					skyy_unset(t_data *d, char *unset_str);
 
 void					file_redirections(t_data *d, t_cmd *cur);
-void					catch_exit_status(pid_t pid, t_data *d);
 
 void					create_cmd_pipe(t_cmd *cur);
 void					close_pipe_ends(t_cmd *job);

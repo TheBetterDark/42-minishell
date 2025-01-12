@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 10:39:33 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 11:20:15 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,15 @@ void	close_pipe_ends(t_cmd *job)
 	while (cur)
 	{
 		if (cur->pipefd[0] != -1)
+		{
 			close(cur->pipefd[0]);
+			cur->pipefd[0] = -1;
+		}
 		if (cur->pipefd[1] != -1)
+		{
 			close(cur->pipefd[1]);
+			cur->pipefd[1] = -1;
+		}
 		cur = cur->next;
 	}
 }
@@ -46,7 +52,7 @@ void	connect_pipeline(t_cmd *cur)
 		if (cur->next)
 		{
 			cur->output_fd = cur->pipefd[1];
-			cur->next->output_fd = cur->pipefd[0];
+			cur->next->input_fd = cur->pipefd[0];
 		}
 		else
 			cur->output_fd = STDOUT_FILENO;
