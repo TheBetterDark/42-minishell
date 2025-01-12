@@ -6,31 +6,18 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 10:34:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 19:56:20 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-int	find_cmdv_size(t_token *cur)
-{
-	t_token	*tmp;
-	int		size;
-
-	size = 0;
-	tmp = cur;
-	while (tmp)
-	{
-		if (tmp->type == PIPE)
-			break ;
-		if (tmp->type == CMD || tmp->type == ARG || tmp->type == EXIT_STAT)
-			size++;
-		tmp = tmp->next;
-	}
-	return (size);
-}
-
-void	set_new_cmd_nulls(t_cmd *new_cmd)
+/*
+* @brief Set the new command to NULL
+*
+* @param new_cmd The new command
+*/
+static void	set_new_cmd_nulls(t_cmd *new_cmd)
 {
 	new_cmd->append_fn = NULL;
 	new_cmd->open_fn = NULL;
@@ -40,6 +27,14 @@ void	set_new_cmd_nulls(t_cmd *new_cmd)
 	new_cmd->next = NULL;
 }
 
+/*
+* @brief strdup the content of the token
+*
+* @param cont The content of the token
+* @param rdr The redirection operator
+*
+* @return The new string
+*/
 static char	*strdup_redir(char *cont, char *rdr)
 {
 	char	*trim;
@@ -49,6 +44,14 @@ static char	*strdup_redir(char *cont, char *rdr)
 	return (trim);
 }
 
+/*
+* @brief Handle the filename
+*
+* @param file_name The file name
+* @param cur The current token
+* @param type The type of the token
+* @param rdr The redirection operator
+*/
 static void	handle_filename(char **file_name, t_token *cur, int type, char *rdr)
 {
 	char	c;
@@ -63,7 +66,14 @@ static void	handle_filename(char **file_name, t_token *cur, int type, char *rdr)
 	}
 }
 
-void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur, t_data *d)
+/*
+* @brief Get the new command data
+*
+* @param new_cmd The new command
+* @param cur The current token
+* @param data The data structure
+*/
+void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur, t_data *data)
 {
 	set_new_cmd_nulls(new_cmd);
 	while (cur)
@@ -80,7 +90,7 @@ void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur, t_data *d)
 		}
 		if (cur->type == EXIT_STAT)
 		{
-			cur->cont = ft_itoa(d->exit_stat);
+			cur->cont = ft_itoa(data->exit_stat);
 		}
 		new_cmd->input_fd = STDIN_FILENO;
 		new_cmd->output_fd = STDOUT_FILENO;

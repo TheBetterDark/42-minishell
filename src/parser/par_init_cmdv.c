@@ -6,43 +6,55 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 15:44:51 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 19:57:13 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-static bool	is_builtin_command(const char *command)
+/*
+* @brief Get the paths from the environment variable
+*
+* @param data The data struct
+*
+* @return The paths
+*/
+static char	**get_paths(t_data *data)
 {
-	int			i;
-	const char	*builtins[] = {
-		"echo", "cd", "pwd", "export", "unset", "env", "exit"
-	};
+	char	*path;
+	char	**paths;
 
-	i = 0;
-	while (i < 7)
-	{
-		if (strcmp(command, builtins[i]) == 0)
-			return (true);
-		i++;
-	}
-	return (false);
+	path = ft_str_arr_has((const char **)data->env, "PATH");
+	if (!path)
+		return (NULL);
+	paths = ft_split(path, ':');
+	if (!paths)
+		return (NULL);
+	return (paths);
 }
 
-static char	*add_path_to_cmdv0(t_data *d, char *cmd)
+/*
+* @brief Add the path to the command
+*
+* @param data The data struct
+* @param cmd_name The command name
+*
+* @return The command with the path
+*/
+static char	*add_path_to_cmdv0(t_data *data, char *cmd_name)
 {
 	char	**paths;
 	char	**tmp;
 	char	*target_path;
 	char	*cmdv0;
 
-	paths = get_paths(d);
+	paths = get_paths(data);
 	if (!paths)
 		return (NULL);
 	tmp = paths;
 	while (*tmp)
 	{
-		target_path = search_paths(*tmp, cmd);
+		target_path = search_paths(*tmp, cmd_name);
 		if (target_path)
 		{
 			cmdv0 = ft_strdup(target_path);
@@ -56,51 +68,77 @@ static char	*add_path_to_cmdv0(t_data *d, char *cmd)
 	return (NULL);
 }
 
-static char	*handle_first_command(t_token *cur, t_data *d)
+/*
+* @brief Handles the first command in the command vector
+*
+* @param cur The current token
+* @param data The data struct
+*
+* @return The command name
+*/
+static char	*handle_first_command(t_token *cur, t_data *data)
 {
-	char	*cmd;
+	char	*cmd_name;
 
 	if (is_builtin_command(cur->cont))
-		cmd = ft_strdup(cur->cont);
+		cmd_name = ft_strdup(cur->cont);
 	else
 	{
 		if (access(cur->cont, F_OK | X_OK) == 0)
-			cmd = ft_strdup(cur->cont);
+			cmd_name = ft_strdup(cur->cont);
 		else
-			cmd = add_path_to_cmdv0(d, cur->cont);
-		if (!cmd)
+			cmd_name = add_path_to_cmdv0(data, cur->cont);
+		if (!cmd_name)
 		{
 			ft_printf("%s: command not found\n", cur->cont);
-			d->exit_stat = 127;
+			data->exit_stat = 127;
 			return (NULL);
 		}
 	}
-	return (cmd);
+	return (cmd_name);
 }
 
-static char	*duplicate_command(t_token *cur, int is_first, t_data *d)
+/*
+* @brief Duplicates the command
+*
+* @param cur The current token
+* @param is_first If the command is the first command
+* @param data The data struct
+*
+* @return The duplicated command
+*/
+static char	*duplicate_command(t_token *cur, int is_first, t_data *data)
 {
-	char	*cmd;
+	char	*cmd_name;
 
 	if (is_first == 0)
 	{
-		cmd = handle_first_command(cur, d);
+		cmd_name = handle_first_command(cur, data);
 	}
 	else
 	{
 		if (cur->type == ARG && cur->cont[0] == '\"')
-			cmd = dup_double_quotes(ft_strtrim(cur->cont, "\""), d);
+			cmd_name = dup_double_quotes(ft_strtrim(cur->cont, "\""), data);
 		else if (cur->type == ARG && cur->cont[0] == '\'')
-			cmd = ft_strdup(ft_strtrim(cur->cont, "\'"));
+			cmd_name = ft_strdup(ft_strtrim(cur->cont, "\'"));
 		else if (cur->type == EXIT_STAT)
-			cmd = ft_itoa(d->exit_stat);
+			cmd_name = ft_itoa(data->exit_stat);
 		else
-			cmd = ft_strdup(cur->cont);
+			cmd_name = ft_strdup(cur->cont);
 	}
-	return (cmd);
+	return (cmd_name);
 }
 
-char	**init_cmdv(t_token *cur, int size, t_data *d)
+/*
+* @brief Initializes the command vector
+*
+* @param cur The current token
+* @param size The size of the command vector
+* @param data The data struct
+*
+* @return The command vector
+*/
+char	**init_cmdv(t_token *cur, int size, t_data *data)
 {
 	char	**cmdv;
 	int		i;
@@ -114,7 +152,7 @@ char	**init_cmdv(t_token *cur, int size, t_data *d)
 		if ((cur->type == CMD || cur->type == ARG
 				|| cur->type == EXIT_STAT) && cur->type != PIPE)
 		{
-			cmdv[i] = duplicate_command(cur, i, d);
+			cmdv[i] = duplicate_command(cur, i, data);
 			if (!cmdv[i])
 			{
 				while (i > 0)

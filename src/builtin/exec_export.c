@@ -1,47 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_fork_process.c                                :+:      :+:    :+:   */
+/*   exec_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 14:23:30 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 18:23:07 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-void	execute_parent_process(t_data *d, t_cmd *cur)
+/*
+* @brief Add a new environment variable
+*
+* @param data The data structure
+*/
+void	builtin_export(t_data *data, char *export_str)
 {
-	redirect_child_fds(cur->input_fd, cur->output_fd);
-	check_for_builtins(d, cur);
-}
+	char	**new_env;
 
-void	fork_child_process(t_data *d, t_cmd *cur)
-{
-	cur->pid = fork();
-	signal(SIGINT, SIG_IGN);
-	if (cur->pid == 0)
+	new_env = ft_str_arr_add((const char **)data->env, export_str);
+	if (!new_env)
 	{
-		signal(SIGINT, handle_sigint);
-		redirect_child_fds(cur->input_fd, cur->output_fd);
-		if (check_for_builtins(d, cur))
-			exit(d->exit_stat);
-		if (execve(cur->cmdv[0], cur->cmdv, d->env))
-			exit(EXIT_FAILURE);
-		free_minishell(d);
-		free_data(d);
-		exit(EXIT_SUCCESS);
-	}
-	else if (cur->pid < 0)
-	{
-		perror("fork");
+		perror("export failed");
 		exit(EXIT_FAILURE);
 	}
-	else
-	{
-		cur->pid = cur->pid;
-		close(cur->pipefd[1]);
-	}
+	ft_free_str_arr(&data->env);
+	data->env = new_env;
 }

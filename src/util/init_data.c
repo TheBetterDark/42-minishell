@@ -1,27 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cd.c                                          :+:      :+:    :+:   */
+/*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 12:12:00 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 18:27:05 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-void	skyy_cd(t_cmd *cur)
+/*
+* @brief Initialize the data struct
+*
+* @return The data struct
+*/
+t_data	*init_data(void)
 {
-	if (cur->cmdv[1])
+	extern char	**environ;
+	t_data		*data;
+
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (NULL);
+	data->env = ft_str_arr_dup((const char **)environ);
+	if (!data->env)
 	{
-		if (chdir(cur->cmdv[1]) != 0)
-			perror("cd");
+		free(data);
+		return (NULL);
 	}
-	else
-	{
-		if (chdir(getenv("HOME")) != 0)
-			perror("cd");
-	}
+	data->input = NULL;
+	data->cmd_ct = 0;
+	data->exit_stat = 0;
+	data->r_input_fd = 0;
+	data->r_output_fd = 1;
+	data->toks = NULL;
+	data->job = NULL;
+	return (data);
 }

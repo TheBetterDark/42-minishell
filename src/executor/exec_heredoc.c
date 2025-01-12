@@ -6,35 +6,47 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/23 18:37:08 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 20:57:36 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-// TODO: Change to use readline & handle signals
-void	write_heredoc(int heredoc, t_cmd *cur)
+/*
+* @brief Write the heredoc to the file descriptor
+*
+* @param heredoc The file descriptor
+* @param current_job The current command
+*/
+void	write_heredoc(int heredoc, t_cmd *cmd)
 {
-	char	*buf;
+	char	*buffer;
 
-	buf = readline("> ");
-	while (buf)
+	ft_printf(HEREDOC_PROMPT);
+	buffer = get_next_line(0);
+	while (buffer)
 	{
-		if (ft_strncmp(buf, cur->eof, cur->e_len) == 0)
+		if (ft_strncmp(buffer, cmd->eof, cmd->e_len) == 0)
 		{
-			free(buf);
+			free(buffer);
 			break ;
 		}
-		ft_putstr_fd(buf, heredoc);
-		ft_putchar_fd('\n', heredoc);
-		free(buf);
-		buf = readline("> ");
+		ft_putstr_fd(buffer, heredoc);
+		free(buffer);
+		ft_printf(HEREDOC_PROMPT);
+		buffer = get_next_line(0);
 	}
 }
 
-void	direct_heredoc(t_data *d, t_cmd *cur)
+/*
+* @brief Direct the heredoc to the file descriptor
+*
+* @param d The data struct
+* @param cmd The current command
+*/
+void	direct_heredoc(t_data *d, t_cmd *cmd)
 {
-	if (cur->eof)
+	if (cmd->eof)
 	{
 		d->r_input_fd = open("hd2sh9fd8F32", O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (d->r_input_fd == -1)
@@ -42,8 +54,8 @@ void	direct_heredoc(t_data *d, t_cmd *cur)
 			perror("heredoc open");
 			exit(EXIT_FAILURE);
 		}
-		write_heredoc(d->r_input_fd, cur);
-		cur->input_fn = ft_strdup("hd2sh9fd8F32");
+		write_heredoc(d->r_input_fd, cmd);
+		cmd->input_fn = ft_strdup("hd2sh9fd8F32");
 		close(d->r_input_fd);
 		d->r_input_fd = -1;
 	}

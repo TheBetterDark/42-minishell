@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pwd.c                                         :+:      :+:    :+:   */
+/*   exec_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 15:18:33 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 18:22:57 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-void	skyy_pwd(void)
+/*
+* @brief Print the environment variables
+*
+* @param data The data structure
+*/
+void	builtin_env(t_data *data)
 {
-	char	buf[256];
+	char	**tmp;
 
-	if (getcwd(buf, sizeof(buf)) == NULL)
+	tmp = data->env;
+	while (*tmp)
 	{
-		perror("cwd");
-		exit(EXIT_FAILURE);
+		ft_putendl_fd(*tmp, STDOUT_FILENO);
+		tmp++;
 	}
-	ft_putendl_fd(buf, 1);
 }

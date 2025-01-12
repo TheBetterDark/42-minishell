@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pipeline_utils.c                              :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 10:58:56 by muabdi           ###   ########.fr       */
+/*   Created: 2025/01/12 17:09:15 by muabdi            #+#    #+#             */
+/*   Updated: 2025/01/12 20:43:02 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/data.h"
+#include "../inc/data.h"
 
-void	direct_pipe_input(void)
+// TODO: Complete signal handling
+
+int	initalize_signals(void)
 {
-	unlink("hd2sh9fd8F32");
+	if (signal(SIGINT, handle_sigint) == SIG_ERR)
+		return (-1);
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		return (-1);
+	if (signal(SIGTSTP, SIG_IGN) == SIG_ERR)
+		return (-1);
+	return (0);
 }
 
-void	safe_dup2(int old_fd, int new_fd)
+void	handle_sigint(int sig)
 {
-	if (dup2(old_fd, new_fd) == -1)
-	{
-		perror("dup2");
-		exit(EXIT_FAILURE);
-	}
-	if (old_fd != new_fd)
-		close(old_fd);
-}
-
-void	redirect_child_fds(int input_fd, int output_fd)
-{
-	safe_dup2(input_fd, STDIN_FILENO);
-	safe_dup2(output_fd, STDOUT_FILENO);
+	(void)sig;
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }

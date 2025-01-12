@@ -6,60 +6,18 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 13:19:23 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 19:11:24 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-static bool	is_builtin_command(const char *command)
-{
-	const char	*builtins[] = {
-		"export", "unset", "cd", "echo", "pwd", "env"
-	};
-	int			i;
-
-	i = 0;
-	while (i < 6)
-	{
-		if (strcmp(command, builtins[i]) == 0)
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
-static void	handle_builtin_command(t_data *d, t_cmd *cur)
-{
-	file_redirections(d, cur);
-	execute_parent_process(d, cur);
-	direct_pipe_input();
-}
-
-static void	execute_commands(t_data *d)
-{
-	t_cmd	*cur;
-
-	cur = d->job;
-	while (cur)
-	{
-		file_redirections(d, cur);
-		fork_child_process(d, cur);
-		direct_pipe_input();
-		cur = cur->next;
-	}
-	cur = d->job;
-	while (cur)
-	{
-		if (cur->pid != 0)
-		{
-			waitpid(cur->pid, &d->exit_stat, 0);
-			d->exit_stat = WEXITSTATUS(d->exit_stat);
-		}
-		cur = cur->next;
-	}
-}
-
+/*
+* @brief Restore the file descriptors
+*
+* @param save_stdout The saved stdout file descriptor
+* @param save_stdin The saved stdin file descriptor
+*/
 static void	restore_file_descriptors(int save_stdout, int save_stdin)
 {
 	if (dup2(save_stdout, 1) == -1)
@@ -76,23 +34,111 @@ static void	restore_file_descriptors(int save_stdout, int save_stdin)
 	close(save_stdin);
 }
 
-void	executor(t_data *d)
+/*
+* @brief Execute the parent process
+*
+* @param data The data struct
+*/
+static void	execute_parent_process(t_data *data)
 {
-	t_cmd	*cur;
+	if (!file_redirections(data, data->job))
+		return ;
+	safe_dup2(data->job->input_fd, STDIN_FILENO);
+	safe_dup2(data->job->output_fd, STDOUT_FILENO);
+	check_for_builtins(data, data->job);
+}
+
+/*
+* @brief Execute the child process
+*
+* @param data The data struct
+* @param cmd The current command
+*/
+static void	execute_child_process(t_data *data, t_cmd *cmd)
+{
+	if (!file_redirections(data, cmd))
+		return ;
+	signal(SIGINT, SIG_IGN);
+	cmd->pid = fork();
+	if (cmd->pid == 0)
+	{
+		signal(SIGINT, handle_sigint);
+		safe_dup2(cmd->input_fd, STDIN_FILENO);
+		safe_dup2(cmd->output_fd, STDOUT_FILENO);
+		if (check_for_builtins(data, cmd))
+			exit(data->exit_stat);
+		if (execve(cmd->cmdv[0], cmd->cmdv, data->env))
+			exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
+	}
+	else if (cmd->pid < 0)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	unlink("hd2sh9fd8F32");
+}
+
+/*
+* @brief Execute the commands
+*
+* @param data The data struct
+*/
+static void	execute_commands(t_data *data)
+{
+	t_cmd	*current_cmd;
+
+	if (data->job->next == NULL && is_builtin_command(data->job->cmdv[0]))
+	{
+		execute_parent_process(data);
+		return ;
+	}
+	current_cmd = data->job;
+	while (current_cmd)
+	{
+		execute_child_process(data, current_cmd);
+		unlink("hd2sh9fd8F32");
+		current_cmd = current_cmd->next;
+	}
+	current_cmd = data->job;
+	while (current_cmd)
+	{
+		if (current_cmd->pid != 0)
+		{
+			waitpid(current_cmd->pid, &data->exit_stat, 0);
+			data->exit_stat = WEXITSTATUS(data->exit_stat);
+		}
+		current_cmd = current_cmd->next;
+	}
+}
+
+/*
+* @brief Execute the commands
+*
+* @param data The data struct
+*/
+void	executor(t_data *data)
+{
 	int		save_stdout;
 	int		save_stdin;
 
-	cur = d->job;
-	if (!cur)
+	if (!data->job)
 		return ;
-	save_stdout = dup(1);
 	save_stdin = dup(0);
-	if (cur->next)
-		connect_pipeline(d->job);
-	if (cur->next == NULL && is_builtin_command(cur->cmdv[0]))
-		handle_builtin_command(d, cur);
-	else
-		execute_commands(d);
+	if (!save_stdin)
+	{
+		perror("dup stdin");
+		exit(EXIT_FAILURE);
+	}
+	save_stdout = dup(1);
+	if (!save_stdout)
+	{
+		perror("dup stdout");
+		exit(EXIT_FAILURE);
+	}
+	if (data->job->next)
+		connect_pipeline(data->job);
+	execute_commands(data);
 	restore_file_descriptors(save_stdout, save_stdin);
-	close_pipe_ends(d->job);
+	close_pipe_ends(data->job);
 }

@@ -6,12 +6,18 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 15:46:04 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 20:43:38 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
 
+/*
+* @brief Handles quotes in the input string
+*
+* @param str The input string
+* @param pos The position in the string
+*/
 static void	handle_quotes(const char *str, int *pos)
 {
 	if (str[*pos] == '\'')
@@ -32,6 +38,12 @@ static void	handle_quotes(const char *str, int *pos)
 	}
 }
 
+/*
+* @brief Handles special characters in the input string
+*
+* @param str The input string
+* @param pos The position in the string
+*/
 static void	handle_special_chars(const char *str, int *pos)
 {
 	char	tmp;
@@ -45,6 +57,12 @@ static void	handle_special_chars(const char *str, int *pos)
 	}
 }
 
+/*
+* @brief Discerns words in the input string
+*
+* @param str The input string
+* @param pos The position in the string
+*/
 static void	discern_words(const char *str, int *pos)
 {
 	if (str[*pos] && (str[*pos] == '\'' || str[*pos] == '\"'))
@@ -63,7 +81,14 @@ static void	discern_words(const char *str, int *pos)
 	}
 }
 
-static void	write_words(char **toks, const char *str, t_data *d)
+/*
+* @brief Writes words to the toks array
+*
+* @param toks The array of words
+* @param str The input string
+* @param data The data structure
+*/
+static void	write_words(char **toks, const char *str, t_data *data)
 {
 	int	pos;
 	int	start;
@@ -83,14 +108,24 @@ static void	write_words(char **toks, const char *str, t_data *d)
 			*toks = ft_substr(str, start, len);
 			if (!*toks)
 				exit(1);
+			if (*toks[0] == '$' && ft_strlen(*toks) > 1)
+				*toks = try_env_value(*toks, data->env, data->exit_stat);
 		}
-		if (*toks[0] == '$' && ft_strlen(*toks) > 1)
-			*toks = try_env_value(*toks, d->env, d->exit_stat);
+		else
+			*toks = NULL;
 		toks++;
 	}
 }
 
-char	**command_line_split(char *input, t_data *d)
+/*
+* @brief Splits the command line into words
+*
+* @param input The input string
+* @param data The data structure
+*
+* @return The array of words
+*/
+char	**command_line_split(char *input, t_data *data)
 {
 	char	**toks;
 	int		count;
@@ -98,11 +133,8 @@ char	**command_line_split(char *input, t_data *d)
 	count = count_words(input);
 	toks = malloc(sizeof(char *) * (count + 1));
 	if (!toks)
-	{
-		perror("toks malloc");
 		return (NULL);
-	}
-	write_words(toks, input, d);
+	write_words(toks, input, data);
 	toks[count] = NULL;
 	return (toks);
 }

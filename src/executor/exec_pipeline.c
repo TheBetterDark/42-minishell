@@ -6,58 +6,73 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 11:20:15 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 19:27:27 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-void	create_cmd_pipe(t_cmd *cur)
+/*
+* @brief Create a pipe
+*
+* @param current_cmd The current job
+*/
+void	create_cmd_pipe(t_cmd *current_cmd)
 {
-	if (pipe(cur->pipefd) == -1)
+	if (pipe(current_cmd->pipefd) == -1)
 	{
 		perror("pipe");
 		exit(EXIT_FAILURE);
 	}
 }
 
-void	close_pipe_ends(t_cmd *job)
+/*
+* @brief Close the pipe ends
+*
+* @param job List of commands
+*/
+void	close_pipe_ends(t_cmd *cmds)
 {
-	t_cmd	*cur;
+	t_cmd	*current_cmd;
 
-	cur = job;
-	while (cur)
+	current_cmd = cmds;
+	while (current_cmd)
 	{
-		if (cur->pipefd[0] != -1)
+		if (current_cmd->pipefd[0] != -1)
 		{
-			close(cur->pipefd[0]);
-			cur->pipefd[0] = -1;
+			close(current_cmd->pipefd[0]);
+			current_cmd->pipefd[0] = -1;
 		}
-		if (cur->pipefd[1] != -1)
+		if (current_cmd->pipefd[1] != -1)
 		{
-			close(cur->pipefd[1]);
-			cur->pipefd[1] = -1;
+			close(current_cmd->pipefd[1]);
+			current_cmd->pipefd[1] = -1;
 		}
-		cur = cur->next;
+		current_cmd = current_cmd->next;
 	}
 }
 
-void	connect_pipeline(t_cmd *cur)
+/*
+* @brief Connect the pipeline
+*
+* @param current_cmd The current job
+*/
+void	connect_pipeline(t_cmd *current_cmd)
 {
 	t_cmd	*tmp;
 
-	tmp = cur;
+	tmp = current_cmd;
 	while (tmp)
 	{
-		if (cur->next)
+		if (current_cmd->next)
 		{
-			cur->output_fd = cur->pipefd[1];
-			cur->next->input_fd = cur->pipefd[0];
+			current_cmd->output_fd = current_cmd->pipefd[1];
+			current_cmd->next->input_fd = current_cmd->pipefd[0];
 		}
 		else
-			cur->output_fd = STDOUT_FILENO;
-		if (cur->input_fd == -1)
-			cur->input_fd = STDIN_FILENO;
+			current_cmd->output_fd = STDOUT_FILENO;
+		if (current_cmd->input_fd == -1)
+			current_cmd->input_fd = STDIN_FILENO;
 		tmp = tmp->next;
 	}
 }

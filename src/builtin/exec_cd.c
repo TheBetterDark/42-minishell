@@ -1,42 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_data.c                                        :+:      :+:    :+:   */
+/*   exec_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 11:25:12 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 18:51:55 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-t_data	*init_data(char **environ)
+/*
+* @brief Change the current working directory
+*
+* @param cmd The current command
+*/
+void	builtin_cd(t_cmd *cmd)
 {
-	t_data	*d;
-
-	d = malloc(sizeof(t_data));
-	if (!d)
-		return (NULL);
-	d->input = NULL;
-	d->cmd_ct = 0;
-	d->env = ft_str_arr_dup((const char **)environ);
-	if (!d->env)
+	if (cmd->cmdv[1])
 	{
-		free(d);
-		return (NULL);
+		if (chdir(cmd->cmdv[1]) != 0)
+			perror("cd");
 	}
-	d->exit_stat = 0;
-	d->r_input_fd = 0;
-	d->r_output_fd = 1;
-	d->toks = NULL;
-	d->job = NULL;
-	return (d);
-}
-
-void	free_data(t_data *d)
-{
-	ft_free_str_arr(&d->env);
-	free(d);
+	else
+	{
+		if (chdir(getenv("HOME")) != 0)
+			perror("cd");
+	}
 }

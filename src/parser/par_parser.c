@@ -6,13 +6,45 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 15:39:34 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 19:56:27 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-t_cmd	*init_new_cmd(t_token **cur, t_data *d)
+/*
+* @brief Find the size of the command vector
+*
+* @param cur The current token
+*
+* @return The size of the command vector
+*/
+static int	find_cmdv_size(t_token *cur)
+{
+	t_token	*tmp;
+	int		size;
+
+	size = 0;
+	tmp = cur;
+	while (tmp)
+	{
+		if (tmp->type == PIPE)
+			break ;
+		if (tmp->type == CMD || tmp->type == ARG || tmp->type == EXIT_STAT)
+			size++;
+		tmp = tmp->next;
+	}
+	return (size);
+}
+
+/*
+* @brief Find the size of the command vector
+*
+* @param cur The current token
+*
+* @return The size of the command vector
+*/
+static t_cmd	*init_new_cmd(t_token **cur, t_data *data)
 {
 	t_cmd	*new_cmd;
 	int		size;
@@ -21,13 +53,13 @@ t_cmd	*init_new_cmd(t_token **cur, t_data *d)
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		return (NULL);
-	(new_cmd)->cmdv = init_cmdv(*cur, size, d);
+	(new_cmd)->cmdv = init_cmdv(*cur, size, data);
 	if (!(new_cmd)->cmdv)
 	{
 		free(new_cmd);
 		return (NULL);
 	}
-	get_new_cmd_data(new_cmd, *cur, d);
+	get_new_cmd_data(new_cmd, *cur, data);
 	(new_cmd)->next = NULL;
 	while (*cur && (*cur)->type != PIPE)
 		*cur = (*cur)->next;
@@ -37,7 +69,13 @@ t_cmd	*init_new_cmd(t_token **cur, t_data *d)
 	return (new_cmd);
 }
 
-void	add_to_job(t_cmd **head_cmd, t_cmd *new_cmd)
+/*
+* @brief Add a new command to the job
+*
+* @param head_cmd The head of the command list
+* @param new_cmd The new command to add
+*/
+static void	add_to_job(t_cmd **head_cmd, t_cmd *new_cmd)
 {
 	t_cmd	*current;
 
@@ -52,40 +90,26 @@ void	add_to_job(t_cmd **head_cmd, t_cmd *new_cmd)
 	}
 }
 
-void	cleanup_job(t_cmd *job)
-{
-	t_cmd	*tmp;
-
-	while (job)
-	{
-		tmp = job;
-		job = job->next;
-		ft_free_str_arr(&tmp->cmdv);
-		if (tmp->open_fn)
-			free(tmp->open_fn);
-		tmp->open_fn = NULL;
-		if (tmp->append_fn)
-			free(tmp->append_fn);
-		tmp->append_fn = NULL;
-		if (tmp->input_fn)
-			free(tmp->input_fn);
-		tmp->input_fn = NULL;
-		free(tmp);
-		tmp = NULL;
-	}
-}
-
-t_cmd	*parser(t_data *d)
+/*
+* @brief Parse the tokens into commands
+*
+* @param data The data structure
+*
+* @return The command list
+*/
+t_cmd	*parser(t_data *data)
 {
 	t_cmd	*job;
 	t_cmd	*new_cmd;
 	t_token	*cur;
 
 	job = NULL;
-	cur = d->toks;
+	cur = data->toks;
 	while (cur)
 	{
-		new_cmd = init_new_cmd(&cur, d);
+		new_cmd = init_new_cmd(&cur, data);
+		if (!new_cmd)
+			return (NULL);
 		add_to_job(&job, new_cmd);
 	}
 	return (job);

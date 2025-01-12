@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_echo.c                                        :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 15:18:03 by muabdi           ###   ########.fr       */
+/*   Created: 2025/01/12 17:28:21 by muabdi            #+#    #+#             */
+/*   Updated: 2025/01/12 20:27:28 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/data.h"
+#include "../inc/data.h"
 
-void	skyy_echo(t_cmd *cur)
+void	handle_error(t_data *data, char *msg, int err_num, bool exit)
 {
-	char	**echos;
-	bool	no_endl;
-
-	echos = cur->cmdv;
-	echos++;
-	no_endl = input_matches(*echos, "-n");
-	if (no_endl)
-		echos++;
-	while (*echos)
+	if (msg)
 	{
-		ft_putstr_fd(*echos, 1);
-		echos++;
-		if (*echos)
-			ft_putstr_fd(" ", 1);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putendl_fd(msg, STDERR_FILENO);
 	}
-	if (!no_endl)
-		ft_putstr_fd("\n", 1);
+	else
+		perror("minishell: ");
+	if (exit)
+		exit_minishell(data, err_num);
+	else
+		data->exit_stat = err_num;
 }

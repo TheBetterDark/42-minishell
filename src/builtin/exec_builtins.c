@@ -6,25 +6,33 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 10:47:30 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/12 18:51:45 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-bool	check_for_builtins(t_data *d, t_cmd *cur)
+/*
+* @brief Check if the command is a builtin and execute it
+*
+* @param data The data struct
+* @param cmd The current command
+*
+* @return true if the command is a builtin, false otherwise
+*/
+bool	check_for_builtins(t_data *data, t_cmd *cmd)
 {
-	if (input_matches(cur->cmdv[0], "echo"))
-		return (skyy_echo(cur), true);
-	if (input_matches(cur->cmdv[0], "cd"))
-		return (skyy_cd(cur), true);
-	if (input_matches(cur->cmdv[0], "pwd"))
-		return (skyy_pwd(), true);
-	if (input_matches(cur->cmdv[0], "export"))
-		return (skyy_export(d, cur->cmdv[1]), true);
-	if (input_matches(cur->cmdv[0], "unset"))
-		return (skyy_unset(d, cur->cmdv[1]), true);
-	if (input_matches(cur->cmdv[0], "env"))
-		return (skyy_env(d), true);
+	if (input_matches(cmd->cmdv[0], "echo"))
+		return (builtin_echo(cmd), true);
+	if (input_matches(cmd->cmdv[0], "cd"))
+		return (builtin_cd(cmd), true);
+	if (input_matches(cmd->cmdv[0], "pwd"))
+		return (builtin_pwd(), true);
+	if (input_matches(cmd->cmdv[0], "export"))
+		return (builtin_export(data, cmd->cmdv[1]), true);
+	if (input_matches(cmd->cmdv[0], "unset"))
+		return (builtin_unset(data, cmd->cmdv[1]), true);
+	if (input_matches(cmd->cmdv[0], "env"))
+		return (builtin_env(data), true);
 	return (false);
 }
