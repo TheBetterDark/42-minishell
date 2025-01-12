@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 14:25:24 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 15:44:51 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static char	*add_path_to_cmdv0(t_data *d, char *cmd)
 	return (NULL);
 }
 
-// TODO: Move command not found to excutor
 static char	*handle_first_command(t_token *cur, t_data *d)
 {
 	char	*cmd;

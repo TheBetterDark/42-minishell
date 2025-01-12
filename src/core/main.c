@@ -6,13 +6,11 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 11:25:14 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/12 15:46:54 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
-
-volatile sig_atomic_t	g_signal;
 
 static int	initalize_signals(void)
 {
@@ -27,7 +25,6 @@ static int	initalize_signals(void)
 
 void	handle_sigint(int sig)
 {
-	g_signal = sig;
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -56,7 +53,6 @@ void	minishell(t_data *d)
 
 void	free_minishell(t_data *d)
 {
-	g_signal = 0;
 	if (d->input)
 	{
 		free(d->input);
@@ -79,7 +75,6 @@ int	main(void)
 	t_data		*d;
 	extern char	**environ;
 
-	g_signal = 0;
 	d = init_data(environ);
 	minishell(d);
 	free_data(d);
