@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 20:32:31 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 16:10:32 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	discern_delim(const char *str, int *pos)
 	else if (is_quote(str[*pos], '\"'))
 	{
 		(*pos)++;
-		*pos += find_quote_pos(&str[*pos], '\"' );
+		*pos += find_quote_pos(&str[*pos], '\"');
 	}
 	else if (str[*pos] && (str[*pos] == '>' || str[*pos] == '<'))
 	{
@@ -65,10 +65,35 @@ static void	discern_delim(const char *str, int *pos)
 	}
 	else
 	{
-		while (str[*pos] && !is_blank(str[*pos])
-			&& !is_quote(str[*pos], '\'') && !is_quote(str[*pos], '\"'))
+		while (str[*pos] && !is_blank(str[*pos]) && !is_quote(str[*pos], '\'')
+			&& !is_quote(str[*pos], '\"'))
 			(*pos)++;
 	}
+}
+
+/*
+* @brief Handles the quotes in the string
+*
+* @param str The input string
+* @param pos The position in the string
+* @param in_double_quote The double quote flag
+* @param in_single_quote The single quote flag
+*
+* @return True if the quote is handled, false otherwise
+*/
+static bool	handle_quotes(const char *str, int *pos, bool *in_double_quote,
+		bool *in_single_quote)
+{
+	if (str[*pos] == '"')
+		*in_double_quote = !*in_double_quote;
+	else if (str[*pos] == '\'')
+		*in_single_quote = !*in_single_quote;
+	if (*in_double_quote || *in_single_quote)
+	{
+		(*pos)++;
+		return (true);
+	}
+	return (false);
 }
 
 /*
@@ -80,22 +105,29 @@ static void	discern_delim(const char *str, int *pos)
 */
 int	count_words(const char *str)
 {
-	int	count;
-	int	pos;
+	int		count;
+	int		pos;
+	bool	in_double_quote;
+	bool	in_single_quote;
 
 	if (!str || !*str)
 		return (0);
+	in_double_quote = false;
+	in_single_quote = false;
 	pos = 0;
 	count = 0;
 	while (str[pos])
 	{
 		while (is_blank(str[pos]))
 			pos++;
-		if (str[pos])
-		{
-			count++;
-			discern_delim(str, &pos);
-		}
+		if (!str[pos])
+			break ;
+		if (handle_quotes(str, &pos, &in_double_quote, &in_single_quote))
+			continue ;
+		count++;
+		discern_delim(str, &pos);
 	}
+	if (in_double_quote || in_single_quote)
+		return (-1);
 	return (count);
 }

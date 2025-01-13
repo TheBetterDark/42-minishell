@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 20:43:38 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 15:57:11 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,11 @@ char	**command_line_split(char *input, t_data *data)
 	int		count;
 
 	count = count_words(input);
+	if (count == -1)
+		return (handle_error(data, ERR_UNCLOSED_QUOTES, 258, false), NULL);
 	toks = malloc(sizeof(char *) * (count + 1));
 	if (!toks)
-		return (NULL);
+		return (handle_error(data, ERR_OUT_OF_MEMORY, EXIT_MEMORY, true), NULL);
 	write_words(toks, input, data);
 	toks[count] = NULL;
 	return (toks);

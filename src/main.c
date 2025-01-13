@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 14:07:17 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 16:13:34 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 	TODO LIST:
 
 	- Signals
-	- Move Command not found to executor so it runs each one if piped
+	- Move Command not found to executor so it runs each one if pipes
+	- Fix issue with quotes (echo "A" "B") but (echo "A" "B"" works??)
 	- Fix issues with pipes (cat | cat | ls)
 	- fix pipe (only pipes the first command into the second one)
 */
@@ -33,23 +34,22 @@ int	main(void)
 	data = init_data();
 	while (true)
 	{
+		cleanup_minishell(data);
 		if (initalize_signals() == -1)
 			handle_error(data, NULL, EXIT_FAILURE, true);
 		data->input = readline(SHELL_PROMPT);
 		if (!data->input)
-			handle_error(data, ERR_UNKNOWN, EXIT_FAILURE, false);
+			handle_error(data, NULL, EXIT_FAILURE, true);
 		if (data->input[0] != '\0')
 			add_history(data->input);
 		if (input_matches(data->input, "history -c"))
 		{
 			rl_clear_history();
-			cleanup_minishell(data);
 			continue ;
 		}
 		data->toks = tokenizer(data);
 		data->job = parser(data);
 		executor(data);
-		cleanup_minishell(data);
 	}
 	exit_minishell(data, EXIT_SUCCESS);
 }
