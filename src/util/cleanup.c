@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:15:07 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/13 15:04:33 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 16:49:54 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	cleanup_minishell(t_data *data)
 		cleanup_job(data->job);
 		data->job = NULL;
 	}
-	data->cmd_ct = 0;
 	data->r_input_fd = -1;
 	data->r_output_fd = -1;
 }

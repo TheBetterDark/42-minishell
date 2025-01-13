@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 15:55:24 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 16:50:21 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ typedef struct s_cmd
 typedef struct s_data
 {
 	char				*input;			// user input
-	int					cmd_ct;			// command count
 	t_token				*toks;			// token list
 	char				**env;			// environment variables
 	int					r_input_fd;		// read input file descriptor
