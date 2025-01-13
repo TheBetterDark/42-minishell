@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 16:50:21 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/13 19:12:18 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,6 @@ typedef struct s_cmd
 	char				*open_fn;		// input file
 	char				*append_fn;		// append file
 	char				*input_fn;		// output file
-	int					input_fd;		// exec's input
-	int					output_fd;		// exec's output
-	int					pipefd[2];		// pipe fds
 	pid_t				pid;			// process id
 	t_cmd				*next;			// next command
 }						t_cmd;
@@ -91,6 +88,8 @@ typedef struct s_data
 	int					r_output_fd;	// read output file descriptor
 	int					exit_stat;		// exit status
 	t_cmd				*job;			// cmd list
+	bool				first_cmd;
+	int					prev_read_fd;
 }						t_data;
 
 // ------------------------------ INITIALIZERS ------------------------------ //
@@ -138,8 +137,10 @@ bool					file_redirections(t_data *data, t_cmd *cmd);
 void					write_heredoc(int heredoc, t_cmd *cmd);
 void					direct_heredoc(t_data *d, t_cmd *cmd);
 
-void					create_cmd_pipe(t_cmd *cmd);
-void					close_pipe_ends(t_cmd *cmd);
+//void					create_cmd_pipe(t_cmd *cmd);
+void					safe_pipe(int *pipe_fd);
+//void					close_pipe_ends(t_cmd *cmd);
+void					close_pipe_ends(int *pipe_fd);
 void					connect_pipeline(t_cmd *cmd);
 
 bool					check_for_builtins(t_data *data, t_cmd *cmd);
