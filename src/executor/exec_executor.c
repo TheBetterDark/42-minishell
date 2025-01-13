@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 14:09:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 14:18:22 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	executor(t_data *data)
 	int		save_stdin;
 
 	if (!data->job)
-		return (handle_error(data, ERR_UNKNOWN, EXIT_FAILURE, false));
+		return ;
 	save_stdin = dup(STDIN_FILENO);
 	if (!save_stdin)
 		return (handle_error(data, NULL, EXIT_FAILURE, true));
