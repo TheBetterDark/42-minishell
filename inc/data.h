@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 20:42:13 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 11:04:04 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ typedef struct s_data
 // ------------------------------ INITIALIZERS ------------------------------ //
 
 t_data					*init_data(void);
-void					exit_minishell(t_data *data, int exit_status);
 void					cleanup_minishell(t_data *data);
+void					exit_minishell(t_data *data, int exit_status);
 
 // ------------------------------ SIGNALS ----------------------------------- //
 
@@ -109,7 +109,7 @@ void					handle_sigint(int sig);
 
 // ---------------------------- TOKENIZER ----------------------------------- //
 
-t_token					*tokenizer(t_data *d);
+t_token					*tokenizer(t_data *data);
 void					tok_redir_operator_type_assigner(t_token *head);
 void					tok_redir_file_type_assigner(t_token *head);
 void					tok_cmd_type_assigner(t_token *head);
@@ -120,38 +120,38 @@ int						tok_lstsize(t_token *tok);
 t_token					*tok_lstlast(t_token *tok);
 void					tok_lstclear(t_token **tok);
 
-char					**command_line_split(char *input, t_data *d);
+char					**command_line_split(char *input, t_data *data);
 int						count_words(const char *str);
 
 // ------------------------------ PARSER ------------------------------------ //
 
-t_cmd					*parser(t_data *d);
+t_cmd					*parser(t_data *data);
 void					get_new_cmd_data(t_cmd *new_cmd, t_token *cur,
-							t_data *d);
+							t_data *data);
 
-char					**init_cmdv(t_token *cur, int size, t_data *d);
+char					**init_cmdv(t_token *cur, int size, t_data *data);
 char					*search_paths(char *path, char *cmd);
-char					*dup_double_quotes(char *str, t_data *d);
+char					*dup_double_quotes(char *str, t_data *data);
 
 // -------------------------------- EXECUTOR -------------------------------- //
 
-void					executor(t_data *d);
-bool					file_redirections(t_data *d, t_cmd *cur);
+void					executor(t_data *data);
+bool					file_redirections(t_data *data, t_cmd *cmd);
 
-void					write_heredoc(int heredoc, t_cmd *cur);
-void					direct_heredoc(t_data *d, t_cmd *cur);
+void					write_heredoc(int heredoc, t_cmd *cmd);
+void					direct_heredoc(t_data *d, t_cmd *cmd);
 
-void					create_cmd_pipe(t_cmd *cur);
-void					close_pipe_ends(t_cmd *job);
-void					connect_pipeline(t_cmd *cur);
+void					create_cmd_pipe(t_cmd *cmd);
+void					close_pipe_ends(t_cmd *cmd);
+void					connect_pipeline(t_cmd *cmd);
 
-bool					check_for_builtins(t_data *d, t_cmd *job);
-void					builtin_echo(t_cmd *cur);
+bool					check_for_builtins(t_data *data, t_cmd *cmd);
+void					builtin_echo(t_cmd *cmd);
 void					builtin_pwd(void);
-void					builtin_cd(t_cmd *cur);
-void					builtin_env(t_data *d);
-void					builtin_export(t_data *d, char *export_str);
-void					builtin_unset(t_data *d, char *unset_str);
+void					builtin_cd(t_cmd *cmd);
+void					builtin_env(t_data *data);
+void					builtin_export(t_data *data, char *export_str);
+void					builtin_unset(t_data *data, char *unset_str);
 
 // ------------------------------ UTILS ------------------------------------- //
 
