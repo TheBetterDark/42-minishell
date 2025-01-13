@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 18:51:45 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 14:03:34 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ bool	check_for_builtins(t_data *data, t_cmd *cmd)
 		return (builtin_unset(data, cmd->cmdv[1]), true);
 	if (input_matches(cmd->cmdv[0], "env"))
 		return (builtin_env(data), true);
+	if (input_matches(cmd->cmdv[0], "exit"))
+		exit_minishell(data, EXIT_SUCCESS);
 	return (false);
 }

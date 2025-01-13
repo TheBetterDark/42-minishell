@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 13:03:04 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 14:03:17 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@
 # define SHELL_PROMPT "minishell$ "
 
 # define ERR_CMD_NOT_FOUND "command not found"
-# define ERR_SYNTAX "syntax error"
-# define ERR_PERMISSION_DENIED "permission denied"
-# define ERR_FILE_NOT_FOUND "file not found"
 # define ERR_OUT_OF_MEMORY "out of memory"
 # define ERR_UNKNOWN "unknown error"
 
@@ -90,7 +87,6 @@ typedef struct s_data
 	char				*input;			// user input
 	int					cmd_ct;			// command count
 	t_token				*toks;			// token list
-	//
 	char				**env;			// environment variables
 	int					r_input_fd;		// read input file descriptor
 	int					r_output_fd;	// read output file descriptor
