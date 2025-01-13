@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 18:27:05 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 16:53:14 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_data	*init_data(void)
 		return (NULL);
 	}
 	data->input = NULL;
-	data->cmd_ct = 0;
 	data->exit_stat = 0;
 	data->r_input_fd = 0;
 	data->r_output_fd = 1;
