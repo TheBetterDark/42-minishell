@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 19:11:24 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 13:18:18 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ static void	execute_parent_process(t_data *data)
 {
 	if (!file_redirections(data, data->job))
 		return ;
-	safe_dup2(data->job->input_fd, STDIN_FILENO);
-	safe_dup2(data->job->output_fd, STDOUT_FILENO);
+	if (dup2(data->job->input_fd, STDIN_FILENO) == -1)
+		handle_error(data, NULL, EXIT_FAILURE, true);
+	if (dup2(data->job->output_fd, STDOUT_FILENO) == -1)
+		handle_error(data, NULL, EXIT_FAILURE, true);
 	check_for_builtins(data, data->job);
 }
 
@@ -63,19 +65,18 @@ static void	execute_child_process(t_data *data, t_cmd *cmd)
 	if (cmd->pid == 0)
 	{
 		signal(SIGINT, handle_sigint);
-		safe_dup2(cmd->input_fd, STDIN_FILENO);
-		safe_dup2(cmd->output_fd, STDOUT_FILENO);
+		if (dup2(cmd->input_fd, STDIN_FILENO) == -1)
+			handle_error(data, NULL, EXIT_FAILURE, true);
+		if (dup2(cmd->output_fd, STDOUT_FILENO) == -1)
+			handle_error(data, NULL, EXIT_FAILURE, true);
 		if (check_for_builtins(data, cmd))
 			exit(data->exit_stat);
 		if (execve(cmd->cmdv[0], cmd->cmdv, data->env))
-			exit(EXIT_FAILURE);
-		exit(EXIT_SUCCESS);
+			return (handle_error(data, NULL, EXIT_FAILURE, true));
+		exit_minishell(data, EXIT_FAILURE);
 	}
 	else if (cmd->pid < 0)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
+		return (handle_error(data, NULL, EXIT_FAILURE, true));
 	unlink("hd2sh9fd8F32");
 }
 
@@ -89,10 +90,7 @@ static void	execute_commands(t_data *data)
 	t_cmd	*current_cmd;
 
 	if (data->job->next == NULL && is_builtin_command(data->job->cmdv[0]))
-	{
-		execute_parent_process(data);
-		return ;
-	}
+		return (execute_parent_process(data));
 	current_cmd = data->job;
 	while (current_cmd)
 	{
@@ -123,19 +121,13 @@ void	executor(t_data *data)
 	int		save_stdin;
 
 	if (!data->job)
-		return ;
+		return (handle_error(data, ERR_UNKNOWN, EXIT_FAILURE, false));
 	save_stdin = dup(0);
 	if (!save_stdin)
-	{
-		perror("dup stdin");
-		exit(EXIT_FAILURE);
-	}
+		return (handle_error(data, NULL, EXIT_FAILURE, true));
 	save_stdout = dup(1);
 	if (!save_stdout)
-	{
-		perror("dup stdout");
-		exit(EXIT_FAILURE);
-	}
+		return (handle_error(data, NULL, EXIT_FAILURE, true));
 	if (data->job->next)
 		connect_pipeline(data->job);
 	execute_commands(data);

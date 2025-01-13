@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 19:56:27 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 13:16:13 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,10 @@ static t_cmd	*init_new_cmd(t_token **cur, t_data *data)
 	size = find_cmdv_size(*cur);
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
-		return (NULL);
-	(new_cmd)->cmdv = init_cmdv(*cur, size, data);
+		return (handle_error(data, ERR_OUT_OF_MEMORY, EXIT_MEMORY, true), NULL);
+	new_cmd->cmdv = init_cmdv(*cur, size, data);
 	if (!(new_cmd)->cmdv)
-	{
-		free(new_cmd);
-		return (NULL);
-	}
+		return (free(new_cmd), NULL);
 	get_new_cmd_data(new_cmd, *cur, data);
 	(new_cmd)->next = NULL;
 	while (*cur && (*cur)->type != PIPE)

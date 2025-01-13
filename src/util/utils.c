@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 20:45:07 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 13:03:00 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,4 @@ bool	is_builtin_command(const char *command)
 		i++;
 	}
 	return (false);
-}
-
-/*
-* @brief Safely duplicate a file descriptor
-*
-* @param old_fd The old file descriptor
-* @param new_fd The new file descriptor
-*/
-void	safe_dup2(int old_fd, int new_fd)
-{
-	if (dup2(old_fd, new_fd) == -1)
-	{
-		perror("dup2");
-		exit(EXIT_FAILURE);
-	}
 }

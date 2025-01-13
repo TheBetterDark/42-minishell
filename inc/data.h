@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 11:04:04 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 13:03:04 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define ERR_FILE_NOT_FOUND "file not found"
 # define ERR_OUT_OF_MEMORY "out of memory"
 # define ERR_UNKNOWN "unknown error"
+
+# define EXIT_MEMORY 12
 
 // ------------------------------ ENUMS ------------------------------------- //
 
@@ -160,7 +162,6 @@ void					handle_error(t_data *data, char *msg, int err_num,
 
 bool					is_builtin_command(const char *command);
 bool					input_matches(char *input, char *test);
-void					safe_dup2(int old_fd, int new_fd);
 
 char					*find_env_var(char *str, char **env);
 char					*try_env_value(char *subquote, char **env,

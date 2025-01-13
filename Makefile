@@ -6,7 +6,7 @@
 #    By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/12 23:59:26 by muabdi            #+#    #+#              #
-#    Updated: 2025/01/04 18:38:17 by smoore           ###   ########.fr        #
+#    Updated: 2025/01/13 13:18:41 by muabdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,6 @@ fclean:
 re: fclean all
 
 leaks: all
-	valgrind --suppressions=valgrind.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	valgrind --suppressions=valgrind.supp --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes ./$(NAME)
 
 .PHONY: all clean fclean re leaks

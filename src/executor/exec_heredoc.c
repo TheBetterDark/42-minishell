@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 20:57:36 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 12:47:32 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	write_heredoc(int heredoc, t_cmd *cmd)
 {
 	char	*buffer;
 
-	ft_printf(HEREDOC_PROMPT);
+	ft_putstr_fd(HEREDOC_PROMPT, STDOUT_FILENO);
 	buffer = get_next_line(0);
 	while (buffer)
 	{
@@ -33,7 +33,7 @@ void	write_heredoc(int heredoc, t_cmd *cmd)
 		}
 		ft_putstr_fd(buffer, heredoc);
 		free(buffer);
-		ft_printf(HEREDOC_PROMPT);
+		ft_putstr_fd(HEREDOC_PROMPT, STDOUT_FILENO);
 		buffer = get_next_line(0);
 	}
 }
@@ -41,22 +41,20 @@ void	write_heredoc(int heredoc, t_cmd *cmd)
 /*
 * @brief Direct the heredoc to the file descriptor
 *
-* @param d The data struct
+* @param data The data struct
 * @param cmd The current command
 */
-void	direct_heredoc(t_data *d, t_cmd *cmd)
+void	direct_heredoc(t_data *data, t_cmd *cmd)
 {
 	if (cmd->eof)
 	{
-		d->r_input_fd = open("hd2sh9fd8F32", O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if (d->r_input_fd == -1)
-		{
-			perror("heredoc open");
-			exit(EXIT_FAILURE);
-		}
-		write_heredoc(d->r_input_fd, cmd);
-		cmd->input_fn = ft_strdup("hd2sh9fd8F32");
-		close(d->r_input_fd);
-		d->r_input_fd = -1;
+		data->r_input_fd = open("hd2sh9fd8F32",
+				O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if (data->r_input_fd == -1)
+			handle_error(data, NULL, 0, true);
+		write_heredoc(data->r_input_fd, cmd);
+		cmd->input_fn = "hd2sh9fd8F32";
+		close(data->r_input_fd);
+		data->r_input_fd = -1;
 	}
 }

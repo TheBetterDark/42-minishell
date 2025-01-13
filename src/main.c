@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 20:50:55 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 13:14:23 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 	- Erorr handling
 	- Signals
+	- Move Command not found to executor so it runs each one if piped
 	- Fix issues with pipes (cat | cat | ls)
 	- fix exit if it takes an argument (ignore the argument)
 	- fix pipe (only pipes the first command into the second one)
@@ -35,7 +36,7 @@ int	main(void)
 	while (true)
 	{
 		if (initalize_signals() == -1)
-			handle_error(data, NULL, 0, true);
+			handle_error(data, NULL, EXIT_FAILURE, true);
 		data->input = readline(SHELL_PROMPT);
 		if (!data->input || ft_strcmp(data->input, "exit") == 0)
 			exit_minishell(data, EXIT_SUCCESS);

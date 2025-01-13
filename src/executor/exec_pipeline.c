@@ -6,11 +6,12 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 11:02:08 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/13 13:11:00 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
+#include <errno.h>
 
 /*
 * @brief Create a pipe
@@ -20,10 +21,7 @@
 void	create_cmd_pipe(t_cmd *cmd)
 {
 	if (pipe(cmd->pipefd) == -1)
-	{
 		perror("pipe");
-		exit(EXIT_FAILURE);
-	}
 }
 
 /*
