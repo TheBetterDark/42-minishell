@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/14 15:07:57 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:44:24 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,21 @@ static void	execute_parent_process(t_data *data)
 */
 static void	handle_pipe(t_data *data, t_cmd *cmd, int *pipe_fd)
 {
-	if (!data->first_cmd)
+	if (data->first_cmd == false)
 	{
+		close(pipe_fd[0]);
 		if (dup2(data->prev_pipe_fd[0], STDIN_FILENO) == -1)
 		{
-			perror("failed to duplicate read pipe fd");
+			perror("failed to duplicate prev pipe fd");
 			exit(EXIT_FAILURE);
 		}
 		close(data->prev_pipe_fd[0]);
 	}
-	else
-	{
-		data->first_cmd = false;
-	}
 	if (cmd->next)
 	{
+		if (data->first_cmd)
+			data->first_cmd = false;
+		close(data->prev_pipe_fd[1]);
 		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
 		{
 			perror("failed to duplicate write pipe fd");
@@ -140,7 +140,8 @@ static void	execute_commands(t_data *data)
 	current_cmd = data->job;
 	while (current_cmd)
 	{
-		safe_pipe(pipe_fd);
+		if (current_cmd->next)
+			safe_pipe(pipe_fd);
 		execute_child_process(data, current_cmd, pipe_fd);
 		unlink("hd2sh9fd8F32");
 		current_cmd = current_cmd->next;
