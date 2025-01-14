@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/14 14:46:44 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:37:04 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ typedef struct s_data
 	t_cmd				*job;			// cmd list
 	bool				first_cmd;
 	int					prev_pipe_fd[2];
+	int					save_stdout;
+	int					save_stdin;
 }						t_data;
 
 // ------------------------------ INITIALIZERS ------------------------------ //

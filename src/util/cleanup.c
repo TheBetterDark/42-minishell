@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:15:07 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/14 14:48:27 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:41:00 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ void	cleanup_minishell(t_data *data)
 		cleanup_job(data->job);
 		data->job = NULL;
 	}
+	if (data->save_stdin != -1)
+		close(data->save_stdin);
+	data->save_stdin = -1;
+	if (data->save_stdout != -1)
+		close(data->save_stdout);
+	data->save_stdout = -1;
 	data->r_input_fd = -1;
 	data->r_output_fd = -1;
 	data->prev_pipe_fd[0] = -1;

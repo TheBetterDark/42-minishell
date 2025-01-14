@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/14 14:47:55 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:37:47 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ t_data	*init_data(void)
 	data->job = NULL;
 	data->prev_pipe_fd[0] = -1;
 	data->prev_pipe_fd[1] = -1;
+	data->save_stdout = -1;
+	data->save_stdin = -1;
 	data->first_cmd = true;
 	return (data);
 }
