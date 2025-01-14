@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/14 14:51:46 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/14 15:07:57 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ static void	execute_child_process(t_data *data, t_cmd *cmd, int *pipe_fd)
 	}
 	else if (cmd->pid < 0)
 		return (handle_error(data, NULL, EXIT_FAILURE, true));
-	data->prev_pipe_fd[0] = dup(pipe_fd[0]);
-	data->prev_pipe_fd[1] = close(pipe_fd[1]);
+	data->prev_pipe_fd[0] = pipe_fd[0];
+	close(pipe_fd[1]);
 	unlink("hd2sh9fd8F32");
 }
 
@@ -171,10 +171,12 @@ void	executor(t_data *data)
 		return ;
 	save_stdin = dup(STDIN_FILENO);
 	if (!save_stdin)
-		return (handle_error(data, NULL, EXIT_FAILURE, true));
+		return (close(save_stdin),
+			handle_error(data, NULL, EXIT_FAILURE, true));
 	save_stdout = dup(STDOUT_FILENO);
 	if (!save_stdout)
-		return (handle_error(data, NULL, EXIT_FAILURE, true));
+		return (close(save_stdout),
+			handle_error(data, NULL, EXIT_FAILURE, true));
 	execute_commands(data);
 	restore_file_descriptors(save_stdout, save_stdin);
 }
