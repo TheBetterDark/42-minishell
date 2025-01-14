@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 19:54:53 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/14 14:51:46 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ static void	handle_pipe(t_data *data, t_cmd *cmd, int *pipe_fd)
 {
 	if (!data->first_cmd)
 	{
-		if (dup2(data->prev_read_fd, STDIN_FILENO) == -1)
+		if (dup2(data->prev_pipe_fd[0], STDIN_FILENO) == -1)
 		{
 			perror("failed to duplicate read pipe fd");
 			exit(EXIT_FAILURE);
 		}
-		close(data->prev_read_fd);
+		close(data->prev_pipe_fd[0]);
 	}
 	else
 	{
@@ -120,7 +120,8 @@ static void	execute_child_process(t_data *data, t_cmd *cmd, int *pipe_fd)
 	}
 	else if (cmd->pid < 0)
 		return (handle_error(data, NULL, EXIT_FAILURE, true));
-	data->prev_read_fd = dup(pipe_fd[0]);
+	data->prev_pipe_fd[0] = dup(pipe_fd[0]);
+	data->prev_pipe_fd[1] = close(pipe_fd[1]);
 	unlink("hd2sh9fd8F32");
 }
 

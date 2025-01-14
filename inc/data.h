@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 19:12:18 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/14 14:46:44 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct s_data
 	int					exit_stat;		// exit status
 	t_cmd				*job;			// cmd list
 	bool				first_cmd;
-	int					prev_read_fd;
+	int					prev_pipe_fd[2];
 }						t_data;
 
 // ------------------------------ INITIALIZERS ------------------------------ //
