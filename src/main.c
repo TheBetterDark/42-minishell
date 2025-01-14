@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 16:13:34 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/14 13:34:31 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 	- Signals
 	- Move Command not found to executor so it runs each one if pipes
-	- Fix issue with quotes (echo "A" "B") but (echo "A" "B"" works??)
 	- Fix issues with pipes (cat | cat | ls)
 	- fix pipe (only pipes the first command into the second one)
 */

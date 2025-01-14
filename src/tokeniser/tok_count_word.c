@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 16:10:32 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/14 13:32:35 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,15 @@ static void	discern_delim(const char *str, int *pos)
 static bool	handle_quotes(const char *str, int *pos, bool *in_double_quote,
 		bool *in_single_quote)
 {
-	if (str[*pos] == '"')
-		*in_double_quote = !*in_double_quote;
-	else if (str[*pos] == '\'')
-		*in_single_quote = !*in_single_quote;
-	if (*in_double_quote || *in_single_quote)
+	if (str[*pos] == '"' && !(*in_single_quote))
 	{
+		*in_double_quote = !(*in_double_quote);
+		(*pos)++;
+		return (true);
+	}
+	if (str[*pos] == '\'' && !(*in_double_quote))
+	{
+		*in_single_quote = !(*in_single_quote);
 		(*pos)++;
 		return (true);
 	}
