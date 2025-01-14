@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/14 13:34:31 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/14 17:46:33 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int	main(void)
 	while (true)
 	{
 		cleanup_minishell(data);
-		if (initalize_signals() == -1)
-			handle_error(data, NULL, EXIT_FAILURE, true);
+		initalize_signals();
 		data->input = readline(SHELL_PROMPT);
 		if (!data->input)
-			handle_error(data, NULL, EXIT_FAILURE, true);
+			exit_minishell(data, EXIT_SUCCESS);
 		if (data->input[0] != '\0')
 			add_history(data->input);
-		if (input_matches(data->input, "history -c"))
+		if (ft_strlen(data->input) != 0
+			&& input_matches(data->input, "history -c"))
 		{
 			rl_clear_history();
 			continue ;

@@ -6,23 +6,21 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:09:15 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/12 20:43:02 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/14 17:44:18 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
 
-// TODO: Complete signal handling
-
-int	initalize_signals(void)
+void	initalize_signals(void)
 {
-	if (signal(SIGINT, handle_sigint) == SIG_ERR)
-		return (-1);
-	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-		return (-1);
-	if (signal(SIGTSTP, SIG_IGN) == SIG_ERR)
-		return (-1);
-	return (0);
+	struct sigaction	sa;
+
+	sa.sa_handler = handle_sigint;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	handle_sigint(int sig)

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/14 15:40:32 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/14 17:50:40 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	execute_child_process(t_data *data, t_cmd *cmd, int *pipe_fd)
 	cmd->pid = fork();
 	if (cmd->pid == 0)
 	{
-		signal(SIGINT, handle_sigint);
+		initalize_signals();
 		if (data->r_input_fd != -1
 			&& dup2(data->r_input_fd, STDIN_FILENO) == -1)
 		{
