@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:15:07 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/15 13:03:06 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/15 14:35:36 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ static void	cleanup_job(t_cmd *job)
 	}
 }
 
+static void	cleanup_fds(t_data *data)
+{
+	if (data->save_stdin != -1)
+		close(data->save_stdin);
+	data->save_stdin = -1;
+	if (data->save_stdout != -1)
+		close(data->save_stdout);
+	data->save_stdout = -1;
+	if (data->r_input_fd != -1)
+		close(data->r_input_fd);
+	if (data->r_output_fd != -1)
+		close(data->r_output_fd);
+	data->r_input_fd = -1;
+	data->r_output_fd = -1;
+}
+
 /*
 * @brief Cleanup the minishell
 *
@@ -61,14 +77,7 @@ void	cleanup_minishell(t_data *data)
 		cleanup_job(data->job);
 		data->job = NULL;
 	}
-	if (data->save_stdin != -1)
-		close(data->save_stdin);
-	data->save_stdin = -1;
-	if (data->save_stdout != -1)
-		close(data->save_stdout);
-	data->save_stdout = -1;
-	data->r_input_fd = -1;
-	data->r_output_fd = -1;
+	cleanup_fds(data);
 	data->first_cmd = true;
 	data->cmd_ct = 0;
 }
