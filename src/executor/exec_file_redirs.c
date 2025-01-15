@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 13:10:39 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/15 14:39:23 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	check_for_open_redirect(t_data *data, t_cmd *cmd)
 			handle_error(data, NULL, EXIT_FAILURE, true);
 		if (dup2(data->r_output_fd, 1) == -1)
 			handle_error(data, NULL, EXIT_FAILURE, true);
-		close(data->r_output_fd);
 	}
 }
 
@@ -48,7 +47,6 @@ static void	check_for_append_redirect(t_data *data, t_cmd *cmd)
 			handle_error(data, NULL, EXIT_FAILURE, true);
 		if (dup2(data->r_output_fd, 1) == -1)
 			handle_error(data, NULL, EXIT_FAILURE, true);
-		close(data->r_output_fd);
 	}
 }
 
