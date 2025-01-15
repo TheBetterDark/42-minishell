@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/14 15:44:24 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/14 20:02:17 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,35 +64,9 @@ static void	execute_parent_process(t_data *data)
 * @param data The data struct
 * @param cmd The current command
 */
-static void	handle_pipe(t_data *data, t_cmd *cmd, int *pipe_fd)
-{
-	if (data->first_cmd == false)
-	{
-		close(pipe_fd[0]);
-		if (dup2(data->prev_pipe_fd[0], STDIN_FILENO) == -1)
-		{
-			perror("failed to duplicate prev pipe fd");
-			exit(EXIT_FAILURE);
-		}
-		close(data->prev_pipe_fd[0]);
-	}
-	if (cmd->next)
-	{
-		if (data->first_cmd)
-			data->first_cmd = false;
-		close(data->prev_pipe_fd[1]);
-		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
-		{
-			perror("failed to duplicate write pipe fd");
-			exit(EXIT_FAILURE);
-		}
-		close(pipe_fd[1]);
-	}
-}
 
-static void	execute_child_process(t_data *data, t_cmd *cmd, int *pipe_fd)
+static void	execute_child_process(t_data *data, t_cmd *cmd, int pipe_fds[][2])
 {
-	handle_pipe(data, cmd, pipe_fd);
 	if (!file_redirections(data, cmd))
 		return ;
 	signal(SIGINT, SIG_IGN);
@@ -100,6 +74,8 @@ static void	execute_child_process(t_data *data, t_cmd *cmd, int *pipe_fd)
 	if (cmd->pid == 0)
 	{
 		signal(SIGINT, handle_sigint);
+		redirect_child_stdio(pipe_fds, &cmd->i, data->cmd_ct);
+		close_pipes(pipe_fds, data->cmd_ct);
 		if (data->r_input_fd != -1
 			&& dup2(data->r_input_fd, STDIN_FILENO) == -1)
 		{
@@ -120,8 +96,6 @@ static void	execute_child_process(t_data *data, t_cmd *cmd, int *pipe_fd)
 	}
 	else if (cmd->pid < 0)
 		return (handle_error(data, NULL, EXIT_FAILURE, true));
-	data->prev_pipe_fd[0] = pipe_fd[0];
-	close(pipe_fd[1]);
 	unlink("hd2sh9fd8F32");
 }
 
@@ -133,20 +107,20 @@ static void	execute_child_process(t_data *data, t_cmd *cmd, int *pipe_fd)
 static void	execute_commands(t_data *data)
 {
 	t_cmd	*current_cmd;
-	int		pipe_fd[2];
+	int		pipe_fds[data->cmd_ct][2];
 
 	if (data->job->next == NULL && is_builtin_command(data->job->cmdv[0]))
 		return (execute_parent_process(data));
 	current_cmd = data->job;
+	init_pipes(pipe_fds, data->cmd_ct);
 	while (current_cmd)
 	{
-		if (current_cmd->next)
-			safe_pipe(pipe_fd);
-		execute_child_process(data, current_cmd, pipe_fd);
+		execute_child_process(data, current_cmd, pipe_fds);
 		unlink("hd2sh9fd8F32");
 		current_cmd = current_cmd->next;
 	}
 	current_cmd = data->job;
+	close_pipes(pipe_fds, data->cmd_ct);
 	while (current_cmd)
 	{
 		if (current_cmd->pid != 0)

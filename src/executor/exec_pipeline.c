@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 19:15:31 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/14 20:06:56 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,19 @@
 *
 * @param cmd The current job
 */
-void	safe_pipe(int *pipe_fd)
+void	init_pipes(int pipe_fds[][2], int cmd_ct)
 {
-	if (pipe(pipe_fd) == -1)
+	int	i;
+
+	i = 0;
+	while (i < cmd_ct - 1)
 	{
-		perror("pipe");
-		exit(EXIT_FAILURE);
+		if (pipe(pipe_fds[i]) == -1)
+		{
+			perror("pipe");
+			exit(EXIT_FAILURE);
+		}
+		i++;
 	}
 }
 
@@ -32,8 +39,24 @@ void	safe_pipe(int *pipe_fd)
 *
 * @param job List of commands
 */
-void	close_pipe_ends(int *pipe_fd)
+
+void	close_pipes(int pipe_fds[][2], int cmd_ct)
 {
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
+	int	i;
+
+	i = 0;
+	while (i < cmd_ct - 1)
+	{
+		close(pipe_fds[i][0]);
+		close(pipe_fds[i][1]);
+		i++;
+	}
+}
+
+void	redirect_child_stdio(int pipe_fds[][2], int *i, int cmd_ct)
+{
+	if (*i > 0)
+		dup2(pipe_fds[*i - 1][0], STDIN_FILENO);
+	if (*i < cmd_ct - 1)
+		dup2(pipe_fds[*i][1], STDOUT_FILENO);
 }

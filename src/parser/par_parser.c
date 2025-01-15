@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 13:16:13 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/14 19:46:36 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static t_cmd	*init_new_cmd(t_token **cur, t_data *data)
 	if (*cur && (*cur)->type == PIPE)
 		*cur = (*cur)->next;
 	new_cmd->pid = 0;
+	new_cmd->i = data->cmd_ct; //
 	return (new_cmd);
 }
 
@@ -108,6 +109,7 @@ t_cmd	*parser(t_data *data)
 		if (!new_cmd)
 			return (NULL);
 		add_to_job(&job, new_cmd);
+		data->cmd_ct++;
 	}
 	return (job);
 }

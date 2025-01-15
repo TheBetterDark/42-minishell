@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/14 14:46:44 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/15 13:02:20 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_cmd
 	char				*append_fn;		// append file
 	char				*input_fn;		// output file
 	pid_t				pid;			// process id
+	int					i;				// index of pipe_fds
 	t_cmd				*next;			// next command
 }						t_cmd;
 
@@ -88,8 +89,9 @@ typedef struct s_data
 	int					r_output_fd;	// read output file descriptor
 	int					exit_stat;		// exit status
 	t_cmd				*job;			// cmd list
+	int					cmd_ct;			// cmd count for pipe_fds
 	bool				first_cmd;
-	int					prev_pipe_fd[2];
+//	int					prev_pipe_fd[2];
 }						t_data;
 
 // ------------------------------ INITIALIZERS ------------------------------ //
@@ -138,10 +140,13 @@ void					write_heredoc(int heredoc, t_cmd *cmd);
 void					direct_heredoc(t_data *d, t_cmd *cmd);
 
 //void					create_cmd_pipe(t_cmd *cmd);
-void					safe_pipe(int *pipe_fd);
+//void					safe_pipe(int *pipe_fd);
 //void					close_pipe_ends(t_cmd *cmd);
-void					close_pipe_ends(int *pipe_fd);
-void					connect_pipeline(t_cmd *cmd);
+//void					close_pipe_ends(int *pipe_fd);
+//void					connect_pipeline(t_cmd *cmd);
+void					init_pipes(int pipe_fds[][2], int cmd_ct);
+void					close_pipes(int pipe_fds[][2], int cmd_ct);
+void					redirect_child_stdio(int pipe_fds[][2], int *i, int cmd_ct);
 
 bool					check_for_builtins(t_data *data, t_cmd *cmd);
 void					builtin_echo(t_cmd *cmd);
