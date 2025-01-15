@@ -13,28 +13,6 @@
 #include "../../inc/data.h"
 
 /*
-* @brief Restore the file descriptors
-*
-* @param save_stdout The saved stdout file descriptor
-* @param save_stdin The saved stdin file descriptor
-*/
-static void	restore_file_descriptors(int save_stdout, int save_stdin)
-{
-	if (dup2(save_stdout, STDOUT_FILENO) == -1)
-	{
-		perror("dup2 save_stdout");
-		exit(EXIT_FAILURE);
-	}
-	close(save_stdout);
-	if (dup2(save_stdin, STDIN_FILENO) == -1)
-	{
-		perror("dup2 save_stdin");
-		exit(EXIT_FAILURE);
-	}
-	close(save_stdin);
-}
-
-/*
 * @brief Execute the parent process
 *
 * @param data The data struct
@@ -73,7 +51,7 @@ static void	execute_child_process(t_data *data, t_cmd *cmd, int pipe_fds[][2])
 	cmd->pid = fork();
 	if (cmd->pid == 0)
 	{
-		signal(SIGINT, handle_sigint);
+		initalize_signals();
 		redirect_child_stdio(pipe_fds, &cmd->i, data->cmd_ct);
 		close_pipes(pipe_fds, data->cmd_ct);
 		if (data->r_input_fd != -1
@@ -139,19 +117,22 @@ static void	execute_commands(t_data *data)
 */
 void	executor(t_data *data)
 {
-	int		save_stdout;
-	int		save_stdin;
-
 	if (!data->job)
 		return ;
-	save_stdin = dup(STDIN_FILENO);
-	if (!save_stdin)
-		return (close(save_stdin),
-			handle_error(data, NULL, EXIT_FAILURE, true));
-	save_stdout = dup(STDOUT_FILENO);
-	if (!save_stdout)
-		return (close(save_stdout),
+	data->save_stdin = dup(STDIN_FILENO);
+	if (data->save_stdin == -1)
+		return (handle_error(data, NULL, EXIT_FAILURE, true));
+	data->save_stdout = dup(STDOUT_FILENO);
+	if (data->save_stdout == -1)
+		return (close(data->save_stdin),
 			handle_error(data, NULL, EXIT_FAILURE, true));
 	execute_commands(data);
-	restore_file_descriptors(save_stdout, save_stdin);
+	if (dup2(data->save_stdout, STDOUT_FILENO) == -1)
+		return (close(data->save_stdin), close(data->save_stdout),
+			handle_error(data, NULL, EXIT_FAILURE, true));
+	close(data->save_stdout);
+	if (dup2(data->save_stdin, STDIN_FILENO) == -1)
+		return (close(data->save_stdin),
+			handle_error(data, NULL, EXIT_FAILURE, true));
+	close(data->save_stdin);
 }

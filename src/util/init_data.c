@@ -37,6 +37,10 @@ t_data	*init_data(void)
 	data->r_output_fd = -1;
 	data->toks = NULL;
 	data->job = NULL;
+	// data->prev_pipe_fd[0] = -1;
+	// data->prev_pipe_fd[1] = -1;
+	data->save_stdout = -1;
+	data->save_stdin = -1;
 	data->first_cmd = true;
 	data->cmd_ct = 0;
 	return (data);

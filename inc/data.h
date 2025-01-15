@@ -92,6 +92,8 @@ typedef struct s_data
 	int					cmd_ct;			// cmd count for pipe_fds
 	bool				first_cmd;
 //	int					prev_pipe_fd[2];
+	int					save_stdout;
+	int					save_stdin;
 }						t_data;
 
 // ------------------------------ INITIALIZERS ------------------------------ //
@@ -102,7 +104,7 @@ void					exit_minishell(t_data *data, int exit_status);
 
 // ------------------------------ SIGNALS ----------------------------------- //
 
-int						initalize_signals(void);
+void					initalize_signals(void);
 void					handle_sigint(int sig);
 
 // ---------------------------- TOKENIZER ----------------------------------- //

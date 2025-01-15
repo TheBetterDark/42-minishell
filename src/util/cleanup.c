@@ -61,6 +61,12 @@ void	cleanup_minishell(t_data *data)
 		cleanup_job(data->job);
 		data->job = NULL;
 	}
+	if (data->save_stdin != -1)
+		close(data->save_stdin);
+	data->save_stdin = -1;
+	if (data->save_stdout != -1)
+		close(data->save_stdout);
+	data->save_stdout = -1;
 	data->r_input_fd = -1;
 	data->r_output_fd = -1;
 	data->first_cmd = true;
