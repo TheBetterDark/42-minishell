@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/15 14:27:57 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/15 17:13:56 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,30 +45,30 @@ static void	execute_parent_process(t_data *data)
 
 static void	execute_child_process(t_data *data, t_cmd *cmd, int **pipe_fds)
 {
-	if (!file_redirections(data, cmd))
-		return ;
 	signal(SIGINT, SIG_IGN);
 	cmd->pid = fork();
 	if (cmd->pid == 0)
 	{
-		initalize_signals();
+		signal(SIGINT, handle_sigint_child);
+		if (!file_redirections(data, cmd))
+			return ;
 		redirect_child_stdio(pipe_fds, &cmd->i, data->cmd_ct);
 		close_pipes(pipe_fds, data->cmd_ct);
 		if (data->r_input_fd != -1
 			&& dup2(data->r_input_fd, STDIN_FILENO) == -1)
-			handle_error(data, NULL, EXIT_FAILURE, true);
+			handle_error(data, NULL, EXIT_FAILURE, false);
 		if (data->r_output_fd != -1
 			&& dup2(data->r_output_fd, STDOUT_FILENO) == -1)
-			handle_error(data, NULL, EXIT_FAILURE, true);
+			handle_error(data, NULL, EXIT_FAILURE, false);
 		if (check_for_builtins(data, cmd))
 			exit(data->exit_stat);
 		if (execve(cmd->cmdv[0], cmd->cmdv, data->env))
-			return (handle_error(data, NULL, EXIT_FAILURE, true));
-		exit_minishell(data, EXIT_FAILURE);
+			return (handle_error(data, ERR_CMD_NOT_FOUND, EXIT_FAILURE, false));
 	}
 	else if (cmd->pid < 0)
 		return (handle_error(data, NULL, EXIT_FAILURE, true));
-	unlink("hd2sh9fd8F32");
+	if (cmd->eof)
+		wait(NULL);
 }
 
 /*

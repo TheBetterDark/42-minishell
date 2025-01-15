@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/15 14:25:19 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:20:33 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void					exit_minishell(t_data *data, int exit_status);
 
 void					initalize_signals(void);
 void					handle_sigint(int sig);
+void					handle_sigint_child(int sig);
 
 // ---------------------------- TOKENIZER ----------------------------------- //
 

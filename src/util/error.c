@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:28:21 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/12 20:27:28 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:37:34 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	handle_error(t_data *data, char *msg, int err_num, bool exit)
 		ft_putendl_fd(msg, STDERR_FILENO);
 	}
 	else
-		perror("minishell: ");
+		perror("minishell: hi ");
 	if (exit)
 		exit_minishell(data, err_num);
 	else

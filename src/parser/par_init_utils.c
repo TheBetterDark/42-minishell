@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 17:15:27 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:34:54 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur, t_data *data)
 	set_new_cmd_nulls(new_cmd);
 	while (cur)
 	{
+		if (cur->type == PIPE)
+			break ;
 		handle_filename(&new_cmd->append_fn, cur, APPEND_FILE, ">>");
 		handle_filename(&new_cmd->open_fn, cur, OUT_FILE, ">");
 		handle_filename(&new_cmd->input_fn, cur, IN_FILE, "<");

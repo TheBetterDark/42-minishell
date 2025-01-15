@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:09:15 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/14 17:44:18 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:26:41 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,11 @@ void	handle_sigint(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+}
+
+void	handle_sigint_child(int sig)
+{
+	(void)sig;
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	exit(EXIT_FAILURE);
 }

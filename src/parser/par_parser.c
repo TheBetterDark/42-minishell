@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/14 19:46:36 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/15 15:31:53 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static t_cmd	*init_new_cmd(t_token **cur, t_data *data)
 	if (*cur && (*cur)->type == PIPE)
 		*cur = (*cur)->next;
 	new_cmd->pid = 0;
-	new_cmd->i = data->cmd_ct; //
+	new_cmd->i = data->cmd_ct;
 	return (new_cmd);
 }
 
