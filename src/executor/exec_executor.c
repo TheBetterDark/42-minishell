@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/14 20:02:17 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/15 14:27:57 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	execute_parent_process(t_data *data)
 * @param cmd The current command
 */
 
-static void	execute_child_process(t_data *data, t_cmd *cmd, int pipe_fds[][2])
+static void	execute_child_process(t_data *data, t_cmd *cmd, int **pipe_fds)
 {
 	if (!file_redirections(data, cmd))
 		return ;
@@ -56,16 +56,10 @@ static void	execute_child_process(t_data *data, t_cmd *cmd, int pipe_fds[][2])
 		close_pipes(pipe_fds, data->cmd_ct);
 		if (data->r_input_fd != -1
 			&& dup2(data->r_input_fd, STDIN_FILENO) == -1)
-		{
 			handle_error(data, NULL, EXIT_FAILURE, true);
-			close(data->r_input_fd);
-		}
 		if (data->r_output_fd != -1
 			&& dup2(data->r_output_fd, STDOUT_FILENO) == -1)
-		{
 			handle_error(data, NULL, EXIT_FAILURE, true);
-			close(data->r_output_fd);
-		}
 		if (check_for_builtins(data, cmd))
 			exit(data->exit_stat);
 		if (execve(cmd->cmdv[0], cmd->cmdv, data->env))
@@ -85,12 +79,13 @@ static void	execute_child_process(t_data *data, t_cmd *cmd, int pipe_fds[][2])
 static void	execute_commands(t_data *data)
 {
 	t_cmd	*current_cmd;
-	int		pipe_fds[data->cmd_ct][2];
+	int		**pipe_fds;
 
 	if (data->job->next == NULL && is_builtin_command(data->job->cmdv[0]))
 		return (execute_parent_process(data));
 	current_cmd = data->job;
-	init_pipes(pipe_fds, data->cmd_ct);
+	pipe_fds = NULL;
+	init_pipes(&pipe_fds, data->cmd_ct);
 	while (current_cmd)
 	{
 		execute_child_process(data, current_cmd, pipe_fds);

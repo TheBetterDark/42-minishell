@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/15 13:02:20 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/15 14:25:19 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,10 @@ void					direct_heredoc(t_data *d, t_cmd *cmd);
 //void					close_pipe_ends(t_cmd *cmd);
 //void					close_pipe_ends(int *pipe_fd);
 //void					connect_pipeline(t_cmd *cmd);
-void					init_pipes(int pipe_fds[][2], int cmd_ct);
-void					close_pipes(int pipe_fds[][2], int cmd_ct);
-void					redirect_child_stdio(int pipe_fds[][2], int *i, int cmd_ct);
+void					init_pipes(int ***pipe_fds, int cmd_ct);
+void					close_pipes(int **pipe_fds, int cmd_ct);
+void					redirect_child_stdio(int **pipe_fds, int *i,
+							int cmd_ct);
 
 bool					check_for_builtins(t_data *data, t_cmd *cmd);
 void					builtin_echo(t_cmd *cmd);
