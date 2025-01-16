@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/15 17:13:56 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/16 18:57:38 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	execute_parent_process(t_data *data)
 * @param cmd The current command
 */
 
-static void	execute_child_process(t_data *data, t_cmd *cmd, int **pipe_fds)
+static void	execute_child_process(t_data *data, t_cmd *cmd)
 {
 	signal(SIGINT, SIG_IGN);
 	cmd->pid = fork();
@@ -52,8 +52,8 @@ static void	execute_child_process(t_data *data, t_cmd *cmd, int **pipe_fds)
 		signal(SIGINT, handle_sigint_child);
 		if (!file_redirections(data, cmd))
 			return ;
-		redirect_child_stdio(pipe_fds, &cmd->i, data->cmd_ct);
-		close_pipes(pipe_fds, data->cmd_ct);
+		redirect_child_stdio(data, &cmd->i, data->pipe_ct);
+		close_pipes(data, data->pipe_ct);
 		if (data->r_input_fd != -1
 			&& dup2(data->r_input_fd, STDIN_FILENO) == -1)
 			handle_error(data, NULL, EXIT_FAILURE, false);
@@ -79,21 +79,20 @@ static void	execute_child_process(t_data *data, t_cmd *cmd, int **pipe_fds)
 static void	execute_commands(t_data *data)
 {
 	t_cmd	*current_cmd;
-	int		**pipe_fds;
 
 	if (data->job->next == NULL && is_builtin_command(data->job->cmdv[0]))
 		return (execute_parent_process(data));
 	current_cmd = data->job;
-	pipe_fds = NULL;
-	init_pipes(&pipe_fds, data->cmd_ct);
+	if (data->pipe_ct)
+		init_pipes(data, data->pipe_ct);
 	while (current_cmd)
 	{
-		execute_child_process(data, current_cmd, pipe_fds);
+		execute_child_process(data, current_cmd);
 		unlink("hd2sh9fd8F32");
 		current_cmd = current_cmd->next;
 	}
 	current_cmd = data->job;
-	close_pipes(pipe_fds, data->cmd_ct);
+	close_pipes(data, data->pipe_ct);
 	while (current_cmd)
 	{
 		if (current_cmd->pid != 0)

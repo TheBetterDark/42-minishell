@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:15:07 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/15 14:35:36 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/16 18:52:33 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	cleanup_minishell(t_data *data)
 	if (data->input)
 	{
 		free(data->input);
-		data->input = NULL;
+		data->input = (char *)NULL;
 	}
 	if (data->toks)
 		tok_lstclear(&data->toks);
@@ -80,4 +80,7 @@ void	cleanup_minishell(t_data *data)
 	cleanup_fds(data);
 	data->first_cmd = true;
 	data->cmd_ct = 0;
+	if (data->pipe_fds)
+		free_pipes(data, data->pipe_ct);
+	data->pipe_ct = -1; // -1 because last cmd only uses prev pipe
 }

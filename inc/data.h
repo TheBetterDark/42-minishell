@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/15 15:20:33 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/16 17:42:04 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ typedef struct s_data
 	t_cmd				*job;			// cmd list
 	int					cmd_ct;			// cmd count for pipe_fds
 	bool				first_cmd;
-//	int					prev_pipe_fd[2];
+	int					**pipe_fds;		// to allocate pipes
+	int					pipe_ct;		// size of pipes
 	int					save_stdout;
 	int					save_stdin;
 }						t_data;
@@ -142,15 +143,10 @@ bool					file_redirections(t_data *data, t_cmd *cmd);
 void					write_heredoc(int heredoc, t_cmd *cmd);
 void					direct_heredoc(t_data *d, t_cmd *cmd);
 
-//void					create_cmd_pipe(t_cmd *cmd);
-//void					safe_pipe(int *pipe_fd);
-//void					close_pipe_ends(t_cmd *cmd);
-//void					close_pipe_ends(int *pipe_fd);
-//void					connect_pipeline(t_cmd *cmd);
-void					init_pipes(int ***pipe_fds, int cmd_ct);
-void					close_pipes(int **pipe_fds, int cmd_ct);
-void					redirect_child_stdio(int **pipe_fds, int *i,
-							int cmd_ct);
+void					init_pipes(t_data *data, int cmd_ct);
+void					close_pipes(t_data *data, int cmd_ct);
+void					redirect_child_stdio(t_data *data, int *i, int pipe_ct);
+void					free_pipes(t_data *data, int pipe_ct);
 
 bool					check_for_builtins(t_data *data, t_cmd *cmd);
 void					builtin_echo(t_cmd *cmd);

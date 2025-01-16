@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/15 15:31:53 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/16 18:31:39 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ t_cmd	*parser(t_data *data)
 		if (!new_cmd)
 			return (NULL);
 		add_to_job(&job, new_cmd);
+		data->pipe_ct++;
 		data->cmd_ct++;
 	}
 	return (job);
