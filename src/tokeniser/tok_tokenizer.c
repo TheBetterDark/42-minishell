@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 15:57:04 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 09:14:21 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_token	*tokenizer(t_data *data)
 		new_tok = tok_lstnew(*toks);
 		if (!new_tok)
 			return (free_split(toks_start), tok_lstclear(&head),
-				handle_error(data, ERR_OUT_OF_MEMORY, EXIT_MEMORY, true), NULL);
+				handle_error_parent(data, ERR_OUT_OF_MEMORY, 12, true), NULL);
 		tok_lstadd_back(&head, new_tok);
 		toks++;
 	}

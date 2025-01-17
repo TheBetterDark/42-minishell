@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 15:07:22 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 08:48:40 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	direct_heredoc(t_data *data, t_cmd *cmd)
 		data->r_input_fd = open("hd2sh9fd8F32",
 				O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (data->r_input_fd == -1)
-			handle_error(data, NULL, 0, true);
+			handle_error_parent(data, NULL, 0, true);
 		write_heredoc(data->r_input_fd, cmd);
 		cmd->input_fn = ft_strdup("hd2sh9fd8F32");
 		close(data->r_input_fd);

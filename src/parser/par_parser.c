@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/16 18:31:39 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/17 09:14:21 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_cmd	*init_new_cmd(t_token **cur, t_data *data)
 	size = find_cmdv_size(*cur);
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
-		return (handle_error(data, ERR_OUT_OF_MEMORY, EXIT_MEMORY, true), NULL);
+		return (handle_error_parent(data, ERR_OUT_OF_MEMORY, 12, true), NULL);
 	new_cmd->cmdv = init_cmdv(*cur, size, data);
 	if (!(new_cmd)->cmdv)
 		return (free(new_cmd), NULL);

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/16 17:42:04 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/17 09:14:07 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,11 @@
 // ------------------------------ DEFINES ----------------------------------- //
 
 # define HEREDOC_PROMPT "> "
-# define SHELL_PROMPT "minishell$ "
+# define SHELL_PROMPT "minishell-$ "
 
-# define ERR_CMD_NOT_FOUND "command not found"
+# define ERR_CMD_NOT_FOUND "Error: command not found"
 # define ERR_OUT_OF_MEMORY "Memory error: out of memory"
 # define ERR_UNCLOSED_QUOTES "Syntax error: unmatched quotes"
-
-# define EXIT_MEMORY 12
 
 // ------------------------------ ENUMS ------------------------------------- //
 
@@ -158,8 +156,10 @@ void					builtin_unset(t_data *data, char *unset_str);
 
 // ------------------------------ UTILS ------------------------------------- //
 
-void					handle_error(t_data *data, char *msg, int err_num,
-							bool exit);
+void					handle_error_parent(t_data *data, char *msg,
+							int err_num, bool exit_stat);
+void					handle_error_child(t_data *data, char *msg,
+							int err_num, bool exit_stat);
 
 bool					is_builtin_command(const char *command);
 bool					input_matches(char *input, char *test);

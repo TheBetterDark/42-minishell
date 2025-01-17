@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/14 17:46:33 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 09:26:39 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 /*
 	TODO LIST:
 
-	- Signals
-	- Move Command not found to executor so it runs each one if pipes
-	- Fix issues with pipes (cat | cat | ls)
-	- fix pipe (only pipes the first command into the second one)
+	- Signals (Needs to Ctrl + C all when there are multiple heredoc
+		commands chained)
+	- Heredoc ENV Expansions
+	- Error Handling Messages break when multiple commands are chained that
+		are not commands found e.g. (e | e | e | e | e | e | e | e | e)
 */
 
 /*

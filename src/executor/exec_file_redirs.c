@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/15 14:39:23 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/17 08:48:40 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static void	check_for_open_redirect(t_data *data, t_cmd *cmd)
 		data->r_output_fd = open(cmd->open_fn,
 				O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (data->r_output_fd == -1)
-			handle_error(data, NULL, EXIT_FAILURE, true);
+			handle_error_parent(data, NULL, EXIT_FAILURE, true);
 		if (dup2(data->r_output_fd, 1) == -1)
-			handle_error(data, NULL, EXIT_FAILURE, true);
+			handle_error_parent(data, NULL, EXIT_FAILURE, true);
 	}
 }
 
@@ -44,9 +44,9 @@ static void	check_for_append_redirect(t_data *data, t_cmd *cmd)
 		data->r_output_fd = open(cmd->append_fn,
 				O_CREAT | O_RDWR | O_APPEND, 0644);
 		if (data->r_output_fd == -1)
-			handle_error(data, NULL, EXIT_FAILURE, true);
+			handle_error_parent(data, NULL, EXIT_FAILURE, true);
 		if (dup2(data->r_output_fd, 1) == -1)
-			handle_error(data, NULL, EXIT_FAILURE, true);
+			handle_error_parent(data, NULL, EXIT_FAILURE, true);
 	}
 }
 
@@ -67,9 +67,9 @@ bool	file_redirections(t_data *data, t_cmd *cmd)
 	{
 		data->r_input_fd = open(cmd->input_fn, O_RDONLY, 0644);
 		if (data->r_input_fd == -1)
-			return (handle_error(data, NULL, EXIT_FAILURE, true), false);
+			return (handle_error_parent(data, NULL, EXIT_FAILURE, true), false);
 		if (dup2(data->r_input_fd, STDIN_FILENO) == -1)
-			handle_error(data, NULL, EXIT_FAILURE, true);
+			handle_error_parent(data, NULL, EXIT_FAILURE, true);
 	}
 	return (true);
 }

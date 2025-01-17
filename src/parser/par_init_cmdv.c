@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 13:12:57 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 09:14:21 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static char	**get_paths(t_data *data)
 		return (NULL);
 	paths = ft_split(path, ':');
 	if (!paths)
-		return (handle_error(data, ERR_OUT_OF_MEMORY, EXIT_MEMORY, true), NULL);
+		return (handle_error_parent(data, ERR_OUT_OF_MEMORY, 12, true),
+			NULL);
 	return (paths);
 }
 
@@ -75,26 +76,22 @@ static char	*add_path_to_cmdv0(t_data *data, char *cmd_name)
 *
 * @return The command name
 */
-// TODO: Do this in the executor
 static char	*handle_first_command(t_token *cur, t_data *data)
 {
 	char	*cmd_name;
 
-	if (is_builtin_command(cur->cont))
+	if (cur->cont[0] == '/' || is_builtin_command(cur->cont))
+	{
 		cmd_name = ft_strdup(cur->cont);
+		if (!cmd_name)
+			return (handle_error_parent(data, ERR_OUT_OF_MEMORY, 12,
+					true), NULL);
+	}
 	else
 	{
-		if (access(cur->cont, F_OK | X_OK) == 0)
-		{
-			cmd_name = ft_strdup(cur->cont);
-			if (!cmd_name)
-				return (handle_error(data,
-						ERR_OUT_OF_MEMORY, EXIT_MEMORY, true), NULL);
-		}
-		else
-			cmd_name = add_path_to_cmdv0(data, cur->cont);
+		cmd_name = add_path_to_cmdv0(data, cur->cont);
 		if (!cmd_name)
-			return (handle_error(data, ERR_CMD_NOT_FOUND, 127, false), NULL);
+			cmd_name = ft_strdup(cur->cont);
 	}
 	return (cmd_name);
 }
@@ -125,8 +122,8 @@ static char	*duplicate_command(t_token *cur, int is_first, t_data *data)
 		else
 			cmd_name = ft_strdup(cur->cont);
 		if (!cmd_name)
-			return (handle_error(data, ERR_OUT_OF_MEMORY, EXIT_MEMORY, true),
-				NULL);
+			return (handle_error_parent(data, ERR_OUT_OF_MEMORY, 12,
+					true), NULL);
 	}
 	return (cmd_name);
 }
@@ -147,12 +144,12 @@ char	**init_cmdv(t_token *cur, int size, t_data *data)
 
 	cmdv = malloc(sizeof(char *) * (size + 1));
 	if (!cmdv)
-		return (handle_error(data, ERR_OUT_OF_MEMORY, EXIT_MEMORY, true), NULL);
+		return (handle_error_parent(data, ERR_OUT_OF_MEMORY, 12, true), NULL);
 	i = 0;
 	while (i < size && cur)
 	{
-		if ((cur->type == CMD || cur->type == ARG
-				|| cur->type == EXIT_STAT) && cur->type != PIPE)
+		if ((cur->type == CMD || cur->type == ARG || cur->type == EXIT_STAT)
+			&& cur->type != PIPE)
 		{
 			cmdv[i] = duplicate_command(cur, i, data);
 			if (!cmdv[i])

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/13 13:03:00 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 09:11:04 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	input_matches(char *input, char *test)
 {
 	if (!input || !test)
 		return (false);
-	if (ft_strncmp(input, test, ft_strlen(input)) == 0)
+	if (ft_strcmp(input, test) == 0)
 		return (true);
 	return (false);
 }
@@ -71,7 +71,7 @@ bool	is_builtin_command(const char *command)
 	i = 0;
 	while (i < 7)
 	{
-		if (strcmp(command, builtins[i]) == 0)
+		if (ft_strcmp(command, builtins[i]) == 0)
 			return (true);
 		i++;
 	}
