@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 12:47:03 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 14:43:32 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ static void	execute_commands(t_data *data)
 
 	if (data->job->next == NULL && is_builtin_command(data->job->cmdv[0]))
 		return (execute_parent_process(data));
-	current_cmd = data->job;
 	if (data->pipe_ct)
 		init_pipes(data, data->pipe_ct);
+	direct_heredoc(data, data->job);
+	current_cmd = data->job;
 	while (current_cmd)
 	{
 		execute_child_process(data, current_cmd);
-		unlink("hd2sh9fd8F32");
 		current_cmd = current_cmd->next;
 	}
 	current_cmd = data->job;
@@ -99,6 +99,7 @@ static void	execute_commands(t_data *data)
 			handle_command_not_found(data, current_cmd->cmdv[0]);
 			data->exit_stat = WEXITSTATUS(data->exit_stat);
 		}
+		unlink(current_cmd->input_fn);
 		current_cmd = current_cmd->next;
 	}
 }

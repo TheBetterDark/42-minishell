@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 08:48:40 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 14:35:01 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void	check_for_append_redirect(t_data *data, t_cmd *cmd)
 */
 bool	file_redirections(t_data *data, t_cmd *cmd)
 {
-	direct_heredoc(data, cmd);
 	check_for_open_redirect(data, cmd);
 	check_for_append_redirect(data, cmd);
 	if (cmd->input_fn)
