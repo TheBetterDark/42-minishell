@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 12:00:19 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 12:21:37 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 	- Signals (Needs to Ctrl + C all when there are multiple heredoc
 		commands chained)
 	- Heredoc ENV Expansions (Double Quotes & restore tabs and spaces)
-	- Error Handling Messages break when multiple commands are chained that
-		are not commands found e.g. (e | e | e | e | e | e | e | e | e)
 */
 
 /*

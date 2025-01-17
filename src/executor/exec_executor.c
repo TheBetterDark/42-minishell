@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 08:56:31 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 12:20:10 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ static void	execute_child_process(t_data *data, t_cmd *cmd)
 		if (check_for_builtins(data, cmd))
 			exit(data->exit_stat);
 		if (execve(cmd->cmdv[0], cmd->cmdv, data->env))
-			return (handle_error_child(data, ERR_CMD_NOT_FOUND, 127, true));
+			return (handle_error_child(data, "", 127, true));
 	}
 	else if (cmd->pid < 0)
 		return (handle_error_parent(data, NULL, EXIT_FAILURE, true));
 	if (cmd->eof)
-		wait(NULL);
+		waitpid(cmd->pid, &data->exit_stat, 0);
 }
 
 /*
@@ -98,6 +98,7 @@ static void	execute_commands(t_data *data)
 		if (current_cmd->pid != 0)
 		{
 			waitpid(current_cmd->pid, &data->exit_stat, 0);
+			handle_command_not_found(data, current_cmd->cmdv[0]);
 			data->exit_stat = WEXITSTATUS(data->exit_stat);
 		}
 		current_cmd = current_cmd->next;

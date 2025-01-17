@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 11:48:15 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 12:20:35 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,8 @@ void					handle_error_parent(t_data *data, char *msg,
 							int err_num, bool exit_stat);
 void					handle_error_child(t_data *data, char *msg,
 							int err_num, bool exit_stat);
+void					handle_command_not_found(t_data *data,
+							char *command_name);
 
 bool					is_builtin_command(const char *command);
 bool					input_matches(char *input, char *test);
