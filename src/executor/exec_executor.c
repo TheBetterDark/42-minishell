@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 12:20:10 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 12:47:03 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ static void	execute_child_process(t_data *data, t_cmd *cmd)
 	}
 	else if (cmd->pid < 0)
 		return (handle_error_parent(data, NULL, EXIT_FAILURE, true));
-	if (cmd->eof)
-		waitpid(cmd->pid, &data->exit_stat, 0);
 }
 
 /*
