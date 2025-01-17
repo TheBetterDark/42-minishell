@@ -6,11 +6,16 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/14 13:32:35 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 14:36:12 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
+
+bool	is_redir_symbol(char c)
+{
+	return (c == '<' || c == '>');
+}
 
 /*
 * @brief Finds the position of the quote in the string
@@ -66,7 +71,7 @@ static void	discern_delim(const char *str, int *pos)
 	else
 	{
 		while (str[*pos] && !is_blank(str[*pos]) && !is_quote(str[*pos], '\'')
-			&& !is_quote(str[*pos], '\"'))
+			&& !is_quote(str[*pos], '\"') && !is_redir_symbol(str[*pos]))
 			(*pos)++;
 	}
 }
