@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 12:49:15 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 14:36:28 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void					tok_lstclear(t_token **tok);
 
 char					**command_line_split(char *input, t_data *data);
 int						count_words(const char *str);
+bool					is_redir_symbol(char c);
 
 // ------------------------------ PARSER ------------------------------------ //
 

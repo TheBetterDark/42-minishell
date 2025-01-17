@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 09:17:40 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 14:37:52 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	discern_words(const char *str, int *pos)
 	else
 	{
 		while (str[*pos] && !is_blank(str[*pos]) && str[*pos] != '\''
-			&& str[*pos] != '\"')
+			&& str[*pos] != '\"' && !is_redir_symbol(str[*pos]))
 			(*pos)++;
 	}
 }
