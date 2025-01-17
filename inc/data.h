@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 09:14:07 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 11:48:15 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ char					*dup_double_quotes(char *str, t_data *data);
 void					executor(t_data *data);
 bool					file_redirections(t_data *data, t_cmd *cmd);
 
-void					write_heredoc(int heredoc, t_cmd *cmd);
 void					direct_heredoc(t_data *d, t_cmd *cmd);
 
 void					init_pipes(t_data *data, int cmd_ct);
@@ -165,6 +164,7 @@ bool					is_builtin_command(const char *command);
 bool					input_matches(char *input, char *test);
 
 char					*find_env_var(char *str, char **env);
+char					*extract_env_var(const char *str);
 char					*try_env_value(char *subquote, char **env,
 							int exit_stat);
 

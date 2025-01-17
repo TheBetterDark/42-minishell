@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 19:13:49 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/12 20:35:13 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 12:00:39 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,25 @@ static char	*get_key(char *str)
 		pos++;
 	}
 	return (NULL);
+}
+
+/*
+* @brief Extract the environment variable
+*
+* @param str The environment variable
+*
+* @return char* The extracted variable
+*/
+char	*extract_env_var(const char *str)
+{
+	int		len;
+	char	*env_var;
+
+	len = 0;
+	while (str[len] && (ft_isalnum(str[len]) || str[len] == '_'))
+		len++;
+	env_var = ft_substr(str, 0, len);
+	return (env_var);
 }
 
 /*

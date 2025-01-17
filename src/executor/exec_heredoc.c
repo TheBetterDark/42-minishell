@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 08:48:40 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 11:59:46 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,42 @@
 /*
 * @brief Write the heredoc to the file descriptor
 *
+* @param buffer The buffer to write
+* @param heredoc The file descriptor
+*/
+// TODO: Double quotes & restore tabs and spaces
+static void	write_heredoc(char *buffer, t_data *data)
+{
+	char	**split;
+	int		i;
+	char	*subquote;
+
+	split = command_line_split(buffer, data);
+	i = 0;
+	subquote = NULL;
+	while (split[i])
+	{
+		if (subquote)
+		{
+			ft_putstr_fd(subquote, data->r_input_fd);
+			free(subquote);
+		}
+		else
+			ft_putstr_fd(split[i], data->r_input_fd);
+		ft_putchar_fd(' ', data->r_input_fd);
+		i++;
+	}
+	ft_putstr_fd("\n", data->r_input_fd);
+	free(buffer);
+}
+
+/*
+* @brief prompt the heredoc to the terminal
+*
 * @param heredoc The file descriptor
 * @param current_job The current command
 */
-void	write_heredoc(int heredoc, t_cmd *cmd)
+static void	prompt_heredoc(t_data *data, t_cmd *cmd)
 {
 	char	*buffer;
 
@@ -31,7 +63,7 @@ void	write_heredoc(int heredoc, t_cmd *cmd)
 			free(buffer);
 			break ;
 		}
-		ft_putstr_fd(buffer, heredoc);
+		write_heredoc(ft_strtrim(buffer, "\n"), data);
 		free(buffer);
 		ft_putstr_fd(HEREDOC_PROMPT, STDOUT_FILENO);
 		buffer = get_next_line(0);
@@ -52,7 +84,7 @@ void	direct_heredoc(t_data *data, t_cmd *cmd)
 				O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (data->r_input_fd == -1)
 			handle_error_parent(data, NULL, 0, true);
-		write_heredoc(data->r_input_fd, cmd);
+		prompt_heredoc(data, cmd);
 		cmd->input_fn = ft_strdup("hd2sh9fd8F32");
 		close(data->r_input_fd);
 		data->r_input_fd = -1;
