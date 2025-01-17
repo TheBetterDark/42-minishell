@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 12:20:35 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 12:49:15 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # define HEREDOC_PROMPT "> "
 # define SHELL_PROMPT "minishell-$ "
 
-# define ERR_CMD_NOT_FOUND "Error: command not found"
 # define ERR_OUT_OF_MEMORY "Memory error: out of memory"
 # define ERR_UNCLOSED_QUOTES "Syntax error: unmatched quotes"
 
