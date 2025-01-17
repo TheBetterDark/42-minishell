@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:06:50 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/07 19:25:58 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/17 14:25:36 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,18 @@ char					**ft_str_arr_dup(const char **str_arr);
 char					*ft_str_arr_has(const char **str_arr, const char *str);
 void					ft_str_arr_out(const char **str_arr);
 
+// ---------------------FT_SNPRINTF------------------------------------
+
+int						ft_snprintf(char *buffer, size_t size,
+							const char *format, ...);
+int						ft_putchar_buf(char *buffer, size_t size, char c);
+int						ft_putstr_buf(char *buffer, size_t size,
+							const char *str);
+int						ft_putnbr_buf(char *buffer, size_t size, int n);
+int						ft_putunbr_buf(char *buffer, size_t size,
+							unsigned int n);
+int						ft_putendl_buf(char *buffer, size_t size,
+							const char *str);
+char					*ft_strupr(char *str);
+char					*ft_tobase(unsigned long num, int base);
 #endif
