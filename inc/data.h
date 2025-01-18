@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 14:36:28 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/18 20:19:52 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ enum					e_type
 
 typedef struct s_cmd	t_cmd;
 typedef struct s_token	t_token;
+typedef struct s_in		t_in;
+typedef struct s_out	t_out;
 
 typedef struct s_token
 {
@@ -64,14 +66,28 @@ typedef struct s_token
 	int					type;			// token type
 }						t_token;
 
+typedef struct s_in
+{
+	char				*eof;			// delimiter
+	int					eof_len;		// delimiter length
+	int					pipe_fds[2];	// heredoc pipe_fds
+	pid_t				pid;			// process id
+	char				*read_fn;		// input file
+	struct s_in			*next;
+}	t_in;
+
+typedef struct s_out
+{
+	char				*truc_fn;		// filename for truc file
+	char				*append_fn;		// filename for append file
+	struct s_out		*next;
+}	t_out;
+
 typedef struct s_cmd
 {
 	char				**cmdv;			// command vector
-	char				*eof;			// delimiter for heredoc
-	int					e_len;			// end_of_file length
-	char				*open_fn;		// input file
-	char				*append_fn;		// append file
-	char				*input_fn;		// output file
+	t_in				*ins;			// in redirections
+	t_out				*outs;			// out redirections
 	pid_t				pid;			// process id
 	int					i;				// index of pipe_fds
 	t_cmd				*next;			// next command
@@ -126,12 +142,22 @@ bool					is_redir_symbol(char c);
 // ------------------------------ PARSER ------------------------------------ //
 
 t_cmd					*parser(t_data *data);
+void					handle_filename(char **file_name, t_token *cur,
+							int type, char *rdr);
 void					get_new_cmd_data(t_cmd *new_cmd, t_token *cur,
 							t_data *data);
 
 char					**init_cmdv(t_token *cur, int size, t_data *data);
 char					*search_paths(char *path, char *cmd);
 char					*dup_double_quotes(char *str, t_data *data);
+void					add_in_redir(t_in **head, t_in *new);
+t_in					*new_in_redir(t_token *cur);
+t_in					*init_in_redirections(t_token *cur, t_data *data);
+void					clear_in_list(t_in **head);
+void					add_out_redir(t_out **head, t_out *new);
+t_out					*new_out_redir(t_token *cur);
+t_out					*init_out_redirections(t_token *cur, t_data *data);
+void					clear_out_list(t_out **head);
 
 // -------------------------------- EXECUTOR -------------------------------- //
 

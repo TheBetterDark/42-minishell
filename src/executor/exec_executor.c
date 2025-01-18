@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 14:43:32 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/18 20:51:21 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,14 @@ static void	execute_commands(t_data *data)
 	t_cmd	*current_cmd;
 
 	if (data->job->next == NULL && is_builtin_command(data->job->cmdv[0]))
-		return (execute_parent_process(data));
+		return (execute_parent_process(data)); // needs a get_heredocs
 	if (data->pipe_ct)
 		init_pipes(data, data->pipe_ct);
-	direct_heredoc(data, data->job);
+//	direct_heredoc(data, data->job);
 	current_cmd = data->job;
 	while (current_cmd)
 	{
+		get_heredocs(data, current_cmd);
 		execute_child_process(data, current_cmd);
 		current_cmd = current_cmd->next;
 	}

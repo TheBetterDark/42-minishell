@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 09:14:21 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/18 20:17:16 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,15 @@ static t_cmd	*init_new_cmd(t_token **cur, t_data *data)
 	new_cmd->cmdv = init_cmdv(*cur, size, data);
 	if (!(new_cmd)->cmdv)
 		return (free(new_cmd), NULL);
-	get_new_cmd_data(new_cmd, *cur, data);
+	get_new_cmd_data(new_cmd, *cur, data)
+	new_cmd->ins = init_in_redirections(*cur, data);
+	new_cmd->outs = init_out_redirections(*cur, data);
 	(new_cmd)->next = NULL;
 	while (*cur && (*cur)->type != PIPE)
 		*cur = (*cur)->next;
 	if (*cur && (*cur)->type == PIPE)
 		*cur = (*cur)->next;
-	new_cmd->pid = 0;
+	new_cmd->pid = -1;
 	new_cmd->i = data->cmd_ct;
 	return (new_cmd);
 }
