@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 14:43:25 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/22 18:08:22 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	prompt_heredoc(t_data *data, t_cmd *cmd)
 	buffer = get_next_line(0);
 	while (buffer)
 	{
-		if (ft_strncmp(buffer, cmd->eof, cmd->e_len) == 0)
+		if (ft_strncmp(buffer, cmd->ins->eof, cmd->ins->eof_len) == 0)
 		{
 			free(buffer);
 			break ;
@@ -84,20 +84,33 @@ void	direct_heredoc(t_data *data, t_cmd *cmd)
 	heredoc_count = 0;
 	while (cmd)
 	{
-		if (cmd->eof)
+		if (cmd->ins->eof)
 		{
-			ft_snprintf(filename, sizeof(filename), "hd2sh9fd8F32_%d",
+			ft_snprintf(filename, sizeof(filename), "/tmp/hd2sh9fd8F32_%d",
 				heredoc_count);
 			data->r_input_fd = open(filename,
 					O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->r_input_fd == -1)
 				handle_error_parent(data, NULL, 0, true);
 			prompt_heredoc(data, cmd);
-			cmd->input_fn = ft_strdup(filename);
+			cmd->ins->read_fn = ft_strdup(filename);
 			close(data->r_input_fd);
 			data->r_input_fd = -1;
 		}
 		heredoc_count++;
 		cmd = cmd->next;
+	}
+}
+
+void	traverse_heredocs(t_data *data, t_cmd *cmd)
+{
+	t_cmd	*tmp;
+
+	tmp = cmd;
+	while (tmp)
+	{
+		if (tmp->ins->eof)
+			direct_heredoc(data, tmp);
+		tmp = tmp->next;
 	}
 }

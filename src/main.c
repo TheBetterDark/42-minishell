@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 12:21:37 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/22 17:36:11 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 	- Signals (Needs to Ctrl + C all when there are multiple heredoc
 		commands chained)
 	- Heredoc ENV Expansions (Double Quotes & restore tabs and spaces)
+	- Has to work with NULL cmdv
+	- Adjust redirect_files to traverse each cmd->ins & cmd->outs
 */
 
 /*
@@ -27,7 +29,7 @@
 */
 int	main(void)
 {
-	t_data		*data;
+	t_data	*data;
 
 	data = init_data();
 	while (true)

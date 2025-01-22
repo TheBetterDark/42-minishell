@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 09:14:21 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/22 19:30:07 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ static char	*duplicate_command(t_token *cur, int is_first, t_data *data)
 */
 char	**init_cmdv(t_token *cur, int size, t_data *data)
 {
+	t_token	*tmp;
 	char	**cmdv;
 	int		i;
 
@@ -146,12 +147,13 @@ char	**init_cmdv(t_token *cur, int size, t_data *data)
 	if (!cmdv)
 		return (handle_error_parent(data, ERR_OUT_OF_MEMORY, 12, true), NULL);
 	i = 0;
-	while (i < size && cur)
+	tmp = cur;
+	while (i < size && tmp)
 	{
-		if ((cur->type == CMD || cur->type == ARG || cur->type == EXIT_STAT)
-			&& cur->type != PIPE)
+		if ((tmp->type == CMD || tmp->type == ARG || tmp->type == EXIT_STAT)
+			&& tmp->type != PIPE)
 		{
-			cmdv[i] = duplicate_command(cur, i, data);
+			cmdv[i] = duplicate_command(tmp, i, data);
 			if (!cmdv[i])
 			{
 				while (i > 0)
@@ -160,7 +162,7 @@ char	**init_cmdv(t_token *cur, int size, t_data *data)
 			}
 			i++;
 		}
-		cur = cur->next;
+		tmp = tmp->next;
 	}
 	cmdv[i] = NULL;
 	return (cmdv);

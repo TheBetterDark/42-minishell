@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/18 19:58:51 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/22 18:35:28 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	clear_out_list(t_out **head)
 		if (cur->append_fn)
 			free(cur->append_fn);
 		free(cur);
-		cur = temp
+		cur = temp;
 	}
 	*head = NULL;
 }
@@ -37,7 +37,7 @@ void	add_out_redir(t_out **head, t_out *new)
 {
 	t_out *cur;
 
-	if (*head || !new)
+	if (*head == NULL)
 	{
 		*head = new;
 		return ;
@@ -65,7 +65,7 @@ t_out	*new_out_redir(t_token *cur)
 	return (new_out);
 }
 
-t_out	*init_out_redirections(t_token *cur, t_data *data)
+t_out	*init_out_redirections(t_token *cur)
 {
 	t_out	*head;
 	t_out	*new;
@@ -75,13 +75,10 @@ t_out	*init_out_redirections(t_token *cur, t_data *data)
 	{
 		if (cur->type == PIPE)
 			break ;
-		if (cur->type == APPEND_FILE || cur->type == OUT_FILE)
-		{
-			new = new_out_redir(cur);
-			if (!new)
-				return (clear_out_list(&head), NULL);
-			add_out_redir(&head, new);
-		}
+		new = new_out_redir(cur);
+		if (!new)
+			return (clear_out_list(&head), NULL);
+		add_out_redir(&head, new);
 		cur = cur->next;
 	}
 	return (head);

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/18 20:00:57 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/22 19:36:36 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	clear_in_list(t_in **head)
 		if (cur->read_fn)
 			free(cur->read_fn);
 		free(cur);
-		cur = temp
+		cur = temp;
 	}
 	*head = NULL;
 }
@@ -37,7 +37,7 @@ void	add_in_redir(t_in **head, t_in *new)
 {
 	t_in *cur;
 
-	if (*head || !new)
+	if (*head == NULL)
 	{
 		*head = new;
 		return ;
@@ -52,19 +52,20 @@ t_in	*new_in_redir(t_token *cur)
 {
 	t_in *new_in;
 
-	new_in = (t_in *)malloc(sizeof(t_in));
+	new_in = malloc(sizeof(t_in));
 	if (!new_in)
 		return (NULL);
 	new_in->eof = NULL;
 	new_in->eof_len = 0;
-	new_in->pipe_fd[0] = -1;
-	new_in->pipe_fd[1] = -1;
+	new_in->pipe_fds[0] = -1;
+	new_in->pipe_fds[1] = -1;
 	new_in->pid = -1;
+	new_in->tmp_fn = NULL;
 	new_in->read_fn = NULL;
 	new_in->next = NULL;
 	if (cur->type == DELIM)
 	{
-		new_in->eof = cur->cont;
+		new_in->eof = ft_strdup(cur->cont);
 		new_in->eof_len = ft_strlen(cur->cont);
 	}
 	else if (cur->type == IN_FILE)	
@@ -72,7 +73,7 @@ t_in	*new_in_redir(t_token *cur)
 	return (new_in);
 }
 
-t_in	*init_in_redirections(t_token *cur, t_data *data)
+t_in	*init_in_redirections(t_token *cur)
 {
 	t_in	*head;
 	t_in	*new;
@@ -82,13 +83,10 @@ t_in	*init_in_redirections(t_token *cur, t_data *data)
 	{
 		if (cur->type == PIPE)
 			break ;
-		if (cur->type == DELIM || cur->type == IN_FILE)
-		{
-			new = init_in_redir(cur);
-			if (!new)
-				return (clear_in_list(&head), NULL);
-			add_in_redir(&head, new);
-		}
+		new = new_in_redir(cur);
+		if (!new)
+			return (clear_in_list(&head), NULL);
+		add_in_redir(&head, new);
 		cur = cur->next;
 	}
 	return (head);
