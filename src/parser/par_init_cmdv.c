@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/22 19:30:07 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/23 19:20:36 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static char	*handle_first_command(t_token *cur, t_data *data)
 {
 	char	*cmd_name;
 
-	if (cur->cont[0] == '/' || is_builtin_command(cur->cont))
+	if (cur->cont[0] == '/' || is_builtin_command2(cur->cont))
 	{
 		cmd_name = ft_strdup(cur->cont);
 		if (!cmd_name)

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/22 18:08:22 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/23 18:32:48 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,17 @@ void	direct_heredoc(t_data *data, t_cmd *cmd)
 	char	filename[256];
 
 	heredoc_count = 0;
+	if (!cmd->ins->eof)
+		return ;
 	while (cmd)
 	{
 		if (cmd->ins->eof)
 		{
 			ft_snprintf(filename, sizeof(filename), "/tmp/hd2sh9fd8F32_%d",
 				heredoc_count);
-			data->r_input_fd = open(filename,
+			cmd->ins->heredoc_fd = open(filename,
 					O_CREAT | O_RDWR | O_TRUNC, 0644);
-			if (data->r_input_fd == -1)
+			if (cmd->ins->heredoc_fd == -1)
 				handle_error_parent(data, NULL, 0, true);
 			prompt_heredoc(data, cmd);
 			cmd->ins->read_fn = ft_strdup(filename);
@@ -107,9 +109,11 @@ void	traverse_heredocs(t_data *data, t_cmd *cmd)
 	t_cmd	*tmp;
 
 	tmp = cmd;
+	if (!tmp->ins)
+		return ;
 	while (tmp)
 	{
-		if (tmp->ins->eof)
+		if (tmp->ins)
 			direct_heredoc(data, tmp);
 		tmp = tmp->next;
 	}

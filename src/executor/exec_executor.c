@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/22 19:35:08 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/23 19:04:38 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,14 @@ static void	execute_child_process(t_data *data, t_cmd *cmd)
 			handle_error_child(data, NULL, EXIT_FAILURE, true);
 		if (check_for_builtins(data, cmd))
 			exit(data->exit_stat);
-		if (execve(cmd->cmdv[0], cmd->cmdv, data->env))
-			return (handle_error_child(data, "", 127, true));
+		if (cmd->cmdv[0] != NULL)
+		{
+			if (execve(cmd->cmdv[0], cmd->cmdv, data->env))
+				return (handle_error_child(data, "", 127, true)); //
+		}
+		else
+				return (handle_error_child(data, "", 127, true)); //
+			
 	}
 	else if (cmd->pid < 0)
 		return (handle_error_parent(data, NULL, EXIT_FAILURE, true));
@@ -78,7 +84,7 @@ static void	execute_commands(t_data *data)
 {
 	t_cmd	*current_cmd;
 
-	if (data->job->next == NULL && is_builtin_command(data->job->cmdv[0]))
+	if (data->job->next == NULL && is_builtin_command(data))
 		return (execute_parent_process(data)); 
 	if (data->pipe_ct)
 		init_pipes(data, data->pipe_ct);
@@ -99,7 +105,6 @@ static void	execute_commands(t_data *data)
 			handle_command_not_found(data, current_cmd->cmdv[0]);
 			data->exit_stat = WEXITSTATUS(data->exit_stat);
 		}
-		unlink(current_cmd->tmp_fn);
 		current_cmd = current_cmd->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:15:07 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/22 17:56:03 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/23 15:51:24 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ static void	cleanup_job(t_cmd *job)
 		tmp = job;
 		job = job->next;
 		ft_free_str_arr(&tmp->cmdv);
+		clear_out_list(&tmp->outs);
+		clear_in_list(&tmp->ins);
+		/*
 		if (tmp->outs->truc_fn != NULL)
 			free(tmp->outs->truc_fn);
 		tmp->outs->truc_fn = NULL;
@@ -35,6 +38,7 @@ static void	cleanup_job(t_cmd *job)
 		if (tmp->ins->read_fn != NULL)
 			free(tmp->ins->read_fn);
 		tmp->ins->read_fn = NULL;
+		*/
 		free(tmp);
 		tmp = NULL;
 	}

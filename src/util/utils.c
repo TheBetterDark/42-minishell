@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 09:11:04 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/23 19:20:50 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ bool	input_matches(char *input, char *test)
 *
 * @return true if the command is a builtin, false otherwise
 */
-bool	is_builtin_command(const char *command)
+bool	is_builtin_command2(const char *command)
 {
 	const char	*builtins[] = {
 		"echo", "cd", "pwd", "export", "unset", "env", "exit"
@@ -69,6 +69,27 @@ bool	is_builtin_command(const char *command)
 	int			i;
 
 	i = 0;
+	while (i < 7)
+	{
+		if (ft_strcmp(command, builtins[i]) == 0)
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+bool	is_builtin_command(t_data *data)
+{
+	const char	*builtins[] = {
+		"echo", "cd", "pwd", "export", "unset", "env", "exit"
+	};
+	const char	*command;
+	int			i;
+
+	if (data->job->cmdv[0] == NULL)
+		return (true);
+	i = 0;
+	command = data->job->cmdv[0];
 	while (i < 7)
 	{
 		if (ft_strcmp(command, builtins[i]) == 0)
