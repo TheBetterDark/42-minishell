@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:15:07 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/23 15:51:24 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/23 20:08:37 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,6 @@ static void	cleanup_job(t_cmd *job)
 		ft_free_str_arr(&tmp->cmdv);
 		clear_out_list(&tmp->outs);
 		clear_in_list(&tmp->ins);
-		/*
-		if (tmp->outs->truc_fn != NULL)
-			free(tmp->outs->truc_fn);
-		tmp->outs->truc_fn = NULL;
-		if (tmp->outs->append_fn != NULL)
-			free(tmp->outs->append_fn);
-		tmp->outs->append_fn = NULL;
-		if (tmp->ins->read_fn != NULL)
-			free(tmp->ins->read_fn);
-		tmp->ins->read_fn = NULL;
-		*/
 		free(tmp);
 		tmp = NULL;
 	}
@@ -78,6 +67,7 @@ void	cleanup_minishell(t_data *data)
 		tok_lstclear(&data->toks);
 	if (data->job)
 	{
+		unlink_heredocs(data->job);
 		cleanup_job(data->job);
 		data->job = NULL;
 	}

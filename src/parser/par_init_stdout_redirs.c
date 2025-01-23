@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/23 18:11:29 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/23 19:44:32 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void	clear_out_list(t_out **head)
 		temp = cur->next;
 		if (cur->truc_fn)
 			free(cur->truc_fn);
+		cur->truc_fn = NULL;
 		if (cur->append_fn)
 			free(cur->append_fn);
+		cur->append_fn = NULL;
 		free(cur);
 		cur = temp;
 	}

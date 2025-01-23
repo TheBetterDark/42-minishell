@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/23 18:07:16 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/23 19:43:29 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void	clear_in_list(t_in **head)
 		temp = cur->next;
 		if (cur->eof)
 			free(cur->eof);
+		cur->eof = NULL;
 		if (cur->read_fn)
 			free(cur->read_fn);
+		cur->read_fn = NULL;
 		free(cur);
 		cur = temp;
 	}
