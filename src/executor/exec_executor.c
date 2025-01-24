@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 16:50:27 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:10:25 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,15 @@ static void	execute_child_process(t_data *data, t_cmd *cmd)
 			return ;
 		redirect_child_stdio(data, &cmd->i, data->pipe_ct);
 		close_pipes(data, data->pipe_ct);
-		if (data->r_input_fd != -1
-			&& dup2(data->r_input_fd, STDIN_FILENO) == -1)
-			handle_error_child(data, NULL, EXIT_FAILURE, true);
-		if (data->r_output_fd != -1
-			&& dup2(data->r_output_fd, STDOUT_FILENO) == -1)
-			handle_error_child(data, NULL, EXIT_FAILURE, true);
 		if (check_for_builtins(data, cmd))
 			exit(data->exit_stat);
 		if (cmd->cmdv[0] != NULL)
 		{
 			if (execve(cmd->cmdv[0], cmd->cmdv, data->env))
-				return (handle_error_child(data, "", 127, true)); //
+				return (handle_error_child(data, "", 127, true));
 		}
 		else
-				return (handle_error_child(data, "", 127, true)); //
-			
+			return (handle_error_child(data, "", 127, true));
 	}
 	else if (cmd->pid < 0)
 		return (handle_error_parent(data, NULL, EXIT_FAILURE, true));
@@ -85,7 +78,7 @@ static void	execute_commands(t_data *data)
 	t_cmd	*current_cmd;
 
 	if (data->job->next == NULL && is_builtin_command(data))
-		return (execute_parent_process(data)); 
+		return (execute_parent_process(data));
 	if (data->pipe_ct)
 		init_pipes(data, data->pipe_ct);
 	current_cmd = data->job;
