@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 16:29:12 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:49:08 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,5 +206,6 @@ char					*try_env_value(char *subquote, char **env,
 bool					is_quote(const char c, const char quote);
 bool					is_blank(const char c);
 void					unlink_heredocs(t_cmd *cmd);
+char					*process_delimiter(char *eof);
 
 #endif

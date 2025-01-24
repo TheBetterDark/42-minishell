@@ -1,0 +1,9 @@
+bin
+in1
+inc
+libft
+Makefile
+minishell
+out
+src
+valgrind.supp

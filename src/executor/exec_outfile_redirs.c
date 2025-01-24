@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 15:15:44 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:21:13 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ bool	outfile_redirections(t_data *data, t_out *outs)
 	}
 	if (data->r_output_fd == -1)
 		handle_error_parent(data, NULL, EXIT_FAILURE, true);
-	if (dup2(data->r_output_fd, 1) == -1)
+	if (dup2(data->r_output_fd, STDOUT_FILENO) == -1)
 		handle_error_parent(data, NULL, EXIT_FAILURE, true);
 	return (true);
 }

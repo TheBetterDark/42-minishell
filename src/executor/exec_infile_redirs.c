@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 16:27:30 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:11:17 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ bool	infile_redirections(t_data *data, t_in *in)
 	heredoc_count = 0;
 	while (tmp)
 	{
+	//	if (data->r_input_fd != -1)
+	//		close(data->r_input_fd);
 		if (tmp->read_fn)
 			data->r_input_fd = open(in->read_fn, O_RDONLY, 0644);
 		if (tmp->eof)
