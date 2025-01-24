@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 14:06:56 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 15:16:17 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@
 *
 * @return True if the redirections are successful, false otherwise
 */
-bool	infile_redirections(t_data *data, t_cmd *cmd)
+bool	infile_redirections(t_data *data, t_in *in)
 {
 	t_in	*tmp;
 
-	if (!cmd->ins)
+	if (!in)
 		return (false);
-	tmp = cmd->ins;
+	tmp = in;
 	while (tmp)
 	{
-		if (cmd->ins->read_fn)
-			data->r_input_fd = open(cmd->ins->read_fn, O_RDONLY, 0644);
+		if (tmp->read_fn)
+			data->r_input_fd = open(in->read_fn, O_RDONLY, 0644);
 		tmp = tmp->next;
 	}
 	if (data->r_input_fd == -1)

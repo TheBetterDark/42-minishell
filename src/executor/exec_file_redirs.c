@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 14:11:33 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 15:12:19 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ bool	file_redirections(t_data *data, t_cmd *cmd)
 		return (true);
 	while (tmp)
 	{
-		outfile_redirections(data, tmp);
-		infile_redirections(data, tmp);
+		outfile_redirections(data, tmp->outs);
+		infile_redirections(data, tmp->ins);
 		tmp = tmp->next;
 	}
 	return (true);

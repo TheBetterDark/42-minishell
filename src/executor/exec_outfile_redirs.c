@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 14:06:35 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 15:15:44 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 * @param data The data struct
 * @param cmd The current command
 */
-static void	check_for_open_redirect(t_data *data, t_cmd *cmd)
+static void	check_for_open_redirect(t_data *data, t_out *out)
 {
-	if (cmd->outs->truc_fn)
+	if (out->truc_fn)
 	{
-		data->r_output_fd = open(cmd->outs->truc_fn,
+		data->r_output_fd = open(out->truc_fn,
 				O_CREAT | O_RDWR | O_TRUNC, 0644);
 	}
 }
@@ -33,11 +33,11 @@ static void	check_for_open_redirect(t_data *data, t_cmd *cmd)
 * @param data The data struct
 * @param cmd The current command
 */
-static void	check_for_append_redirect(t_data *data, t_cmd *cmd)
+static void	check_for_append_redirect(t_data *data, t_out *out)
 {
-	if (cmd->outs->append_fn) // needs to open all cmd->outs and only redirect the last one
+	if (out->append_fn) // needs to open all cmd->outs and only redirect the last one
 	{
-		data->r_output_fd = open(cmd->outs->append_fn,
+		data->r_output_fd = open(out->append_fn,
 				O_CREAT | O_RDWR | O_APPEND, 0644);
 	}
 }
@@ -50,17 +50,19 @@ static void	check_for_append_redirect(t_data *data, t_cmd *cmd)
 *
 * @return True if the redirections are successful, false otherwise
 */
-bool	outfile_redirections(t_data *data, t_cmd *cmd)
+bool	outfile_redirections(t_data *data, t_out *outs)
 {
 	t_out *tmp;
 	
-	if (!cmd->outs)
+	if (!outs)
 		return (false);
-	tmp = cmd->outs;
+	tmp = outs;
 	while (tmp)
 	{
-		check_for_open_redirect(data, cmd);
-		check_for_append_redirect(data, cmd);
+		if (data->r_output_fd != -1)
+			close(data->r_output_fd);
+		check_for_open_redirect(data, tmp);
+		check_for_append_redirect(data, tmp);
 		tmp = tmp->next;
 	}
 	if (data->r_output_fd == -1)
