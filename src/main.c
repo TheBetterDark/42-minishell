@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 17:42:38 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/24 18:54:40 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	main(void)
 	t_data	*data;
 
 	data = init_data();
+	if (!isatty(STDIN_FILENO))
+		handle_error_parent(data, "Minishell: Not a terminal", 1, true);
 	while (true)
 	{
 		cleanup_minishell(data);
