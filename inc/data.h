@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 16:29:12 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:36:43 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,13 +152,11 @@ char					*search_paths(char *path, char *cmd);
 char					*dup_double_quotes(char *str, t_data *data);
 void					add_in_redir(t_in **head, t_in *new);
 t_in					*new_in_redir(t_token *cur);
-//t_in					*init_in_redirections(t_token *cur);
 t_in					*init_in_redirections(t_in **head, t_token *cur);
 void					clear_in_list(t_in **head);
 void					add_out_redir(t_out **head, t_out *new);
 t_out					*new_out_redir(t_token *cur);
 t_out					*init_out_redirections(t_out **head, t_token *cur);
-//t_out					*init_out_redirections(t_token *cur);
 void					clear_out_list(t_out **head);
 
 // -------------------------------- EXECUTOR -------------------------------- //
@@ -168,8 +166,8 @@ bool					file_redirections(t_data *data, t_cmd *cmd);
 bool					infile_redirections(t_data *data, t_in *in);
 bool					outfile_redirections(t_data *data, t_out *out);
 
-//void					direct_heredoc(t_data *d, t_cmd *cmd);
-int						direct_heredoc(t_data *data, t_in *in, int *heredoc_count);
+int						direct_heredoc(t_data *data, t_in *in,
+							int *heredoc_count);
 void					traverse_heredocs(t_data *data, t_cmd *cmd);
 
 void					init_pipes(t_data *data, int cmd_ct);

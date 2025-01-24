@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 15:15:44 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:32:21 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	check_for_open_redirect(t_data *data, t_out *out)
 */
 static void	check_for_append_redirect(t_data *data, t_out *out)
 {
-	if (out->append_fn) // needs to open all cmd->outs and only redirect the last one
+	if (out->append_fn)
 	{
 		data->r_output_fd = open(out->append_fn,
 				O_CREAT | O_RDWR | O_APPEND, 0644);
@@ -52,8 +52,8 @@ static void	check_for_append_redirect(t_data *data, t_out *out)
 */
 bool	outfile_redirections(t_data *data, t_out *outs)
 {
-	t_out *tmp;
-	
+	t_out	*tmp;
+
 	if (!outs)
 		return (false);
 	tmp = outs;

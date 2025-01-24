@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/23 19:44:32 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:43:14 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	clear_out_list(t_out **head)
 
 void	add_out_redir(t_out **head, t_out *new)
 {
-	t_out *cur;
+	t_out	*cur;
 
 	if (*head == NULL)
 	{
@@ -52,7 +52,7 @@ void	add_out_redir(t_out **head, t_out *new)
 
 t_out	*new_out_redir(t_token *cur)
 {
-	t_out *new_out;
+	t_out	*new_out;
 
 	new_out = (t_out *)malloc(sizeof(t_out));
 	if (!new_out)
@@ -62,7 +62,7 @@ t_out	*new_out_redir(t_token *cur)
 	new_out->next = NULL;
 	if (cur->type == APPEND_FILE)
 		new_out->append_fn = handle_filename(cur, APPEND_FILE, ">>");
-	else if (cur->type == OUT_FILE)	
+	else if (cur->type == OUT_FILE)
 		new_out->truc_fn = handle_filename(cur, OUT_FILE, ">");
 	return (new_out);
 }

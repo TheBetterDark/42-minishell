@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 17:10:25 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:35:58 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,12 @@ static void	execute_child_process(t_data *data, t_cmd *cmd)
 		if (cmd->cmdv[0] != NULL)
 		{
 			if (execve(cmd->cmdv[0], cmd->cmdv, data->env))
-				return (handle_error_child(data, "", 127, true));
+				return (handle_error_child(data,
+						"minishell: %s: command not found", 127, true));
 		}
 		else
-			return (handle_error_child(data, "", 127, true));
+			return (handle_error_child(data,
+					"minishell: %s: command not found", 127, true));
 	}
 	else if (cmd->pid < 0)
 		return (handle_error_parent(data, NULL, EXIT_FAILURE, true));
@@ -94,7 +96,6 @@ static void	execute_commands(t_data *data)
 		if (current_cmd->pid != 0)
 		{
 			waitpid(current_cmd->pid, &data->exit_stat, 0);
-			handle_command_not_found(data, current_cmd->cmdv[0]);
 			data->exit_stat = WEXITSTATUS(data->exit_stat);
 		}
 		current_cmd = current_cmd->next;

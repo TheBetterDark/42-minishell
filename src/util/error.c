@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:28:21 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/17 12:20:02 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:36:06 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,4 @@ void	handle_error_child(t_data *data, char *msg, int err_num, bool exit_stat)
 	}
 	else
 		data->exit_stat = err_num;
-}
-
-void	handle_command_not_found(t_data *data, char *command_name)
-{
-	if (WIFEXITED(data->exit_stat) && WEXITSTATUS(data->exit_stat) != 0)
-		ft_printf("minishell: %s: command not found\n", command_name);
 }

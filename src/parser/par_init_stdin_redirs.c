@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/23 19:43:29 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:42:57 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	clear_in_list(t_in **head)
 
 void	add_in_redir(t_in **head, t_in *new)
 {
-	t_in *cur;
+	t_in	*cur;
 
 	if (*head == NULL)
 	{
@@ -52,7 +52,7 @@ void	add_in_redir(t_in **head, t_in *new)
 
 t_in	*new_in_redir(t_token *cur)
 {
-	t_in *new_in;
+	t_in	*new_in;
 
 	new_in = malloc(sizeof(t_in));
 	if (!new_in)
@@ -70,7 +70,7 @@ t_in	*new_in_redir(t_token *cur)
 		new_in->eof = ft_strdup(cur->cont);
 		new_in->eof_len = ft_strlen(cur->cont);
 	}
-	else if (cur->type == IN_FILE)	
+	else if (cur->type == IN_FILE)
 		new_in->read_fn = handle_filename(cur, IN_FILE, "<");
 	return (new_in);
 }
