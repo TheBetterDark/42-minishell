@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/23 19:04:38 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:50:27 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static void	execute_commands(t_data *data)
 		return (execute_parent_process(data)); 
 	if (data->pipe_ct)
 		init_pipes(data, data->pipe_ct);
-	traverse_heredocs(data, data->job);
 	current_cmd = data->job;
 	while (current_cmd)
 	{

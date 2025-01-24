@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 15:17:15 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:29:12 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,8 @@ bool					file_redirections(t_data *data, t_cmd *cmd);
 bool					infile_redirections(t_data *data, t_in *in);
 bool					outfile_redirections(t_data *data, t_out *out);
 
-void					direct_heredoc(t_data *d, t_cmd *cmd);
+//void					direct_heredoc(t_data *d, t_cmd *cmd);
+int						direct_heredoc(t_data *data, t_in *in, int *heredoc_count);
 void					traverse_heredocs(t_data *data, t_cmd *cmd);
 
 void					init_pipes(t_data *data, int cmd_ct);

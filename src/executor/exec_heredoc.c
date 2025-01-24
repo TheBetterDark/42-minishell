@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/23 18:32:48 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:54:38 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 * @param heredoc The file descriptor
 */
 // TODO: Double quotes & restore tabs and spaces
-static void	write_heredoc(char *buffer, t_data *data)
+static void	write_heredoc(char *buffer, t_data *data, t_in *in)
 {
 	char	**split;
 	int		i;
@@ -32,15 +32,15 @@ static void	write_heredoc(char *buffer, t_data *data)
 	{
 		if (subquote)
 		{
-			ft_putstr_fd(subquote, data->r_input_fd);
+			ft_putstr_fd(subquote, in->heredoc_fd);
 			free(subquote);
 		}
 		else
-			ft_putstr_fd(split[i], data->r_input_fd);
-		ft_putchar_fd(' ', data->r_input_fd);
+			ft_putstr_fd(split[i], in->heredoc_fd);
+		ft_putchar_fd(' ', in->heredoc_fd);
 		i++;
 	}
-	ft_putstr_fd("\n", data->r_input_fd);
+	ft_putstr_fd("\n", in->heredoc_fd);
 	free(buffer);
 }
 
@@ -50,7 +50,7 @@ static void	write_heredoc(char *buffer, t_data *data)
 * @param heredoc The file descriptor
 * @param current_job The current command
 */
-static void	prompt_heredoc(t_data *data, t_cmd *cmd)
+static void	prompt_heredoc(t_data *data, t_in *in)
 {
 	char	*buffer;
 
@@ -58,12 +58,12 @@ static void	prompt_heredoc(t_data *data, t_cmd *cmd)
 	buffer = get_next_line(0);
 	while (buffer)
 	{
-		if (ft_strncmp(buffer, cmd->ins->eof, cmd->ins->eof_len) == 0)
+		if (ft_strncmp(buffer, in->eof, in->eof_len) == 0)
 		{
 			free(buffer);
 			break ;
 		}
-		write_heredoc(ft_strtrim(buffer, "\n"), data);
+		write_heredoc(ft_strtrim(buffer, "\n"), data, in);
 		free(buffer);
 		ft_putstr_fd(HEREDOC_PROMPT, STDOUT_FILENO);
 		buffer = get_next_line(0);
@@ -76,45 +76,26 @@ static void	prompt_heredoc(t_data *data, t_cmd *cmd)
 * @param data The data struct
 * @param cmd The current command
 */
-void	direct_heredoc(t_data *data, t_cmd *cmd)
+int	direct_heredoc(t_data *data, t_in *in, int *heredoc_count)
 {
-	int		heredoc_count;
 	char	filename[256];
 
-	heredoc_count = 0;
-	if (!cmd->ins->eof)
-		return ;
-	while (cmd)
+	if (!in->eof)
+		return (-1);
+	else if (in->eof)
 	{
-		if (cmd->ins->eof)
-		{
-			ft_snprintf(filename, sizeof(filename), "/tmp/hd2sh9fd8F32_%d",
-				heredoc_count);
-			cmd->ins->heredoc_fd = open(filename,
-					O_CREAT | O_RDWR | O_TRUNC, 0644);
-			if (cmd->ins->heredoc_fd == -1)
-				handle_error_parent(data, NULL, 0, true);
-			prompt_heredoc(data, cmd);
-			cmd->ins->read_fn = ft_strdup(filename);
-			close(data->r_input_fd);
-			data->r_input_fd = -1;
-		}
+		ft_bzero(filename, 256);
+		ft_snprintf(filename, sizeof(filename), "/tmp/hd2sh9fd8F32_%d",
+			*heredoc_count);
+		in->heredoc_fd = open(filename,
+				O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if (in->heredoc_fd == -1)
+			handle_error_parent(data, NULL, 0, true);
+		prompt_heredoc(data, in);
+//		in->read_fn = ft_strdup(filename);
+//		close(data->r_input_fd);
 		heredoc_count++;
-		cmd = cmd->next;
+		return (in->heredoc_fd);
 	}
-}
-
-void	traverse_heredocs(t_data *data, t_cmd *cmd)
-{
-	t_cmd	*tmp;
-
-	tmp = cmd;
-	if (!tmp->ins)
-		return ;
-	while (tmp)
-	{
-		if (tmp->ins)
-			direct_heredoc(data, tmp);
-		tmp = tmp->next;
-	}
+	return (-1);
 }
