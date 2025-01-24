@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/23 19:20:36 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:44:50 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,6 @@ char	**init_cmdv(t_token *cur, int size, t_data *data)
 	int		i;
 
 	cmdv = malloc(sizeof(char *) * (size + 1));
-	if (!cmdv)
-		return (handle_error_parent(data, ERR_OUT_OF_MEMORY, 12, true), NULL);
 	i = 0;
 	tmp = cur;
 	while (i < size && tmp)

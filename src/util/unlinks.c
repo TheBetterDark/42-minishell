@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/23 20:09:25 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:38:57 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,16 @@ void	unlink_heredocs(t_cmd *cmd)
 	str = ft_strdup("/tmp/hd2sh9fd8F32_");
 	while (tmp)
 	{
-		if (tmp->ins->eof)
+		if (tmp->ins && tmp->ins->eof)
 		{
-			num = ft_itoa(count);		
-			file = ft_strjoin(str, num);				
+			num = ft_itoa(count);
+			file = ft_strjoin(str, num);
 			unlink(file);
 			count++;
-			free(num);	
+			free(num);
 			free(file);
 		}
 		tmp = tmp->next;
 	}
+	free(str);
 }

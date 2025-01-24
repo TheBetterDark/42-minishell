@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 16:54:38 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:25:53 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,9 @@ int	direct_heredoc(t_data *data, t_in *in, int *heredoc_count)
 		if (in->heredoc_fd == -1)
 			handle_error_parent(data, NULL, 0, true);
 		prompt_heredoc(data, in);
-//		in->read_fn = ft_strdup(filename);
-//		close(data->r_input_fd);
 		heredoc_count++;
+		close(in->heredoc_fd);
+		in->heredoc_fd = open(filename, O_RDONLY, 0644);
 		return (in->heredoc_fd);
 	}
 	return (-1);
