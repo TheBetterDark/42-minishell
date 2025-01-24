@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_file_redirs.c                                 :+:      :+:    :+:   */
+/*   exec_infile_redirs.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 14:11:33 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/24 14:06:56 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,22 @@
 *
 * @return True if the redirections are successful, false otherwise
 */
-bool	file_redirections(t_data *data, t_cmd *cmd)
+bool	infile_redirections(t_data *data, t_cmd *cmd)
 {
-	t_cmd *tmp;
-	
-	tmp = cmd;
-	if (!cmd->ins && !cmd->outs)
-		return (true);
+	t_in	*tmp;
+
+	if (!cmd->ins)
+		return (false);
+	tmp = cmd->ins;
 	while (tmp)
 	{
-		outfile_redirections(data, tmp);
-		infile_redirections(data, tmp);
+		if (cmd->ins->read_fn)
+			data->r_input_fd = open(cmd->ins->read_fn, O_RDONLY, 0644);
 		tmp = tmp->next;
 	}
+	if (data->r_input_fd == -1)
+		return (handle_error_parent(data, NULL, EXIT_FAILURE, true), false);
+	if (dup2(data->r_input_fd, STDIN_FILENO) == -1)
+		handle_error_parent(data, NULL, EXIT_FAILURE, true);
 	return (true);
 }
