@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 09:14:21 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/27 18:12:15 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_token	*tokenizer(t_data *data)
 	head = NULL;
 	while (*toks)
 	{
-		new_tok = tok_lstnew(*toks);
+		new_tok = tok_lstnew(*toks, data);
 		if (!new_tok)
 			return (free_split(toks_start), tok_lstclear(&head),
 				handle_error_parent(data, ERR_OUT_OF_MEMORY, 12, true), NULL);

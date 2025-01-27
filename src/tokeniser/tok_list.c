@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/27 16:23:25 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/27 18:11:31 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 *
 * @return The new token
 */
-t_token	*tok_lstnew(char *word)
+t_token	*tok_lstnew(char *word, t_data *data)
 {
 	t_token	*new_tok;
 
 	new_tok = (t_token *)malloc(sizeof(t_token));
 	if (!new_tok)
 		return (NULL);
-	new_tok->cont = process_tok_cont(word);
+	new_tok->cont = process_tok_cont(word, data);
 	new_tok->next = NULL;
 	new_tok->prev = NULL;
 	return (new_tok);

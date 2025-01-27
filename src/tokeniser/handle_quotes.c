@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/27 17:08:17 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/27 18:08:42 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool handle_single_quote(char *s, int *i)
 	return (false);
 }
 
-static char	*get_str(char *s, int *i)
+static char	*get_str(char *s, int *i, t_data *data)
 {
 	int		start;
 	char	*substr;
@@ -50,6 +50,7 @@ static char	*get_str(char *s, int *i)
 		quotes_closed = handle_double_quote(s, i);
 		if (quotes_closed)
 			substr = ft_substr(s, start + 1, (*i - start) - 1);
+		substr = dup_double_quotes(substr, data);
 	}
 	else if (s[*i] == '\'')
 	{
@@ -68,7 +69,7 @@ static char	*get_str(char *s, int *i)
 	return (substr);
 }
 
-char	*process_tok_cont(char *cont)
+char	*process_tok_cont(char *cont, t_data *data)
 {
 	char	*str1;
 	char	*str2;
@@ -81,7 +82,7 @@ char	*process_tok_cont(char *cont)
 	{
 		str1 = ft_strdup(join);
 		free(join);
-		str2 = get_str(cont, &i);
+		str2 = get_str(cont, &i, data);
 		if (!str2)
 			return (NULL);
 		join = ft_strjoin(str1, str2);
