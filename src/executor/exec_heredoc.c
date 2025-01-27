@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 17:25:53 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/27 21:59:30 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 *
 * @param buffer The buffer to write
 * @param heredoc The file descriptor
-*/
 // TODO: Double quotes & restore tabs and spaces
 static void	write_heredoc(char *buffer, t_data *data, t_in *in)
 {
@@ -43,13 +42,13 @@ static void	write_heredoc(char *buffer, t_data *data, t_in *in)
 	ft_putstr_fd("\n", in->heredoc_fd);
 	free(buffer);
 }
+*/
 
 /*
 * @brief prompt the heredoc to the terminal
 *
 * @param heredoc The file descriptor
 * @param current_job The current command
-*/
 static void	prompt_heredoc(t_data *data, t_in *in)
 {
 	char	*buffer;
@@ -69,13 +68,13 @@ static void	prompt_heredoc(t_data *data, t_in *in)
 		buffer = get_next_line(0);
 	}
 }
+*/
 
 /*
 * @brief Direct the heredoc to the file descriptor
 *
 * @param data The data struct
 * @param cmd The current command
-*/
 int	direct_heredoc(t_data *data, t_in *in, int *heredoc_count)
 {
 	char	filename[256];
@@ -94,8 +93,9 @@ int	direct_heredoc(t_data *data, t_in *in, int *heredoc_count)
 		prompt_heredoc(data, in);
 		heredoc_count++;
 		close(in->heredoc_fd);
-		in->heredoc_fd = open(filename, O_RDONLY, 0644);
+//		in->heredoc_fd = open(filename, O_RDONLY, 0644);
 		return (in->heredoc_fd);
 	}
 	return (-1);
 }
+*/

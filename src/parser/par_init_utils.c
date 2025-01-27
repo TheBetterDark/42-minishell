@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/23 18:12:20 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/27 21:26:17 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur, t_data *data)
 		if (cur->type == EXIT_STAT)
 			cur->cont = ft_itoa(data->exit_stat);
 		if (cur->type == IN_FILE || cur->type == DELIM)
-			new_cmd->ins = init_in_redirections(&head_in, cur);
+			new_cmd->ins = init_in_redirections(&head_in, cur, data);
 		if (cur->type == OUT_FILE || cur->type == APPEND_FILE)
 			new_cmd->outs = init_out_redirections(&head_out, cur);
 		cur = cur->next;

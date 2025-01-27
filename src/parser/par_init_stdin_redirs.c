@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 17:42:57 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/27 22:06:22 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	add_in_redir(t_in **head, t_in *new)
 	cur->next = new;
 }
 
-t_in	*new_in_redir(t_token *cur)
+t_in	*new_in_redir(t_token *cur, t_data *data)
 {
 	t_in	*new_in;
 
@@ -67,21 +67,23 @@ t_in	*new_in_redir(t_token *cur)
 	new_in->next = NULL;
 	if (cur->type == DELIM)
 	{
-		new_in->eof = ft_strdup(cur->cont);
+		new_in->eof = ft_strdup(cur->cont); //needs to handle quotes
 		new_in->eof_len = ft_strlen(cur->cont);
+		new_in->heredoc_fd = get_heredoc(new_in->eof, new_in->eof_len, new_in, data);
+		data->heredoc_ct++;
 	}
 	else if (cur->type == IN_FILE)
 		new_in->read_fn = handle_filename(cur, IN_FILE, "<");
 	return (new_in);
 }
 
-t_in	*init_in_redirections(t_in **head, t_token *cur)
+t_in	*init_in_redirections(t_in **head, t_token *cur, t_data *data)
 {
 	t_in	*new;
 
 	if (cur->type == PIPE)
 		return (*head);
-	new = new_in_redir(cur);
+	new = new_in_redir(cur, data);
 	if (!new)
 		return (clear_in_list(head), NULL);
 	add_in_redir(head, new);

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/16 15:55:13 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/27 20:45:32 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ t_data	*init_data(void)
 	data->cmd_ct = 0;
 	data->pipe_fds = NULL;
 	data->pipe_ct = 0;
+	data->heredoc_ct = 0;
 	return (data);
 }

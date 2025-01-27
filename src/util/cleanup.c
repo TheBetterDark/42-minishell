@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:15:07 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/23 20:08:37 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/27 20:51:48 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	cleanup_minishell(t_data *data)
 		tok_lstclear(&data->toks);
 	if (data->job)
 	{
-		unlink_heredocs(data->job);
+		unlink_heredocs(data);
 		cleanup_job(data->job);
 		data->job = NULL;
 	}
@@ -81,4 +81,5 @@ void	cleanup_minishell(t_data *data)
 		data->pipe_fds = NULL;
 	}
 	data->pipe_ct = -1;
+	data->heredoc_ct = 0;
 }
