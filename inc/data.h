@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 17:49:08 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/27 16:22:17 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,11 @@ t_token					*tok_lstlast(t_token *tok);
 void					tok_lstclear(t_token **tok);
 
 char					**command_line_split(char *input, t_data *data);
-int						count_words(const char *str);
+int						count_words(char *str);
 bool					is_redir_symbol(char c);
+void	find_quote_delim(char *str, int *i, char quote_mark, char other_mark);
+bool	is_space(char c);
+char	*process_tok_cont(char *cont);
 
 // ------------------------------ PARSER ------------------------------------ //
 

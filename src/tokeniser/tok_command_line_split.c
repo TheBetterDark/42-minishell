@@ -6,138 +6,86 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/17 14:37:52 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/27 15:53:03 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
 
-/*
-* @brief Handles quotes in the input string
-*
-* @param str The input string
-* @param pos The position in the string
-*/
-static void	handle_quotes(const char *str, int *pos)
+static void	handle_quote(char *str, int *i, char delim);
+static void handle_non_quote(char *str, int *i);
+static int	find_tok_str_delim(char *str, int *i);
+
+
+static void	handle_quote(char *str, int *i, char delim)
 {
-	if (str[*pos] == '\'')
-	{
-		(*pos)++;
-		while (str[*pos] && str[*pos] != '\'')
-			(*pos)++;
-		if (str[*pos] == '\'')
-			(*pos)++;
-	}
-	else if (str[*pos] == '\"')
-	{
-		(*pos)++;
-		while (str[*pos] && str[*pos] != '\"')
-			(*pos)++;
-		if (str[*pos] == '\"')
-			(*pos)++;
-	}
+	char non_delim;
+
+	non_delim = '\0';
+	if (delim == '\'')
+		non_delim = '\"';
+	else if (delim == '\"')
+		non_delim = '\'';
+	find_quote_delim(str, i, delim, non_delim);
 }
 
-/*
-* @brief Handles special characters in the input string
-*
-* @param str The input string
-* @param pos The position in the string
-*/
-static void	handle_special_chars(const char *str, int *pos)
+static void handle_non_quote(char *str, int *i)
 {
-	char	tmp;
-
-	if (str[*pos] == '>' || str[*pos] == '<')
-	{
-		tmp = str[*pos];
-		(*pos)++;
-		if (str[*pos] && str[*pos] == tmp)
-			(*pos)++;
-	}
+	while (str[*i] && !is_space(str[*i]) && str[*i] != '\''
+		&& str[*i] != '\"')
+		(*i)++;
+	if (str[*i] == '\'')
+		handle_quote(str, i, str[*i]);
+	else if (str[*i] == '\"')
+		handle_quote(str, i, str[*i]);
 }
 
-/*
-* @brief Discerns words in the input string
-*
-* @param str The input string
-* @param pos The position in the string
-*/
-static void	discern_words(const char *str, int *pos)
+static int	find_tok_str_delim(char *str, int *i)
 {
-	if (str[*pos] && (str[*pos] == '\'' || str[*pos] == '\"'))
+	int	start;	
+
+	start = *i;
+	if (str[*i] == '>' || str[*i] == '<' || str[*i] == '|')
 	{
-		handle_quotes(str, pos);
+		(*i)++;
+		if ((str[*i] == '>' && str[*i - 1] == '>')
+			|| (str[*i] == '<' && str[*i - 1] == '<'))
+			(*i)++;
 	}
-	else if (str[*pos] && (str[*pos] == '>' || str[*pos] == '<'))
-	{
-		handle_special_chars(str, pos);
-	}
-	else
-	{
-		while (str[*pos] && !is_blank(str[*pos]) && str[*pos] != '\''
-			&& str[*pos] != '\"' && !is_redir_symbol(str[*pos]))
-			(*pos)++;
-	}
+	else if (str[*i] == '\'')
+		handle_quote(str, i, str[*i]);
+	else if (str[*i] == '\"')
+		handle_quote(str, i, str[*i]);
+	else if (!is_space(str[*i]))
+		handle_non_quote(str, i);
+	return (start);
 }
 
-/*
-* @brief Writes words to the toks array
-*
-* @param toks The array of words
-* @param str The input string
-* @param data The data structure
-*/
-static void	write_words(char **toks, const char *str, t_data *data)
-{
-	int	pos;
-	int	start;
-	int	len;
-
-	pos = 0;
-	start = 0;
-	while (str[pos])
-	{
-		while (str[pos] && is_blank(str[pos]))
-			pos++;
-		start = pos;
-		discern_words(str, &pos);
-		len = pos - start;
-		if (len > 0)
-		{
-			*toks = ft_substr(str, start, len);
-			if (!*toks)
-				exit(1);
-			if (*toks[0] == '$' && ft_strlen(*toks) > 1)
-				*toks = try_env_value(*toks, data->env, data->exit_stat);
-		}
-		else
-			*toks = NULL;
-		toks++;
-	}
-}
-
-/*
-* @brief Splits the command line into words
-*
-* @param input The input string
-* @param data The data structure
-*
-* @return The array of words
-*/
 char	**command_line_split(char *input, t_data *data)
 {
-	char	**toks;
-	int		count;
+	char	**tok_strs;
+	int		size;
+	int		start;
+	int		ct;
+	int		i;
 
-	count = count_words(input);
-	if (count == -1)
+	size = count_words(input);
+	if (size == -1)
 		return (handle_error_parent(data, ERR_UNCLOSED_QUOTES, 258, false),
 			NULL);
-	toks = malloc(sizeof(char *) * (count + 1));
-	if (!toks)
+	tok_strs = malloc(sizeof(char *) * (size + 1));
+	if (!tok_strs)
 		return (handle_error_parent(data, ERR_OUT_OF_MEMORY, 12, true), NULL);
-	write_words(toks, input, data);
-	toks[count] = NULL;
-	return (toks);
+	i = 0;
+	ct = 0;
+	while (ct < size)
+	{
+		while (input[i] && (input[i] == ' ' || input[i] == '\t'))
+			i++;
+		start = find_tok_str_delim(input, &i);	
+		tok_strs[ct] = ft_substr(input, start, i - start);
+		ct++;
+	}
+	tok_strs[ct] = NULL;
+	return (tok_strs);
 }

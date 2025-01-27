@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 20:09:59 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/27 16:23:25 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_token	*tok_lstnew(char *word)
 	new_tok = (t_token *)malloc(sizeof(t_token));
 	if (!new_tok)
 		return (NULL);
-	new_tok->cont = ft_strdup(word);
+	new_tok->cont = process_tok_cont(word);
 	new_tok->next = NULL;
 	new_tok->prev = NULL;
 	return (new_tok);
