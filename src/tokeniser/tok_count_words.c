@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/27 15:51:20 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/28 11:55:46 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static bool	is_quoted(char *str, int *i, char quote_mark)
 	return (false);
 }
 
-static void find_word_delim(char *str, int *i, int *count)
+static void	find_word_delim(char *str, int *i, int *count)
 {
 	while (str[*i] == ' ' || str[*i] == '\t')
 		(*i)++;

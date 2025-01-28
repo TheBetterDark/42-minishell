@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:15:07 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/27 20:51:48 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/28 11:07:42 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ static void	cleanup_fds(t_data *data)
 	data->r_output_fd = -1;
 }
 
+static void	reset_minishell_data_values(t_data *data)
+{
+	data->first_cmd = true;
+	data->cmd_ct = 0;
+	data->pipe_ct = -1;
+	data->heredoc_ct = 0;
+}
+
 /*
 * @brief Cleanup the minishell
 *
@@ -72,14 +80,11 @@ void	cleanup_minishell(t_data *data)
 		data->job = NULL;
 	}
 	cleanup_fds(data);
-	data->first_cmd = true;
-	data->cmd_ct = 0;
 	if (data->pipe_fds)
 	{
 		free_pipes(data, data->pipe_ct);
 		free(data->pipe_fds);
 		data->pipe_fds = NULL;
 	}
-	data->pipe_ct = -1;
-	data->heredoc_ct = 0;
+	reset_minishell_data_values(data);
 }

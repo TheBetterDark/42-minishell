@@ -6,20 +6,19 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 15:42:24 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/27 15:53:03 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/28 11:57:48 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
 
 static void	handle_quote(char *str, int *i, char delim);
-static void handle_non_quote(char *str, int *i);
+static void	handle_non_quote(char *str, int *i);
 static int	find_tok_str_delim(char *str, int *i);
-
 
 static void	handle_quote(char *str, int *i, char delim)
 {
-	char non_delim;
+	char	non_delim;
 
 	non_delim = '\0';
 	if (delim == '\'')
@@ -29,7 +28,7 @@ static void	handle_quote(char *str, int *i, char delim)
 	find_quote_delim(str, i, delim, non_delim);
 }
 
-static void handle_non_quote(char *str, int *i)
+static void	handle_non_quote(char *str, int *i)
 {
 	while (str[*i] && !is_space(str[*i]) && str[*i] != '\''
 		&& str[*i] != '\"')
@@ -82,7 +81,7 @@ char	**command_line_split(char *input, t_data *data)
 	{
 		while (input[i] && (input[i] == ' ' || input[i] == '\t'))
 			i++;
-		start = find_tok_str_delim(input, &i);	
+		start = find_tok_str_delim(input, &i);
 		tok_strs[ct] = ft_substr(input, start, i - start);
 		ct++;
 	}

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/28 10:49:21 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/28 11:09:41 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_token	*tok_lstnew(char *word, t_data *data)
 	new_tok = (t_token *)malloc(sizeof(t_token));
 	if (!new_tok)
 		return (NULL);
-	if (word[0] == '$') //
-		new_tok->cont = dup_double_quotes(word, data); //
+	if (word[0] == '$')
+		new_tok->cont = dup_double_quotes(word, data);
 	else
 		new_tok->cont = process_tok_cont(word, data);
 	new_tok->next = NULL;

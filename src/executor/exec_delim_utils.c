@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 17:48:16 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/28 11:30:47 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void	measure_substr(char *eof, int *pos, int *start)
 {
-	char c;
+	char	c;
 
 	c = eof[*pos];
-	if (c == '\'' || c  == '\"')
+	if (c == '\'' || c == '\"')
 	{
 		if (eof[*pos] == c)
 		{
@@ -42,7 +42,7 @@ char	*process_delimiter(char *eof)
 	char	*str1;
 	char	*str2;
 	char	*result;
-	
+
 	pos = 0;
 	start = 0;
 	result = ft_strdup("");

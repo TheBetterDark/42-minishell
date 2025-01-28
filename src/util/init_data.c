@@ -6,11 +6,28 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/27 20:45:32 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/28 11:09:16 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
+
+static void	assign_default_values(t_data *data)
+{
+	data->input = NULL;
+	data->exit_stat = 0;
+	data->r_input_fd = -1;
+	data->r_output_fd = -1;
+	data->toks = NULL;
+	data->job = NULL;
+	data->save_stdout = -1;
+	data->save_stdin = -1;
+	data->first_cmd = true;
+	data->cmd_ct = 0;
+	data->pipe_fds = NULL;
+	data->pipe_ct = 0;
+	data->heredoc_ct = 0;
+}
 
 /*
 * @brief Initialize the data struct
@@ -31,18 +48,6 @@ t_data	*init_data(void)
 		free(data);
 		return (NULL);
 	}
-	data->input = NULL;
-	data->exit_stat = 0;
-	data->r_input_fd = -1;
-	data->r_output_fd = -1;
-	data->toks = NULL;
-	data->job = NULL;
-	data->save_stdout = -1;
-	data->save_stdin = -1;
-	data->first_cmd = true;
-	data->cmd_ct = 0;
-	data->pipe_fds = NULL;
-	data->pipe_ct = 0;
-	data->heredoc_ct = 0;
+	assign_default_values(data);
 	return (data);
 }

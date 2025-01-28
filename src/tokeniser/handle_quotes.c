@@ -6,25 +6,25 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/27 18:08:42 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/28 11:27:53 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-static bool handle_double_quote(char *s, int *i)
+static bool	handle_double_quote(char *s, int *i)
 {
 	(*i)++;
 	while (s[*i])
 	{
 		if (s[*i] == '\"')
-			return (true);	
+			return (true);
 		(*i)++;
 	}
 	return (false);
 }
 
-static bool handle_single_quote(char *s, int *i)
+static bool	handle_single_quote(char *s, int *i)
 {
 	(*i)++;
 	while (s[*i])
@@ -36,14 +36,12 @@ static bool handle_single_quote(char *s, int *i)
 	return (false);
 }
 
-static char	*get_str(char *s, int *i, t_data *data)
+static char	*substr_logic(char *s, int *i, t_data *data, char *substr)
 {
 	int		start;
-	char	*substr;
 	bool	quotes_closed;
 
 	start = *i;
-	substr = NULL;
 	quotes_closed = true;
 	if (s[*i] == '\"')
 	{
@@ -64,6 +62,15 @@ static char	*get_str(char *s, int *i, t_data *data)
 			(*i)++;
 		substr = ft_substr(s, start, *i - start);
 	}
+	return (substr);
+}
+
+static char	*get_str(char *s, int *i, t_data *data)
+{
+	char	*substr;
+
+	substr = NULL;
+	substr = substr_logic(s, i, data, substr);
 	if (!substr)
 		return (NULL);
 	return (substr);
@@ -75,7 +82,7 @@ char	*process_tok_cont(char *cont, t_data *data)
 	char	*str2;
 	char	*join;
 	int		i;
-	
+
 	i = 0;
 	join = ft_strdup("");
 	while (cont[i])

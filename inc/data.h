@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/27 21:29:14 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/28 11:04:16 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void					tok_redir_operator_type_assigner(t_token *head);
 void					tok_redir_file_type_assigner(t_token *head);
 void					tok_cmd_type_assigner(t_token *head);
 
-t_token	*tok_lstnew(char *word, t_data *data);
+t_token					*tok_lstnew(char *word, t_data *data);
 void					tok_lstadd_back(t_token **head, t_token *new);
 int						tok_lstsize(t_token *tok);
 t_token					*tok_lstlast(t_token *tok);
@@ -139,10 +139,12 @@ void					tok_lstclear(t_token **tok);
 char					**command_line_split(char *input, t_data *data);
 int						count_words(char *str);
 bool					is_redir_symbol(char c);
-void	find_quote_delim(char *str, int *i, char quote_mark, char other_mark);
-bool	is_space(char c);
-char	*process_tok_cont(char *cont, t_data *data);
-int		get_heredoc(char *eof, int size, t_in *in, t_data *data);
+void					find_quote_delim(char *str,
+							int *i, char quote_mark, char other_mark);
+bool					is_space(char c);
+char					*process_tok_cont(char *cont, t_data *data);
+int						get_heredoc(char *eof, int size, t_in *in,
+							t_data *data);
 
 // ------------------------------ PARSER ------------------------------------ //
 
@@ -156,7 +158,8 @@ char					*search_paths(char *path, char *cmd);
 char					*dup_double_quotes(char *str, t_data *data);
 void					add_in_redir(t_in **head, t_in *new);
 t_in					*new_in_redir(t_token *cur, t_data *data);
-t_in					*init_in_redirections(t_in **head, t_token *cur, t_data *data);
+t_in					*init_in_redirections(t_in **head, t_token *cur,
+							t_data *data);
 void					clear_in_list(t_in **head);
 void					add_out_redir(t_out **head, t_out *new);
 t_out					*new_out_redir(t_token *cur);
