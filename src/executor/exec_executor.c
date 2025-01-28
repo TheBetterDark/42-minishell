@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/24 17:35:58 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/28 10:08:16 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	execute_child_process(t_data *data, t_cmd *cmd)
 		{
 			if (execve(cmd->cmdv[0], cmd->cmdv, data->env))
 				return (handle_error_child(data,
-						"minishell: %s: command not found", 127, true));
+						cmd->cmdv[0], 127, true));
 		}
 		else
 			return (handle_error_child(data,

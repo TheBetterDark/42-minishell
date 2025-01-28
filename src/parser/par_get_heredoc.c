@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/27 22:12:52 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/28 10:53:15 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,7 @@ static char	*get_heredoc_name(int heredoc_ct)
 	free(num);
 	return (result);
 }
-/*
-static void	write_heredoc(int fd, char *heredoc_name)
-{
-	char	*buf;
 
-	fd = open(heredoc_name, O_RDONLY);
-	if (fd < 0)
-	{
-		printf("ERROR!\n");
-		exit(EXIT_FAILURE);
-	}
-	while (1)
-	{
-		buf = get_next_line(fd);
-		if (!buf)
-			break ;
-		write(fd, buf, ft_strlen(buf));
-		free(buf);
-	}
-	close(fd);
-}
-*/
 int	get_heredoc(char *eof, int size, t_in *in, t_data *data)
 {
 	char	*buf;
@@ -68,11 +47,11 @@ int	get_heredoc(char *eof, int size, t_in *in, t_data *data)
 			free(buf);
 			break ;
 		}
+		buf = dup_double_quotes(buf, data);
 		write(fd, buf, ft_strlen(buf));
 		free(buf);
 		write(1, "> ", 2);
 	}
 	close(fd);
-	//write_heredoc(fd, in->read_fn);
 	return (fd);
 }

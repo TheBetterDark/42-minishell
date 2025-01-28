@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/27 22:06:22 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/28 10:21:38 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_in	*new_in_redir(t_token *cur, t_data *data)
 	new_in->next = NULL;
 	if (cur->type == DELIM)
 	{
-		new_in->eof = ft_strdup(cur->cont); //needs to handle quotes
+		new_in->eof = process_tok_cont(cur->cont, data);
 		new_in->eof_len = ft_strlen(cur->cont);
 		new_in->heredoc_fd = get_heredoc(new_in->eof, new_in->eof_len, new_in, data);
 		data->heredoc_ct++;

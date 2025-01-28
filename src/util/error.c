@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 17:28:21 by muabdi            #+#    #+#             */
-/*   Updated: 2025/01/24 17:36:06 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/01/28 10:10:23 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	handle_error_child(t_data *data, char *msg, int err_num, bool exit_stat)
 	{
 		if (ft_strlen(msg) > 0)
 		{
-			ft_putstr_fd(SHELL_PROMPT, STDERR_FILENO);
-			ft_putendl_fd(msg, STDERR_FILENO);
+			ft_putstr_fd(msg, STDERR_FILENO);
+			ft_putendl_fd(": command not found", STDERR_FILENO);
 		}
 	}
 	else
