@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/28 11:51:25 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/02 16:09:32 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,27 @@ static char	*get_heredoc_name(int heredoc_ct)
 int	get_heredoc(char *eof, int size, t_in *in, t_data *data)
 {
 	char	*buf;
+	char	*temp;
 	int		fd;
 
 	in->read_fn = get_heredoc_name(data->heredoc_ct);
 	fd = open_heredoc_fd(in);
 	if (fd == -1)
 		return (-1);
-	write(1, "> ", 2);
-	while (1)
+	while (true)
 	{
+		ft_putstr_fd("> ", STDOUT_FILENO);
 		buf = get_next_line(STDIN_FILENO);
 		if (ft_strncmp(buf, eof, size) == 0 && buf[size] == '\n')
 		{
 			free(buf);
 			break ;
 		}
-		buf = dup_double_quotes(buf, data);
-		write(fd, buf, ft_strlen(buf));
+		temp = dup_double_quotes(buf, data);
 		free(buf);
-		write(1, "> ", 2);
+		buf = temp;
+		ft_putstr_fd(buf, fd);
+		free(temp);
 	}
 	close(fd);
 	return (fd);
