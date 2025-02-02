@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/28 11:27:53 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/02 16:15:20 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,18 @@ char	*process_tok_cont(char *cont, t_data *data)
 	{
 		str1 = ft_strdup(join);
 		free(join);
+		if (!str1)
+			return (NULL);
 		str2 = get_str(cont, &i, data);
 		if (!str2)
 			return (NULL);
 		join = ft_strjoin(str1, str2);
 		free(str1);
 		free(str2);
-		i++;
+		if (!join)
+			return (NULL);
+		if (i > (int)ft_strlen(cont))
+			break ;
 	}
 	return (join);
 }
