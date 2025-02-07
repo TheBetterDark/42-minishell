@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   is_builtin_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 13:44:53 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 07:55:30 by muabdi           ###   ########.fr       */
+/*   Created: 2025/02/07 13:37:40 by smoore            #+#    #+#             */
+/*   Updated: 2025/02/07 14:35:41 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../inc/data.h"
 
-void	ft_putendl_fd(char *s, int fd)
+bool	is_builtin_cmd(char *cmdv)
 {
-	int	i;
+	const char	*builtins[] = {
+		"cd", "echo", "env", "exit", "export", "pwd", "unset"
+	};
+	int			i;
 
+	if (!cmdv)
+		return (NULL);
 	i = 0;
-	while (s[i] != '\0')
+	while (i < 7)
 	{
-		write(fd, &s[i], 1);
+		if (word_match(cmdv, (char *)builtins[i]))
+			return (true);
 		i++;
 	}
-	write(fd, "\n", 1);
+	return (false);
 }

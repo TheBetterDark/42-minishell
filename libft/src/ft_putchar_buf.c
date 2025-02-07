@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_putchar_buf.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 13:44:53 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 07:55:30 by muabdi           ###   ########.fr       */
+/*   Created: 2024/08/24 18:34:21 by muabdi            #+#    #+#             */
+/*   Updated: 2025/01/17 14:22:49 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_putendl_fd(char *s, int fd)
+// Writes a character to the buffer.
+int	ft_putchar_buf(char *buffer, size_t size, char c)
 {
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
+	if (size > 0)
 	{
-		write(fd, &s[i], 1);
-		i++;
+		*buffer = c;
+		return (1);
 	}
-	write(fd, "\n", 1);
+	return (0);
 }

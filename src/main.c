@@ -5,171 +5,122 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/17 14:49:18 by smoore           ###   ########.fr       */
+/*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
+/*   Updated: 2025/02/07 11:56:50 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
 
-char	*check_null(char *av)
+volatile sig_atomic_t	g_signal;
+
+t_data	*initialize_minishell(void);
+void	free_minishell(t_data *data);
+char	*read_command_line(void);
+void	run_minishell(t_data *data);
+
+t_data	*initialize_minishell(void)
 {
-	if (ft_strncmp(av, "NULL", 4) == 0)
+	t_data	*data;
+
+	data = malloc(sizeof(t_data));
+	if (!data)
 		return (NULL);
-	return (ft_strdup(av));
+	data->input = NULL;
+	data->toks = NULL;
+	data->cmds = NULL;
+	data->cmd_ct = 0;
+	data->pipe_ct = 0;
+	data->heredoc_ct = 0;
+	data->env = ft_str_arr_dup((const char **)__environ);
+	data->read_fd = -1;
+	data->write_fd = -1;
+	return (data);
 }
 
-int		find_cmdv_size(t_token *cur)
+void	free_minishell(t_data *data)
 {
-	t_token	*cur_cur;
-	int	size;
-
-	size = 0;
-	cur_cur = cur;
-	while (cur_cur && (cur_cur->type == CMD || cur_cur->type == ARG)) 
+	if (data)
 	{
-		size++;
-		cur_cur = cur_cur->next;
-	}
-	return (size);
-}
-
-char	**init_cmdv(t_token *cur, int size)
-{
-	char	**cmdv;
-	int		i;
-
-	cmdv = malloc(sizeof(char *) * (size + 1));
-	if (!cmdv)
-		return (NULL);
-	i = 0;
-	while (i < size && cur)
-	{
-		if (cur->type == CMD || cur->type == ARG)
+		if (data->input)
+			free(data->input);
+		if (data->toks)
+			tok_lstclear(&data->toks);
+		if (data->cmds && data->pipe_ct)
+			free_pipes(data, data->pipe_ct);
+		if (data->cmds)
+			cmd_lstclear(&data->cmds);
+		if (data->read_fd != -1)
 		{
-			cmdv[i] = ft_strdup(cur->cont);
-			if (!cmdv[i])
-			{
-				perror("Cmdv strdup Error");
-				while (i > 0)
-					free(cmdv[--i]);
-				free(cmdv);
-				return (NULL);
-			}
-			i++;
+			close(data->read_fd);
+			data->read_fd = -1;
 		}
-		cur = cur->next;
-	}
-	cmdv[i] = NULL;
-	return (cmdv);
-}
-void	set_new_cmd_nulls(t_cmd *new_cmd)
-{
-	new_cmd->append_fn = NULL;
-	new_cmd->open_fn = NULL;
-	new_cmd->input_fn = NULL;
-	new_cmd->eof = NULL;
-	new_cmd->e_len = 0;
-	new_cmd->next = NULL;
-}
-
-void	get_new_cmd_data(t_cmd *new_cmd, t_token *cur)
-{
-	set_new_cmd_nulls(new_cmd);
-	//while (cur && (cur->type != PIPE && cur->type != CMD))
-	while (cur)
-	{
-		if (cur->type == APPEND_FILE)
-			new_cmd->append_fn = cur->cont;
-		if (cur->type == OUT_FILE)
-			new_cmd->open_fn = cur->cont;
-		if (cur->type == IN_FILE)
-			new_cmd->input_fn = cur->cont;
-		if (cur->type == DELIM)
+		if (data->write_fd != -1)
 		{
-			new_cmd->eof = cur->cont;
-			new_cmd->e_len = ft_strlen(cur->cont);
+			close(data->write_fd);
+			data->write_fd = -1;
 		}
-		cur = cur->next;
+		data->cmd_ct = 0;
+		data->pipe_ct = 0;
+		data->heredoc_ct = 0;
 	}
 }
 
-t_token	*init_new_cmd(t_cmd **new_cmd, t_token *cur)
+char	*read_command_line(void)
 {
-	int		size;
-	
-	size = find_cmdv_size(cur);
-	*new_cmd = malloc(sizeof(t_cmd));
-	if (!*new_cmd)
-		return (NULL);
-	(*new_cmd)->cmdv = init_cmdv(cur, size);
-	if (!(*new_cmd)->cmdv)
+	char	*input;
+	char	*trim;
+
+	input = readline("minishell$ ");
+	if (input)
+		add_history(input);
+	trim = ft_strtrim(input, " \t");
+	free(input);
+	if (!has_finished_quotes(trim))
 	{
-		perror("Cmdv Error");
-		return (NULL);
+		input = finish_quotes(trim);
+		free(trim);
+		trim = ft_strtrim(input, "\n");
+		free(input);
 	}
-	get_new_cmd_data(*new_cmd, cur);
-	(*new_cmd)->next = NULL;	
-	while (cur && cur->type != PIPE)
-		cur = cur->next;
-	if (cur && cur->type == PIPE)
-		cur = cur->next;
-	return (cur);
+	return (trim);
 }
 
-void	add_to_job(t_cmd **head_cmd, t_cmd *new_cmd)
+void	run_minishell(t_data *data)
 {
-	t_cmd	*current;
-
-	if (*head_cmd == NULL)
-		*head_cmd = new_cmd;
-	else
+	while (data)
 	{
-		current = *head_cmd;
-		while (current->next != NULL)
-			current = current->next;
-		current->next = new_cmd;
-	}
-}
-
-t_cmd	*parser(t_data *d)
-{
-	t_cmd	*job;
-	t_cmd	*new_cmd;
-	t_token	*cur;
-
-	job = NULL;
-	cur = d->toks;
-	while (cur)
-	{
-		cur = init_new_cmd(&new_cmd, cur);	
-		add_to_job(&job, new_cmd);
-	}
-	return (job);
-}
-
-void	minishell(t_data *d)
-{
-	while (1)
-	{		
-		d->input = readline("🐚");
-		readline_config(d);
-		if (!d->input)
+		free_minishell(data);
+		config_minishell_signals(&data->saved_termios);
+		data->input = read_command_line();
+		if (g_signal == MINI_SIGINT)
+			g_signal = NO_SIGNAL;
+		if (!data->input || word_match(data->input, "exit"))
+		{
+			printf("exit\n");
 			break ;
-		d->toks = tokenizer(d);
-		print_toks(d);
-		d->job = parser(d);
-		print_job(d->job);
-		free_minishell(d);
+		}
+		if (word_match(data->input, "history -c"))
+			rl_clear_history();
+		tokenize(data);
+		parse(data);
+		execute(data);
 	}
 }
 
 int	main(void)
 {
-	t_data		*d;
-	extern char	**environ;
+	t_data	*data;
 
-	d = init_data(environ);
-	minishell(d);
-	free_data(d);
+	if (!isatty(STDIN_FILENO))
+	{
+		ft_putstr_fd("minishell: not a terminal", STDERR_FILENO);
+		return (1);
+	}
+	data = initialize_minishell();
+	run_minishell(data);
+	ft_str_arr_free(&data->env);
+	free_minishell(data);
+	free(data);
+	return (0);
 }

@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 13:44:53 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 07:55:30 by muabdi           ###   ########.fr       */
+/*   Created: 2025/02/07 13:38:00 by smoore            #+#    #+#             */
+/*   Updated: 2025/02/07 14:25:17 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../inc/data.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	parse(t_data *data)
 {
-	int	i;
+	t_token	*cur;
+	t_cmd	*new;
 
-	i = 0;
-	while (s[i] != '\0')
+	cur = data->toks;
+	while (cur)
 	{
-		write(fd, &s[i], 1);
-		i++;
+		new = cmd_lstnew(&cur, data);
+		cmd_lstadd_back(&data->cmds, new);
+		data->cmd_ct++;
 	}
-	write(fd, "\n", 1);
+	data->pipe_ct = data->cmd_ct - 1;
+	get_expansions(&data->cmds, data);
+	get_heredocs(&data->cmds, data);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ltoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/14 17:52:56 by smoore            #+#    #+#             */
+/*   Updated: 2025/01/05 07:55:16 by muabdi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/libft.h"
 
 static int	get_digits(int n)
@@ -17,7 +29,7 @@ static int	get_digits(int n)
 	return (digits);
 }
 
-static void put_arr(char **str, long long n, int i)
+static void	put_arr(char **str, long long n, int i)
 {
 	if (n == LLONG_MIN)
 	{

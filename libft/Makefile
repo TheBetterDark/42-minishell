@@ -13,32 +13,25 @@ CURSIVE='\033[3m'
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo $(CURSIVE)$(GRAY) "	-	Making object files"$(NONE)
-	@echo $(CURSIVE)$(GRAY) "	-	Archiving $(NAME)..."$(NONE)
 	@ar rcs $(NAME) $(OBJ) 
-	@echo $(GREEN) "- Compiled -"$(NONE)
+	@echo $(GREEN) "Libft Compiled"$(NONE)
 	@rm $(OBJ)
-	@echo $(CURSIVE)$(GRAY) "	-	Deleted object files"$(NONE)
 
 %.o: %.c $(HEADER) 
 	@$(CC) -c $< -o $@ 
 
 clean:
-	@echo $(CURSIVE)$(GRAY) "	-	Deleting object files"$(NONE)
 	@rm -f $(OBJ)
 
 fclean: clean 
-	@echo $(CURSIVE)$(GRAY) "	-	Deleting archive file"$(NONE)
 	@rm -f $(NAME)
 
 re: fclean all
 
 main:
-	@echo $(CURSIVE)$(GRAY) "	-	Making executable"$(NONE)
 	@$(CC) main.c $(LFLAG) -o main
 
 mclean: fclean clean
-	@echo $(CURSIVE)$(GRAY) "	-	Deleting executable"$(NONE)
 	@rm -f main
 
 .PHONY: all clean fclean re

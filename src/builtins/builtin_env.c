@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   exec_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 13:44:53 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 07:55:30 by muabdi           ###   ########.fr       */
+/*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
+/*   Updated: 2025/01/12 18:22:57 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../inc/data.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	builtin_env(t_data *data);
+
+/*
+* @brief Print the environment variables
+*
+* @param data The data structure
+*/
+
+void	builtin_env(t_data *data)
 {
-	int	i;
+	char	**tmp;
 
-	i = 0;
-	while (s[i] != '\0')
+	tmp = data->env;
+	while (*tmp)
 	{
-		write(fd, &s[i], 1);
-		i++;
+		ft_putendl_fd(*tmp, STDOUT_FILENO);
+		tmp++;
 	}
-	write(fd, "\n", 1);
 }

@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   exec_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 13:44:53 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 07:55:30 by muabdi           ###   ########.fr       */
+/*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
+/*   Updated: 2025/01/12 18:23:07 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../inc/data.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	builtin_export(t_data *data, char *export_str);
+
+/*
+* @brief Add a new environment variable
+*
+* @param data The data structure
+*/
+
+void	builtin_export(t_data *data, char *export_str)
 {
-	int	i;
+	char	**new_env;
 
-	i = 0;
-	while (s[i] != '\0')
+	new_env = ft_str_arr_add((const char **)data->env, export_str);
+	if (!new_env)
 	{
-		write(fd, &s[i], 1);
-		i++;
+		perror("export failed");
+		exit(EXIT_FAILURE);
 	}
-	write(fd, "\n", 1);
+	ft_str_arr_free(&data->env);
+	data->env = new_env;
 }

@@ -3,24 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_str_array.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:51:35 by smoore            #+#    #+#             */
-/*   Updated: 2024/11/25 16:36:17 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/05 07:53:55 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_free_str_arr(char **str_arr)
+void	ft_str_arr_free(char ***head)
 {
-	char **tmp;
+	char	**tmp;
 
-	tmp = str_arr;
+	if (!head || *head == NULL)
+		return ;
+	tmp = *head;
 	while (*tmp)
 	{
 		free(*tmp);
+		*tmp = NULL;
 		tmp++;
 	}
-	free(str_arr);
+	free(*head);
+	*head = NULL;
 }

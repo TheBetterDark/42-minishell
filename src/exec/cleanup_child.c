@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_minishell.c                                   :+:      :+:    :+:   */
+/*   cleanup_child.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/16 17:12:55 by smoore           ###   ########.fr       */
+/*   Created: 2025/02/07 13:38:44 by smoore            #+#    #+#             */
+/*   Updated: 2025/02/07 13:38:46 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/data.h"
 
-void	free_minishell(t_data *d)
+void	cleanup_child(t_data *data, int exit_status);
+
+void	cleanup_child(t_data *data, int exit_status)
 {
-	free(d->input);
-	d->cmd_ct = 0;
-	tok_lstclear(&d->toks);
-	d->input_fd = 0;
-	d->output_fd = 1;
-	d->r_input_fd = -1;
-	d->r_output_fd = -1;
+	if (data)
+	{
+		free_minishell(data);
+		ft_str_arr_free(&data->env);
+		free(data);
+	}
+	exit(exit_status);
 }

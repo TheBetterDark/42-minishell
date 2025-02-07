@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_arr_has.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:51:08 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/13 17:11:07 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/07 19:23:38 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-bool	ft_str_arr_has(const char **str_arr, const char *str)
+char	*ft_str_arr_has(const char **str_arr, const char *str)
 {
 	const char	**tmp;
 
@@ -22,8 +22,8 @@ bool	ft_str_arr_has(const char **str_arr, const char *str)
 	while (*tmp)
 	{
 		if (ft_strncmp(*tmp, str, ft_strlen(str)) == 0)
-			return (true);
+			return ((char *)*tmp);
 		tmp++;
 	}
-	return (false);
+	return (NULL);
 }

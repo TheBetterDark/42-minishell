@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tok_type_utils.c                                   :+:      :+:    :+:   */
+/*   exec_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/16 16:21:49 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/12 18:23:21 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/data.h"
+#include "../../inc/data.h"
 
-bool	is_cmd(t_token *cur, bool first)
+void	builtin_pwd(void);
+
+/*
+* @brief Print the current working directory
+*/
+
+void	builtin_pwd(void)
 {
-	if (first || cur->prev->type == PIPE)
-		return (true);
-	return (false);
+	char	*buf;
+
+	buf = getcwd(NULL, 0);
+	if (buf == NULL)
+	{
+		perror("cwd");
+		exit(EXIT_FAILURE);
+	}
+	ft_putendl_fd(buf, STDOUT_FILENO);
+	free(buf);
 }

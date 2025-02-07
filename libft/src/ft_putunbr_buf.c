@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_putunbr_buf.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 13:44:53 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 07:55:30 by muabdi           ###   ########.fr       */
+/*   Created: 2024/08/24 18:39:31 by muabdi            #+#    #+#             */
+/*   Updated: 2025/01/17 14:22:49 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_putendl_fd(char *s, int fd)
+// Writes an unsigned integer to the buffer.
+int	ft_putunbr_buf(char *buffer, size_t size, unsigned int n)
 {
-	int	i;
+	int				len;
+	unsigned int	num;
 
-	i = 0;
-	while (s[i] != '\0')
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
-	write(fd, "\n", 1);
+	len = 0;
+	num = n;
+	if (num >= 10)
+		len += ft_putunbr_buf(buffer + len, size - len, num / 10);
+	if (size > (size_t)len)
+		buffer[len] = num % 10 + '0';
+	len++;
+	return (len);
 }

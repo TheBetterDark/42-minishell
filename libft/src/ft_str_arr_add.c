@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_arr_add.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:43:29 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/13 15:25:22 by smoore           ###   ########.fr       */
+/*   Updated: 2025/01/05 07:55:59 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 static int	find_size(const char **str_arr)
 {
 	const char	**tmp;
-	int		size;
+	int			size;
 
 	size = 1;
 	tmp = str_arr;
-	while (*str_arr)
+	while (*tmp)
 	{
 		size++;
-		str_arr++;
+		tmp++;
 	}
 	return (size);
 }

@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_configs.c                                :+:      :+:    :+:   */
+/*   ft_putstr_buf.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2024/12/16 17:14:55 by smoore           ###   ########.fr       */
+/*   Created: 2024/08/24 18:35:20 by muabdi            #+#    #+#             */
+/*   Updated: 2025/01/17 14:22:49 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/data.h"
+#include "../include/libft.h"
 
-void	readline_config(t_data *d)
+// Writes a string to the buffer.
+int	ft_putstr_buf(char *buffer, size_t size, const char *str)
 {
-	add_history(d->input);
-	if (input_matches(d->input, "history -c"))
-		rl_clear_history();
-	else if (input_matches(d->input, "exit"))
-		exit(EXIT_SUCCESS);
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0' && i < size)
+	{
+		buffer[i] = str[i];
+		i++;
+	}
+	return (i);
 }
