@@ -6,11 +6,11 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:35:30 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:20:42 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/data.h"
+#include "../../inc/data.h"
 
 int		count_words(char *line);
 char	**allocate_words_memory(char *line);

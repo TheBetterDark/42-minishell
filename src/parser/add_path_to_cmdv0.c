@@ -6,11 +6,11 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:36:23 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:29:24 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/07 14:42:54 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "data.h"
+#include "../../inc/data.h"
 
 static char	**get_paths(t_data *data);
 static bool	try_find_target_path(char ***paths, char **cmdv0,

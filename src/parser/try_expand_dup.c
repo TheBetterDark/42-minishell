@@ -6,11 +6,11 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:17 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:25:11 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/data.h"
+#include "../../inc/data.h"
 
 char	*get_plain_substr(char *name, int *i);
 char	*get_expanded_substr(char *substr, int *i, t_data *data);

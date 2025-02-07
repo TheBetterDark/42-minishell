@@ -6,11 +6,11 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:35:22 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:20:51 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/data.h"
+#include "../../inc/data.h"
 
 char	**command_line_split(char *line);
 

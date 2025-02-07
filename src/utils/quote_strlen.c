@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quote_strlen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:51:57 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 13:33:49 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/data.h"
+#include "../../inc/data.h"
 
 static void	quoted_strlen_util(char *str, int *i);
 int			quoted_strlen(char *str);

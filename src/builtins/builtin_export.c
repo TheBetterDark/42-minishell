@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_export.c                                      :+:      :+:    :+:   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 18:23:07 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/07 14:55:57 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	builtin_export(t_data *data, char *export_str)
 {
 	char	**new_env;
 
+	if (!ft_strchr(export_str, '='))
+	{
+		data->exit_stat = 1;
+		return ;
+	}
 	new_env = ft_str_arr_add((const char **)data->env, export_str);
 	if (!new_env)
 	{

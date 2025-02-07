@@ -6,11 +6,11 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:59 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:29:10 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/data.h"
+#include "../../inc/data.h"
 
 void	open_read_files(t_ins *ins, t_data *data);
 void	open_write_files(t_outs *outs, t_data *data);

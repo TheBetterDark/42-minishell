@@ -3,80 +3,108 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smoore <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 11:51:31 by smoore            #+#    #+#              #
-#    Updated: 2025/02/07 11:51:34 by smoore           ###   ########.fr        #
+#    Updated: 2025/02/07 14:55:47 by muabdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CC = cc -Wall -Wextra -Werror -g
-LIBFT = libft/libft.a
-HEADER = inc/data.h
-IFLAG = -I./inc -I./libft/include
-SRC = $(wildcard src/*.c)
-#builtins  exec  main.c  parser  tokens  utils
-SRC1 = $(wildcard src/utils/*.c)
-SRC2 = $(wildcard src/builtins/*.c)
-SRC3 = $(wildcard src/tokens/*.c)
-SRC4 = $(wildcard src/parser/*.c)
-SRC5 = $(wildcard src/exec/*.c)
-OBJ = $(patsubst src/%.c, obj/%.o, $(SRC)) \
-	$(patsubst src/utils/%.c, obj/%.o, $(SRC1))\
-	$(patsubst src/builtins/%.c, obj/%.o, $(SRC2))\
-	$(patsubst src/tokens/%.c, obj/%.o, $(SRC3))\
-	$(patsubst src/parser/%.c, obj/%.o, $(SRC4))\
-	$(patsubst src/exec/%.c, obj/%.o, $(SRC5))
+
+INCLUDES = ./inc
+
+LIBFT = libft
+
+CC = cc
+CFLAGS = -Wall -Werror -Wextra
+
+INCLUDEFLAGS = -I$(INCLUDES) -I$(LIBFT)/includes
 
 RED = \033[0;31m
 GREEN = \033[0;32m
 YELLOW = \033[0;33m
+NC = \033[0m
 
-all: libft $(NAME)
+SRC_DIR = ./src
+OBJ_DIR = ./bin
 
-#LINKING
-$(NAME): $(OBJ)
-	@make -C libft
-	@$(CC) $(IFLAG) $^ -o $@ $(LIBFT) -lreadline
-	@echo "${GREEN}Linked up."
+SRCS = $(SRC_DIR)/main.c \
+	$(SRC_DIR)/builtins/builtin_cd.c \
+    $(SRC_DIR)/builtins/builtin_echo.c \
+    $(SRC_DIR)/builtins/builtin_env.c \
+    $(SRC_DIR)/builtins/builtin_exit.c \
+    $(SRC_DIR)/builtins/builtin_export.c \
+    $(SRC_DIR)/builtins/builtin_pwd.c \
+    $(SRC_DIR)/builtins/builtin_unset.c \
+    $(SRC_DIR)/builtins/execute_builtins.c \
+	$(SRC_DIR)/exec/cleanup_child.c \
+    $(SRC_DIR)/exec/execute.c \
+    $(SRC_DIR)/exec/pipeline.c \
+    $(SRC_DIR)/exec/prepare_file_descriptors.c \
+    $(SRC_DIR)/parser/add_path_to_cmdv0.c \
+    $(SRC_DIR)/parser/cmd_lstnew.c \
+    $(SRC_DIR)/parser/find_cmdv_size.c \
+    $(SRC_DIR)/parser/find_environment_value.c \
+    $(SRC_DIR)/parser/get_expansions.c \
+    $(SRC_DIR)/parser/get_heredocs.c \
+    $(SRC_DIR)/parser/get_io_redirs.c \
+    $(SRC_DIR)/parser/ins_lstnew.c \
+    $(SRC_DIR)/parser/is_builtin_cmd.c \
+    $(SRC_DIR)/parser/outs_lstnew.c \
+    $(SRC_DIR)/parser/parse.c \
+    $(SRC_DIR)/parser/process_str.c \
+    $(SRC_DIR)/parser/search_paths.c \
+    $(SRC_DIR)/parser/try_expand_dup.c \
+	$(SRC_DIR)/tokens/assign_tok_types.c \
+    $(SRC_DIR)/tokens/command_line_split.c \
+    $(SRC_DIR)/tokens/count_words.c \
+    $(SRC_DIR)/tokens/tok_lstnew.c \
+    $(SRC_DIR)/tokens/tokenize.c \
+    $(SRC_DIR)/utils/config_child_signals.c \
+    $(SRC_DIR)/utils/config_minishell_signals.c \
+    $(SRC_DIR)/utils/config_parent_signals.c \
+    $(SRC_DIR)/utils/finish_quotes.c \
+    $(SRC_DIR)/utils/quote_strlen.c \
+    $(SRC_DIR)/utils/str_utils.c \
+    $(SRC_DIR)/utils/str_utils2.c
 
-#COMPILING
-obj/%.o: src/%.c $(HEADER)
-	@mkdir -p obj
-	@$(CC) $(IFLAG) -c $< -o $@ 
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-obj/%.o: src/utils/%.c $(HEADER)
-	@mkdir -p obj
-	@$(CC) $(IFLAG) -c $< -o $@ 
+all: $(NAME) $(OBJ_DIR)
 
-obj/%.o: src/builtins/%.c $(HEADER)
-	@mkdir -p obj
-	@$(CC) $(IFLAG) -c $< -o $@ 
+$(OBJ_DIR):
+	@echo "${YELLOW}Creating object directory $(OBJ_DIR)...${NC}"
+	@mkdir -p $(OBJ_DIR)
+	@echo "${GREEN}Object directory $(OBJ_DIR) created.${NC}"
 
-obj/%.o: src/tokens/%.c $(HEADER)
-	@mkdir -p obj
-	@$(CC) $(IFLAG) -c $< -o $@ 
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) $(INCLUDEFLAGS) -c $< -o $@
 
-obj/%.o: src/parser/%.c $(HEADER)
-	@mkdir -p obj
-	@$(CC) $(IFLAG) -c $< -o $@ 
+${NAME}: $(OBJS)
+	@make -C $(LIBFT)
+	@echo "${YELLOW}Creating $(NAME)...${NC}"
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -o $(NAME) -lreadline
+	@echo "${GREEN}$(NAME) created.${NC}"
 
-obj/%.o: src/exec/%.c $(HEADER)
-	@mkdir -p obj
-	@$(CC) $(IFLAG) -c $< -o $@ 
-
+all: $(NAME) $(OBJ_DIR)
 
 clean:
-	@echo "${YELLOW}Cleaning..."
-	@rm -f obj/*.o
-	@echo "${GREEN}Cleaned."
+	@make -C $(LIBFT) clean
+	@echo "${YELLOW}Removing object files...${NC}"
+	@rm -rf $(OBJ_DIR)
+	@echo "${GREEN}Object files removed.${NC}"
 
-fclean: clean
-	@echo "${YELLOW}Fcleaning..."
+fclean:
+	@make -C $(LIBFT) fclean
+	@echo "${YELLOW}Removing object files...${NC}"
+	@rm -rf $(OBJ_DIR)
+	@echo "${GREEN}Object files removed.${NC}"
+	@echo "${YELLOW}Removing $(Name) executable...${NC}"
 	@rm -f $(NAME)
-	@echo "${GREEN}Fcleaned."
+	@echo "${GREEN}$(NAME) executable removed.${NC}"
 
 re: fclean all
 
-.PHONY: minishell all clean fclean re
+.PHONY: all clean fclean re

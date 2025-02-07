@@ -6,11 +6,11 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:37:18 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:24:58 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/data.h"
+#include "../../inc/data.h"
 
 static bool	read_write(t_ins *ins, t_data *data);
 static void	get_cur_heredoc(t_ins *ins, t_data *data);

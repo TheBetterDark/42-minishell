@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   finish_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:14:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 12:48:37 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/07 15:25:39 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/data.h"
+#include "../../inc/data.h"
 
 static bool	finish_quotes_util(char **join, char **buf, char **str1,
 				char quote);
@@ -50,8 +50,8 @@ char	*finish_quotes(char *input)
 		return (NULL);
 	}
 	while (!found)
-	{
 		found = finish_quotes_util(&join, &buf, &str1, quote);
-	}
+	if (buf)
+		free(buf);
 	return (join);
 }

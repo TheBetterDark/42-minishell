@@ -6,11 +6,11 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:37:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:23:34 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/data.h"
+#include "../../inc/data.h"
 
 static void	get_ins_redirs(t_cmd **cmd, t_token *toks, t_data *data);
 static void	get_outs_redirs(t_cmd **cmd, t_token *toks);
