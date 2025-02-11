@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:06 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/10 17:58:43 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ char	*process_str(char *name, t_data *data)
 	char	*tmp;
 	int		i;
 
-	result = ft_strdup("");
 	i = 0;
+	result = ft_strdup("");
 	while (name[i])
 	{
 		tmp = ft_strdup(result);

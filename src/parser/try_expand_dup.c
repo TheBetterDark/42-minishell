@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:17 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/10 18:45:24 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	*get_plain_substr(char *name, int *i)
 	substr = NULL;
 	start = *i;
 	while (name[*i] && name[*i] != '$')
+		(*i)++;
+	if (name[ft_strlen(name) - 1] == '$')
 		(*i)++;
 	substr = ft_substr(name, start, *i - start);
 	return (substr);
@@ -64,7 +66,7 @@ char	*try_expand_dup(char *name, t_data *data)
 	{
 		str1 = ft_strdup(join);
 		free(join);
-		if (name[i] == '$')
+		if (name[i] == '$' && name[i + 1] != '$')
 			str2 = get_expanded_substr(name, &i, data);
 		else
 			str2 = get_plain_substr(name, &i);

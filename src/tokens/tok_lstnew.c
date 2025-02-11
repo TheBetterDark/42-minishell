@@ -14,6 +14,7 @@
 
 void	tok_lstclear(t_token **head);
 void	tok_lstadd_back(t_token **head, t_token *new);
+t_token	*tok_lstlast(t_token *cur);
 t_token	*tok_lstnew(char *word);
 
 void	tok_lstclear(t_token **head)
@@ -32,6 +33,19 @@ void	tok_lstclear(t_token **head)
 		cur = next;
 	}
 	*head = NULL;
+}
+
+t_token	*tok_lstlast(t_token *cur)
+{
+	if (!cur)
+		return (NULL);
+	while (cur)
+	{
+		if (!cur->next)
+			return (cur);
+		cur = cur->next;
+	}
+	return (cur);
 }
 
 void	tok_lstadd_back(t_token **head, t_token *new)

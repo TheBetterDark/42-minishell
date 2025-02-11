@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_echo.c                                        :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/12 18:51:58 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/10 20:14:34 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ void	builtin_echo(t_cmd *cmd)
 	char	**echos;
 	bool	no_endl;
 
+	no_endl = false;
 	echos = cmd->cmdv;
 	echos++;
-	no_endl = word_match(*echos, "-n");
+	if (*echos)
+		no_endl = word_match(*echos, "-n");
 	if (no_endl)
 		echos++;
 	while (*echos)

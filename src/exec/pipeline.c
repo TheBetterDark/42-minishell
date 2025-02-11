@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/07 16:04:22 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	free_pipes(t_data *data, int pipe_ct)
 	int	i;
 
 	i = 0;
+	if (!data->pipe_fd)
+		return ;
 	while (i < pipe_ct)
 	{
 		free(data->pipe_fd[i]);

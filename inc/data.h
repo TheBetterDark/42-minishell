@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:28:20 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/10 15:13:43 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
-# define NO_SIGNAL			0
-# define MINI_SIGINT		1
-# define HEREDOC_SIGINT 	2
-# define HEREDOC_MODE		10
 
 extern volatile sig_atomic_t	g_signal;
+
 enum							e_type
 {
 	ARG,
@@ -40,6 +37,15 @@ enum							e_type
 	FN_TRUNC,
 	FN_APPEND,
 	DELIM,
+};
+
+enum							e_signal
+{
+	NO_SIGNAL,
+	RL_SIGNAL,
+	NORMAL_SIGNAL,
+	IGNORE_SIGNAL,
+	CHILD_SIGNAL
 };
 
 typedef struct s_data			t_data;
@@ -99,15 +105,20 @@ typedef struct s_data
 	int				**pipe_fd;
 	int				read_fd;
 	int				write_fd;
+	char			*pwd;
+	bool			token_syntax_error;
+	bool			input_mode;
 }	t_data;
 
 //	** MAIN  **	//
-t_data	*initialize_minishell(void);
-void	free_minishell(t_data *data);
-char	*read_command_line(void);
+char	*read_command_line(t_data *data);
 void	run_minishell(t_data *data);
 
-//	** UTILS STRS **	//
+//	** UTILS INIT/STRS/SIGNALS **	//
+
+void	free_minishell(t_data *data);
+t_data	*initialize_minishell(void);
+
 bool	word_match(char *word, char *check);
 bool	is_blank(char c);
 bool	is_symbol(char c);
@@ -122,24 +133,11 @@ char	get_last_quote(char *input);
 
 char	*finish_quotes(char *input);
 
-//	** UTILS SIGNALS  **	//
-void	config1(struct termios *saved_termios);
-void	config_sigquit(void);
-void	sigint_handl3(int signal);
-void	config_sigint(void);
-void	config_minishell_signals(struct termios *saved_termios);
-
-void	parent_sigint_handl3(int signal);
-void	config_parent_sigint(void);
-void	config_parent_signals(void);
-
-void	config_child_sigquit(void);
-void	config_child_sigint(void);
-void	config_child_signals(struct termios *saved_termios);
-
-void	heredoc_sigint_handle(int signal);
-void	config_heredoc_sigint(void);
-void	config_heredoc_signals(struct termios *saved_termios);
+void	init_termios(t_data *data);
+void	ignore_sigquit(void);
+void	rl_sigint_handler(int signo);
+void	normal_sigint_handler(int signo);
+void	modify_sigint(int state, t_data *data);
 
 //	**TOKENIZE**	//
 void	tokenize(t_data *data);
@@ -149,9 +147,14 @@ char	**allocate_words_memory(char *line);
 
 void	tok_lstclear(t_token **head);
 void	tok_lstadd_back(t_token **head, t_token *new);
+t_token	*tok_lstlast(t_token *cur);
 t_token	*tok_lstnew(char *word);
 
-void	assign_tok_types(t_token *head);
+void	assign_tok_types(t_token *head, t_data *data);
+
+void	unexpected_token_error(t_token *head, t_data *data);
+void	check_for_final_cmd(t_token *head, t_data *data);
+void	get_next_input(t_data *data);
 
 //	**PARSE**	//
 void	parse(t_data *data);
@@ -174,7 +177,6 @@ void	outs_lstclear(t_outs **head);
 void	outs_lstadd_back(t_outs **head, t_outs *new);
 t_outs	*outs_lstnew(t_token *cur);
 
-char	*swap_expanded_str(char *str);
 void	expand_ins(t_ins **in, t_data *data);
 void	expand_outs(t_outs **outs, t_data *data);
 void	expand_cur_cmds(t_cmd *cmd, t_data *data);
@@ -201,13 +203,13 @@ char	*search_paths(char *path, char *cmd);
 void	get_heredocs(t_cmd **cmds, t_data *data);
 
 //	** BUILTINS **	//
-void	builtin_cd(t_cmd *cmd);
+void	builtin_cd(t_data *data, t_cmd *cmd);
 void	builtin_echo(t_cmd *cmd);
 void	builtin_env(t_data *data);
 void	builtin_exit(t_data *data);
-void	builtin_export(t_data *data, char *export_str);
-void	builtin_pwd(void);
-void	builtin_unset(t_data *data, char *unset_str);
+void	builtin_export(t_data *data, char **export_str);
+void	builtin_pwd(t_data *data);
+void	builtin_unset(t_data *data, char **unset_str);
 void	execute_builtin(t_data *data, char *cmd);
 
 //	** EXECUTE **	//

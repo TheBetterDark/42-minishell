@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:50 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/11 13:19:29 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ void	parent_waits_for_child(t_data *data, t_cmd *cur)
 {
 	int	status;
 
-	config_parent_signals();
+	status = 0;
+	modify_sigint(IGNORE_SIGNAL, data);
 	waitpid(cur->pid, &status, 0);
 	data->exit_stat = WEXITSTATUS(status);
-	if (data->exit_stat != 0)
+	if (data->exit_stat != 0 && !is_builtin_cmd(data->cmds->cmdv[0]))
 	{
 		ft_putstr_fd(cur->cmdv[0], 1);
 		ft_putstr_fd(": command not found\n", 1);
@@ -37,16 +38,16 @@ void	execve_child(t_data *data, t_cmd *cur)
 	cur->pid = fork();
 	if (cur->pid == 0)
 	{
-		config_child_signals(&data->saved_termios);
-		prepare_file_descriptors(data, cur);
+		modify_sigint(CHILD_SIGNAL, data);
 		redirect_pipes(data, cur->i);
+		prepare_file_descriptors(data, cur);
 		close_pipes(data, data->pipe_ct);
 		if (cur->cmdv[0])
 		{
 			if (is_builtin_cmd(cur->cmdv[0]))
 			{
 				execute_builtin(data, cur->cmdv[0]);
-				exit(EXIT_SUCCESS);
+				cleanup_child(data, data->exit_stat);
 			}
 			else if ((execve(cur->cmdv[0], cur->cmdv, data->env)) == -1)
 				cleanup_child(data, 127);
@@ -96,14 +97,14 @@ void	execute(t_data *data)
 	data->saved_stdin = dup(STDIN_FILENO);
 	if (data->saved_stdin == -1)
 		return ;
+	close(data->saved_stdin);
 	data->saved_stdout = dup(STDOUT_FILENO);
-	if (data->saved_stdin == -1)
+	if (data->saved_stdout == -1)
 		return ;
+	close(data->saved_stdout);
 	select_process(data);
 	if (dup2(data->saved_stdin, STDIN_FILENO) == -1)
 		return ;
-	close(data->saved_stdin);
 	if (dup2(data->saved_stdout, STDOUT_FILENO) == -1)
 		return ;
-	close(data->saved_stdout);
 }

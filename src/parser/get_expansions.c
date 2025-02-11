@@ -6,26 +6,17 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:37:06 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/10 18:28:55 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-char	*swap_processed_str(char *str, t_data *data);
 void	expand_ins(t_ins **in, t_data *data);
 void	expand_outs(t_outs **outs, t_data *data);
+char	*swap_processed_str(char *str, t_data *data);
 void	expand_cur_cmds(t_cmd *cmd, t_data *data);
 void	get_expansions(t_cmd **cmds, t_data *data);
-
-char	*swap_processed_str(char *str, t_data *data)
-{
-	char	*dup;
-
-	dup = process_str(str, data);
-	free(str);
-	return (dup);
-}
 
 void	expand_ins(t_ins **ins, t_data *data)
 {
@@ -55,6 +46,17 @@ void	expand_outs(t_outs **outs, t_data *data)
 			out_cur->append_fn = swap_processed_str(out_cur->append_fn, data);
 		out_cur = out_cur->next;
 	}
+}
+
+char	*swap_processed_str(char *str, t_data *data)
+{
+	char	*dup;
+
+	if (word_match(str, "$") || word_match(str, "$$"))
+		return (str);
+	dup = process_str(str, data);
+	free(str);
+	return (dup);
 }
 
 void	expand_cur_cmds(t_cmd *cmd, t_data *data)

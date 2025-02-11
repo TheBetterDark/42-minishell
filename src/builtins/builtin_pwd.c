@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pwd.c                                         :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,22 +12,11 @@
 
 #include "../../inc/data.h"
 
-void	builtin_pwd(void);
-
 /*
 * @brief Print the current working directory
 */
 
-void	builtin_pwd(void)
+void	builtin_pwd(t_data *data)
 {
-	char	*buf;
-
-	buf = getcwd(NULL, 0);
-	if (buf == NULL)
-	{
-		perror("cwd");
-		exit(EXIT_FAILURE);
-	}
-	ft_putendl_fd(buf, STDOUT_FILENO);
-	free(buf);
+	ft_putendl_fd(data->pwd, STDOUT_FILENO);
 }

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:59 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/10 20:29:31 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	open_read_files(t_ins *ins, t_data *data)
 		return ;
 	if (dup2(data->read_fd, STDIN_FILENO) == -1)
 		return ;
+	close(data->read_fd);
 }
 
 void	open_write_files(t_outs *outs, t_data *data)
@@ -57,6 +58,7 @@ void	open_write_files(t_outs *outs, t_data *data)
 		return ;
 	if (dup2(data->write_fd, STDOUT_FILENO) == -1)
 		return ;
+	close(data->write_fd);
 }
 
 void	open_files(t_cmd *cmds, t_data *data)

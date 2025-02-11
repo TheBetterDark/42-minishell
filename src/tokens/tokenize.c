@@ -34,5 +34,5 @@ void	tokenize(t_data *data)
 		}
 	}
 	ft_str_arr_free(&words);
-	assign_tok_types(data->toks);
+	assign_tok_types(data->toks, data);
 }

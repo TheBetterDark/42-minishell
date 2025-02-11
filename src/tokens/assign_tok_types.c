@@ -12,7 +12,10 @@
 
 #include "../../inc/data.h"
 
-void		assign_tok_types(t_token *head);
+static void	assign_symbols(t_token *head);
+static void	assign_files(t_token *head);
+static void	assign_cmds(t_token *head);
+void		assign_tok_types(t_token *head, t_data *data);
 
 static void	assign_symbols(t_token *head)
 {
@@ -74,9 +77,11 @@ static void	assign_cmds(t_token *head)
 	}
 }
 
-void	assign_tok_types(t_token *head)
+void	assign_tok_types(t_token *head, t_data *data)
 {
 	assign_symbols(head);
 	assign_files(head);
 	assign_cmds(head);
+	unexpected_token_error(head, data);
+	check_for_final_cmd(head, data);
 }

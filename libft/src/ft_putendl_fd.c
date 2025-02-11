@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 13:44:53 by smoore            #+#    #+#             */
-/*   Updated: 2025/01/05 07:55:30 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/11 13:00:13 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 void	ft_putendl_fd(char *s, int fd)
 {
-	int	i;
+	size_t	len;
 
-	i = 0;
-	while (s[i] != '\0')
+	len = ft_strlen(s);
+	if (write(fd, s, len) == -1)
 	{
-		write(fd, &s[i], 1);
-		i++;
+		if (errno == EPIPE)
+			exit(EXIT_FAILURE);
 	}
-	write(fd, "\n", 1);
+	if (write(fd, "\n", 1) == -1)
+	{
+		if (errno == EPIPE)
+			exit(EXIT_FAILURE);
+	}
 }

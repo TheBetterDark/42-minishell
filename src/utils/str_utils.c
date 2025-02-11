@@ -19,7 +19,7 @@ bool	is_quote(char c);
 
 bool	word_match(char *word, char *check)
 {
-	if (ft_strncmp(word, check, ft_strlen(word)) == 0)
+	if (ft_strcmp(word, check) == 0)
 		return (true);
 	return (false);
 }

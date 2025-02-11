@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cd.c                                          :+:      :+:    :+:   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,9 +12,7 @@
 
 #include "../../inc/data.h"
 
-void	builtin_cd(t_cmd *cmd);
-
-void	builtin_cd(t_cmd *cmd)
+void	builtin_cd(t_data *data, t_cmd *cmd)
 {
 	if (cmd->cmdv[1])
 	{
@@ -26,4 +24,6 @@ void	builtin_cd(t_cmd *cmd)
 		if (chdir(getenv("HOME")) != 0)
 			perror("cd");
 	}
+	free(data->pwd);
+	data->pwd = getcwd(NULL, 0);
 }

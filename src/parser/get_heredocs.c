@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:37:18 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/10 17:28:25 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,16 @@ void	get_heredocs(t_cmd **cmds, t_data *data)
 	t_ins	*in_ptr;
 
 	cmd_ptr = *cmds;
-	g_signal = HEREDOC_MODE;
 	while (cmd_ptr)
 	{
 		in_ptr = cmd_ptr->ins;
-		while (in_ptr && g_signal != HEREDOC_SIGINT)
+		while (in_ptr)
 		{
 			get_cur_heredoc(in_ptr, data);
+			if (g_signal == SIGINT)
+				return ;
 			in_ptr = in_ptr->next;
 		}
 		cmd_ptr = cmd_ptr->next;
 	}
-	if (g_signal == HEREDOC_MODE)
-		g_signal = NO_SIGNAL;
 }
