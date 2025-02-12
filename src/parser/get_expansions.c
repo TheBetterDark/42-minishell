@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:37:06 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/10 18:28:55 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 17:21:48 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	expand_cur_cmds(t_cmd *cmd, t_data *data)
 	}
 	head = cmd->cmdv;
 	tmp = cmd->cmdv[0];
-	if (!is_builtin_cmd(head[0]))
+	if (!is_builtin_cmd_child(head[0]))
 	{
 		cmd->cmdv[0] = add_path_cmdv0(&head[0], data);
 		free(tmp);

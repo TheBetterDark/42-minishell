@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:50 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 17:00:07 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/12 17:21:45 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	parent_waits_for_child(t_data *data, t_cmd *cur)
 	modify_sigint(IGNORE_SIGNAL, data);
 	waitpid(cur->pid, &status, 0);
 	data->exit_stat = WEXITSTATUS(status);
-	if (data->exit_stat == 127 && !is_builtin_cmd(data->cmds->cmdv[0]))
+	if (data->exit_stat == 127 && !is_builtin_cmd_child(data->cmds->cmdv[0]))
 	{
 		if (ft_strchr(cur->cmdv[0], '/'))
 			ft_putstr_fd(ft_strrchr(cur->cmdv[0], '/') + 1, 1);
@@ -47,7 +47,7 @@ void	execve_child(t_data *data, t_cmd *cur)
 		close_pipes(data, data->pipe_ct);
 		if (cur->cmdv[0])
 		{
-			if (is_builtin_cmd(cur->cmdv[0]))
+			if (is_builtin_cmd_child(cur->cmdv[0]))
 			{
 				execute_builtin(data, cur->cmdv[0]);
 				cleanup_child(data, data->exit_stat);
@@ -87,7 +87,7 @@ void	prepare_pipeline(t_data *data, t_cmd *cmds)
 
 void	select_process(t_data *data)
 {
-	if (!data->cmds->next && is_builtin_cmd(data->cmds->cmdv[0]))
+	if (!data->cmds->next && is_builtin_cmd_parent(data->cmds->cmdv[0]))
 	{
 		prepare_file_descriptors(data, data->cmds);
 		execute_builtin(data, data->cmds->cmdv[0]);

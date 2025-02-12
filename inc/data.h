@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 16:21:55 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/12 17:21:18 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,8 @@ char	*get_key(char *env_cur);
 char	*search_for_env_match(char *key, char **env);
 char	*find_environment_value(char *key, t_data *data);
 
-bool	is_builtin_cmd(char *cmdv);
+bool	is_builtin_cmd_child(char *cmdv);
+bool	is_builtin_cmd_parent(char *cmdv);
 char	*add_path_cmdv0(char **cmdv0, t_data *data);
 char	*search_paths(char *path, char *cmd);
 

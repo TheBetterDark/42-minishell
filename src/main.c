@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/10 16:14:58 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 17:13:55 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	run_minishell(t_data *data)
 			g_signal = NO_SIGNAL;
 		if (!data->input)
 		{
-			printf("exit\n");
+			ft_printf("exit\n");
 			break ;
 		}
 		if (word_match(data->input, "history -c"))
