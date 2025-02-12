@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:35:14 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:21:48 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/12 19:21:01 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ void	assign_tok_types(t_token *head, t_data *data)
 	assign_files(head);
 	assign_cmds(head);
 	unexpected_token_error(head, data);
+	check_for_redir_files(head, data);
 	check_for_final_cmd(head, data);
 }

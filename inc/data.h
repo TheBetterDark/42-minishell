@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 19:00:44 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 19:19:26 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ t_token	*tok_lstnew(char *word);
 void	assign_tok_types(t_token *head, t_data *data);
 
 void	unexpected_token_error(t_token *head, t_data *data);
+void	check_for_redir_files(t_token *head, t_data *data);
 void	check_for_final_cmd(t_token *head, t_data *data);
 void	get_next_input(t_data *data);
 

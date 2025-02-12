@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 17:04:28 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/12 19:33:46 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void		unexpected_token_error(t_token *head, t_data *data);
 static bool	is_tok_symbol(t_token *cur);
+static bool	is_file(t_token *cur);
 void		check_for_final_cmd(t_token *head, t_data *data);
+void		check_for_redir_files(t_token *head, t_data *data);
 
 void	unexpected_token_error(t_token *head, t_data *data)
 {
@@ -45,6 +47,12 @@ static bool	is_tok_symbol(t_token *cur)
 		|| cur->type == RE_APPEND || cur->type == DELIM);
 }
 
+static bool	is_file(t_token *cur)
+{
+	return (cur->type == FN_READ || cur->type == FN_TRUNC
+		|| cur->type == FN_APPEND);
+}
+
 void	check_for_final_cmd(t_token *head, t_data *data)
 {
 	t_token	*cur;
@@ -63,7 +71,8 @@ void	check_for_final_cmd(t_token *head, t_data *data)
 		else if (cur->type == PIPE && !cmd_found && symbol_found)
 		{
 			data->token_syntax_error = true;
-			printf("minishell: syntax error near unexpected token `newline'\n");
+			ft_putstr_fd(
+				"minishell: syntax error near unexpected token `newline'\n", 2);
 		}
 		else if (cur->type == PIPE && !cmd_found && !symbol_found)
 		{
@@ -71,5 +80,25 @@ void	check_for_final_cmd(t_token *head, t_data *data)
 			break ;
 		}
 		cur = cur->prev;
+	}
+}
+
+void	check_for_redir_files(t_token *head, t_data *data)
+{
+	t_token	*cur;
+	bool	symbol_found;
+
+	symbol_found = false;
+	cur = head;
+	while (cur && !data->token_syntax_error)
+	{
+		if ((cur->type == RE_HEREDOC && cur->next->type != DELIM)
+			&& (is_symbol(cur->type) && cur->next->type != is_file(cur)))
+		{
+			data->token_syntax_error = true;
+			ft_putstr_fd(
+				"minishell: syntax error near unexpected token `newline'\n", 2);
+		}
+		cur = cur->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 18:46:37 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 19:28:20 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_termios(t_data *data);
 void	parent_sigquit_handler(int signo)
 {
 	g_signal = signo;
-	ft_putstr_fd("\n", STDOUT_FILENO);
+	ft_putstr_fd("Quit\n", STDOUT_FILENO);
 }
 
 void	child_sigquit_handler(int signo)
