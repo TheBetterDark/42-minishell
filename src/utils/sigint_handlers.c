@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 12:56:55 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 19:03:53 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	rl_sigint_handler(int signo);
 void	normal_sigint_handler(int signo);
 void	child_sigint_handler(int signo);
+void	heredoc_sigint_handler(int signo);
 void	modify_sigint(int state, t_data *data);
 
 void	rl_sigint_handler(int signo)
@@ -38,6 +39,12 @@ void	child_sigint_handler(int signo)
 	ft_putstr_fd("\n", STDOUT_FILENO);
 }
 
+void	heredoc_sigint_handler(int signo)
+{
+	g_signal = signo;
+	ft_putstr_fd("\n", STDOUT_FILENO);
+}
+
 void	modify_sigint(int state, t_data *data)
 {
 	struct sigaction	sa;
@@ -54,8 +61,8 @@ void	modify_sigint(int state, t_data *data)
 		tcsetattr(1, TCSAFLUSH, &data->saved_termios);
 		sa.sa_handler = child_sigint_handler;
 	}
-	else
-		printf("There is an error with signit.\n");
+	else if (state == HEREDOC_SIGNAL)
+		sa.sa_handler = heredoc_sigint_handler;
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);

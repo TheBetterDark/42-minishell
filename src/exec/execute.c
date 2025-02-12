@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:50 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 17:21:45 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/12 18:51:54 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	parent_waits_for_child(t_data *data, t_cmd *cur)
 
 	status = 0;
 	modify_sigint(IGNORE_SIGNAL, data);
+	modify_sigquit(PARENT_SIGNAL);
 	waitpid(cur->pid, &status, 0);
 	data->exit_stat = WEXITSTATUS(status);
 	if (data->exit_stat == 127 && !is_builtin_cmd_child(data->cmds->cmdv[0]))
@@ -42,6 +43,7 @@ void	execve_child(t_data *data, t_cmd *cur)
 	if (cur->pid == 0)
 	{
 		modify_sigint(CHILD_SIGNAL, data);
+		modify_sigquit(CHILD_SIGNAL);
 		redirect_pipes(data, cur->i);
 		prepare_file_descriptors(data, cur);
 		close_pipes(data, data->pipe_ct);

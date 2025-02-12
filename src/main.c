@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 17:13:55 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/12 18:54:08 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*read_command_line(t_data *data)
 	char	*trim;
 
 	modify_sigint(RL_SIGNAL, data);
+	modify_sigquit(NORMAL_SIGNAL);
 	input = readline("minishell$ ");
 	if (input)
 		add_history(input);

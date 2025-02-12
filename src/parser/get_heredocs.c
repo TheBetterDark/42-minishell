@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:37:18 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/10 17:28:25 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 19:00:26 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	get_heredocs(t_cmd **cmds, t_data *data)
 	t_cmd	*cmd_ptr;
 	t_ins	*in_ptr;
 
+	modify_sigint(HEREDOC_SIGNAL, data);
 	cmd_ptr = *cmds;
 	while (cmd_ptr)
 	{
@@ -81,4 +82,5 @@ void	get_heredocs(t_cmd **cmds, t_data *data)
 		}
 		cmd_ptr = cmd_ptr->next;
 	}
+	modify_sigint(NORMAL_SIGNAL, data);
 }
