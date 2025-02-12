@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:50 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/11 15:40:27 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 17:00:07 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ void	execve_child(t_data *data, t_cmd *cur)
 				cleanup_child(data, 127);
 		}
 		else
+		{
+			cleanup_child(data, 0);
 			exit(EXIT_SUCCESS);
+		}
 	}
 }
 
