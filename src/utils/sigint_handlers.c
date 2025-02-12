@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 12:24:51 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 12:56:55 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	rl_sigint_handler(int signo)
 void	normal_sigint_handler(int signo)
 {
 	g_signal = signo;
-	ft_putstr_fd("^C\n", STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 }
 
 void	child_sigint_handler(int signo)
