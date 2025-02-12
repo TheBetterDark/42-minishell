@@ -6,7 +6,7 @@
 #    By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 11:51:31 by smoore            #+#    #+#              #
-#    Updated: 2025/02/10 15:07:44 by smoore           ###   ########.fr        #
+#    Updated: 2025/02/12 12:28:00 by smoore           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,8 @@ SRCS = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/utils/quote_strlen.c \
 	$(SRC_DIR)/utils/str_utils.c \
 	$(SRC_DIR)/utils/str_utils2.c \
-	$(SRC_DIR)/utils/signals.c \
+	$(SRC_DIR)/utils/init_termios.c \
+	$(SRC_DIR)/utils/sigint_handlers.c \
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

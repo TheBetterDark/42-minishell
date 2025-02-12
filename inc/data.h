@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/10 15:13:43 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 12:26:05 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,12 @@ char	get_last_quote(char *input);
 
 char	*finish_quotes(char *input);
 
-void	init_termios(t_data *data);
 void	ignore_sigquit(void);
+void	init_termios(t_data *data);
+
 void	rl_sigint_handler(int signo);
 void	normal_sigint_handler(int signo);
+void	child_sigint_handler(int signo);
 void	modify_sigint(int state, t_data *data);
 
 //	**TOKENIZE**	//

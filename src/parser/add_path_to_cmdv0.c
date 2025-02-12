@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:36:23 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:42:54 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/11 14:54:26 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,16 @@ char	*add_path_cmdv0(char **cmdv0, t_data *data)
 	saved_cmdv0 = ft_strdup(*cmdv0);
 	if (!saved_cmdv0)
 		return (NULL);
+	if (data->env)
+		paths = get_paths(data);
+	else
+		paths = NULL;
+	if (!paths)
+	{
+		*cmdv0 = saved_cmdv0;
+		return (saved_cmdv0);
+	}
 	*cmdv0 = NULL;
-	paths = get_paths(data);
 	if (try_find_target_path(&paths, cmdv0, saved_cmdv0))
 		return (*cmdv0);
 	ft_str_arr_free(&paths);

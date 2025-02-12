@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/11 14:03:54 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 12:22:49 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	builtin_unset(t_data *data, char **unset_str)
 		if (!new_env)
 		{
 			perror("unset failed");
-			exit(EXIT_FAILURE);
+			return ;
 		}
 		ft_str_arr_free(&data->env);
 		data->env = new_env;

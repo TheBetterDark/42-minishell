@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:50 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/11 13:19:29 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/11 15:40:27 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ void	parent_waits_for_child(t_data *data, t_cmd *cur)
 	modify_sigint(IGNORE_SIGNAL, data);
 	waitpid(cur->pid, &status, 0);
 	data->exit_stat = WEXITSTATUS(status);
-	if (data->exit_stat != 0 && !is_builtin_cmd(data->cmds->cmdv[0]))
+	if (data->exit_stat == 127 && !is_builtin_cmd(data->cmds->cmdv[0]))
 	{
-		ft_putstr_fd(cur->cmdv[0], 1);
+		if (ft_strchr(cur->cmdv[0], '/'))
+			ft_putstr_fd(ft_strrchr(cur->cmdv[0], '/') + 1, 1);
+		else
+			ft_putstr_fd(cur->cmdv[0], 1);
 		ft_putstr_fd(": command not found\n", 1);
 	}
 }
