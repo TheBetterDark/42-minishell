@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 18:54:08 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 20:56:21 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	main(void)
 {
 	t_data	*data;
 
-	if (!isatty(STDIN_FILENO))
+	if (!isatty(STDIN_FILENO) || !isatty(STDERR_FILENO))
 	{
 		ft_putstr_fd("minishell: not a terminal", STDERR_FILENO);
 		return (1);
