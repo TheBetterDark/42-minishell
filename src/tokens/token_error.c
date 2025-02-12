@@ -86,19 +86,24 @@ void	check_for_final_cmd(t_token *head, t_data *data)
 void	check_for_redir_files(t_token *head, t_data *data)
 {
 	t_token	*cur;
-	bool	symbol_found;
 
-	symbol_found = false;
-	cur = head;
+	cur = tok_lstlast(head);
 	while (cur && !data->token_syntax_error)
 	{
-		if ((cur->type == RE_HEREDOC && cur->next->type != DELIM)
-			&& (is_symbol(cur->type) && cur->next->type != is_file(cur)))
+		if (!cur->next && is_tok_symbol(cur))
 		{
 			data->token_syntax_error = true;
 			ft_putstr_fd(
 				"minishell: syntax error near unexpected token `newline'\n", 2);
 		}
-		cur = cur->next;
+		else if (cur->next && (
+			(cur->type == RE_HEREDOC && cur->next->type != DELIM) ||
+			(is_tok_symbol(cur) && !is_file(cur->next))))
+		{
+			data->token_syntax_error = true;
+			ft_putstr_fd(
+				"minishell: syntax error near unexpected token `newline'\n", 2);
+		}
+		cur = cur->prev;
 	}
 }
