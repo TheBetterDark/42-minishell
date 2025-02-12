@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:58:29 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 19:30:43 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/12 19:30:51 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static void	check_exit_args(t_cmd *cmd)
 	}
 }
 
-// TODO: if the argument number is greater than intmax
 void	builtin_exit(t_data *data)
 {
 	int	exit_stat;
