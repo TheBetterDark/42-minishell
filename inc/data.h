@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 12:26:05 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 16:21:55 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define DATA_H
 
 # include "../libft/include/libft.h"
-# include <signal.h> 
+# include <signal.h>
 # include <errno.h>
-# include <dirent.h> 
+# include <dirent.h>
 # include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
