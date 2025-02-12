@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/10 19:28:47 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/12 18:35:56 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_data	*initialize_minishell(void)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
-	ignore_sigquit();
+	modify_sigquit(NORMAL_SIGNAL);
 	init_termios(data);
 	data->input = NULL;
 	data->toks = NULL;

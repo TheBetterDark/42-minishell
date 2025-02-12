@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 17:21:18 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/12 19:00:44 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ enum							e_signal
 	RL_SIGNAL,
 	NORMAL_SIGNAL,
 	IGNORE_SIGNAL,
-	CHILD_SIGNAL
+	HEREDOC_SIGNAL,
+	CHILD_SIGNAL,
+	PARENT_SIGNAL
 };
 
 typedef struct s_data			t_data;
@@ -133,12 +135,15 @@ char	get_last_quote(char *input);
 
 char	*finish_quotes(char *input);
 
-void	ignore_sigquit(void);
+void	child_sigquit_handler(int signo);
+void	parent_sigquit_handler(int signo);
+void	modify_sigquit(int state);
 void	init_termios(t_data *data);
 
 void	rl_sigint_handler(int signo);
 void	normal_sigint_handler(int signo);
 void	child_sigint_handler(int signo);
+void	heredoc_sigint_handler(int signo);
 void	modify_sigint(int state, t_data *data);
 
 //	**TOKENIZE**	//
