@@ -6,7 +6,7 @@
 #    By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 11:51:31 by smoore            #+#    #+#              #
-#    Updated: 2025/02/12 12:28:00 by smoore           ###   ########.fr        #
+#    Updated: 2025/02/13 15:44:34 by muabdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ SRCS = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/utils/str_utils2.c \
 	$(SRC_DIR)/utils/init_termios.c \
 	$(SRC_DIR)/utils/sigint_handlers.c \
+	$(SRC_DIR)/utils/env_util.c
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
