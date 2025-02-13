@@ -6,78 +6,58 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/13 15:14:30 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/13 15:46:14 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/data.h"
 
-static char	*get_environment_variable(char *env_var, t_data *data);;
-static char	*find_env_match(char *key, char **env);
-static void	print_env(t_data *data);
-static void	error_util(void);
+static void	update_existing_var(char *cur_env_var, char *export_str);
+static void	add_new_var(t_data *data, char *export_str);
 void		builtin_export(t_data *data, char **export_str);
 
-static char	*find_env_match(char *key, char **env)
+static void	update_existing_var(char *cur_env_var, char *export_str)
 {
-	char	**env_cur;
-	char	*potential_key;
+	size_t	new_value_len;
 
-	env_cur = env;
-	while (*env_cur)
+	new_value_len = strlen(export_str);
+	if (new_value_len <= strlen(cur_env_var))
 	{
-		potential_key = get_key(*env_cur);
-		if (word_match(potential_key, key))
+		strncpy(cur_env_var, export_str, new_value_len);
+		cur_env_var[new_value_len] = '\0';
+	}
+	else
+	{
+		char *new_var = strdup(export_str);
+		if (!new_var)
 		{
-			free(potential_key);
-			return (*env_cur);
+			perror("export failed");
+			exit(EXIT_FAILURE);
 		}
-		free(potential_key);
-		env_cur++;
+		free(cur_env_var);
+		cur_env_var = new_var;
 	}
-	return (NULL);
 }
 
-static char	*get_environment_variable(char *env_var, t_data *data)
+static void	add_new_var(t_data *data, char *export_str)
 {
-	char	*value;
+	char	**new_env;
 
-	value = NULL;
-	if (env_var)
-		value = find_env_match(get_key(env_var), data->env);
-	if (!value)
-		return (NULL);
-	return (value);
-}
-
-static void	print_env(t_data *data)
-{
-	char	**tmp;
-
-	tmp = data->env;
-	while (*tmp)
+	new_env = ft_str_arr_add((const char **)data->env, export_str);
+	ft_str_arr_free(&data->env);
+	if (!new_env)
 	{
-		ft_putstr_fd("declare -x ", STDOUT_FILENO);
-		ft_putendl_fd(*tmp, STDOUT_FILENO);
-		tmp++;
+		perror("minishell: export failed");
+		exit(EXIT_FAILURE);
 	}
-}
-
-static void	error_util(void)
-{
-	perror("export failed");
-	exit(EXIT_FAILURE);
+	data->env = new_env;
 }
 
 void	builtin_export(t_data *data, char **export_str)
 {
-	char	**new_env;
 	char	*cur_env_var;
-	size_t	new_value_len;
 
 	export_str++;
-	new_env = NULL;
-	cur_env_var = NULL;
 	if (!*export_str)
 	{
 		print_env(data);
@@ -92,32 +72,9 @@ void	builtin_export(t_data *data, char **export_str)
 		}
 		cur_env_var = get_environment_variable(*export_str, data);
 		if (cur_env_var)
-        {
-            // Replace memory safely
-            new_value_len = strlen(*export_str);
-            if (new_value_len <= strlen(cur_env_var))
-            {
-                strncpy(cur_env_var, *export_str, new_value_len);
-                cur_env_var[new_value_len] = '\0';
-            }
-            else
-            {
-                // Allocate new memory if the new value is larger
-                char *new_var = strdup(*export_str);
-                if (!new_var)
-                    error_util();
-                free(cur_env_var);
-                cur_env_var = new_var;
-            }
-        }
+			update_existing_var(cur_env_var, *export_str);
 		else
-		{
-			new_env = ft_str_arr_add((const char **)data->env, *export_str);
-			ft_str_arr_free(&data->env);
-			if (!new_env)
-				error_util();
-				data->env = new_env;
-		}
+			add_new_var(data, *export_str);
 		export_str++;
 	}
 }

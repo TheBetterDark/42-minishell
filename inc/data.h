@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 19:19:26 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/13 15:45:46 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,10 @@ char	*process_str(char *name, t_data *data);
 char	*get_plain_substr(char *name, int *i);
 char	*get_expanded_substr(char *substr, int *i, t_data *data);
 char	*try_expand_dup(char *substr, t_data *data);
+
+char	*get_environment_variable(char *env_var, t_data *data);
+char	*find_env_match(char *key, char **env);
+void	print_env(t_data *data);
 
 char	*get_key(char *env_cur);
 char	*search_for_env_match(char *key, char **env);
