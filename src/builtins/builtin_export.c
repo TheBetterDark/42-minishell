@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/13 15:46:14 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/14 11:22:37 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,14 @@ void		builtin_export(t_data *data, char **export_str);
 static void	update_existing_var(char *cur_env_var, char *export_str)
 {
 	size_t	new_value_len;
+	char	*new_var;
 
 	new_value_len = strlen(export_str);
 	if (new_value_len <= strlen(cur_env_var))
-	{
-		strncpy(cur_env_var, export_str, new_value_len);
-		cur_env_var[new_value_len] = '\0';
-	}
+		ft_strcpy(cur_env_var, export_str);
 	else
 	{
-		char *new_var = strdup(export_str);
+		new_var = ft_strdup(export_str);
 		if (!new_var)
 		{
 			perror("export failed");
