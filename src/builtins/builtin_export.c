@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/14 11:22:37 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/14 11:31:36 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	update_existing_var(char *cur_env_var, char *export_str)
 	size_t	new_value_len;
 	char	*new_var;
 
-	new_value_len = strlen(export_str);
-	if (new_value_len <= strlen(cur_env_var))
+	new_value_len = ft_strlen(export_str);
+	if (new_value_len <= ft_strlen(cur_env_var))
 		ft_strcpy(cur_env_var, export_str);
 	else
 	{
