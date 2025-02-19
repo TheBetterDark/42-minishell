@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 15:09:27 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:28:24 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # ifndef ERROR_MSGS
 #  define NL_ERR "minishell: syntax error near unexpected token `newline'\n"
 #  define PIPE_ERR "minishell: syntax error near unexpected token `| '\n"
+#  define CONT_ERR "\nminishell: unexpected EOF while looking for matching \"\'\nminishell: syntax error: unexpected end of file\n"
 # endif
 
 extern volatile sig_atomic_t	g_signal;
@@ -115,6 +116,7 @@ typedef struct s_data
 	char			*pwd;
 	bool			token_syntax_error;
 	bool			input_mode;
+	bool			prompt_cont_error;
 }	t_data;
 
 //	** MAIN  **	//

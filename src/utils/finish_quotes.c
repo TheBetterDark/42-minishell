@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:14:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 15:25:39 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:20:24 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ static bool	finish_quotes_util(char **join, char **buf, char **str1,
 	free(*join);
 	ft_putstr_fd("> ", STDOUT_FILENO);
 	*buf = get_next_line(STDIN_FILENO);
+	if (g_signal == SIGINT || !*buf)
+	{
+		free(*str1);
+		return (false);
+	}
 	*join = ft_strjoin(*str1, *buf);
 	free(*str1);
 	if (ft_strchr(*buf, quote))
@@ -50,7 +55,11 @@ char	*finish_quotes(char *input)
 		return (NULL);
 	}
 	while (!found)
+	{
 		found = finish_quotes_util(&join, &buf, &str1, quote);
+		if (g_signal == SIGINT || !buf)
+			return (NULL);
+	}
 	if (buf)
 		free(buf);
 	return (join);

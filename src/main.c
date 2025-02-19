@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 13:42:27 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:31:05 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,14 @@ char	*read_command_line(t_data *data)
 	modify_sigint(NORMAL_SIGNAL, data);
 	trim = ft_strtrim(input, " \t");
 	free(input);
+	modify_sigint(HEREDOC_SIGNAL, data);
 	input = complete_quoted_input(trim);
+	if (!input)
+	{
+		data->prompt_cont_error = true;
+		ft_putstr_fd(CONT_ERR, 2);
+	}
+	modify_sigint(NORMAL_SIGNAL, data);
 	trim = ft_strtrim(input, "\n");
 	free(input);
 	return (trim);
@@ -43,9 +50,10 @@ void	run_minishell(t_data *data)
 	while (data)
 	{
 		free_minishell(data);
+		g_signal = NO_SIGNAL;
 		data->input = read_command_line(data);
-		if (g_signal)
-			g_signal = NO_SIGNAL;
+		if (g_signal == SIGINT || data->prompt_cont_error)
+			continue ;
 		if (!data->input)
 		{
 			ft_printf("exit\n");

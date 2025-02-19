@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:14:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 14:57:09 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:52:37 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ static char	*check_and_complete_quotes(char *input)
 
 char	*complete_quoted_input(char *input)
 {
+	char	*new_input;
+
+	new_input = NULL;
 	if (!has_quotes(input))
 		return (input);
 	return (check_and_complete_quotes(input));

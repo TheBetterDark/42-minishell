@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 18:35:56 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:23:13 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	free_minishell(t_data *data)
 		data->heredoc_ct = 0;
 		data->token_syntax_error = false;
 		data->input_mode = false;
+		data->prompt_cont_error = false;
 	}
 }
 
@@ -74,5 +75,6 @@ t_data	*initialize_minishell(void)
 	data->exit_stat = 0;
 	data->token_syntax_error = false;
 	data->input_mode = false;
+	data->prompt_cont_error = false;
 	return (data);
 }
