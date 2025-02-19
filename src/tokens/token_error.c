@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 15:35:49 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:09:48 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,47 +75,10 @@ void	check_for_final_cmd(t_token *head, t_data *data)
 	}
 }
 
-
-/*
-static bool	is_file(t_token *cur)
-{
-	return (cur->type == FN_READ || cur->type == FN_TRUNC
-		|| cur->type == FN_APPEND);
-}
-
 void	check_for_redir_files(t_token *head, t_data *data)
 {
 	t_token	*cur;
 
-	cur = tok_lstlast(head);
-	while (cur && !data->token_syntax_error)
-	{
-	//	if (!cur->next && is_tok_symbol(cur))
-		if (cur && cur->next && is_tok_symbol(cur) && !is_file(cur->next))
-		{
-			data->token_syntax_error = true;
-			ft_putstr_fd(NL_ERR, 2);
-		}
-		else if (cur->next
-			&& (
-				(cur->type == RE_HEREDOC && cur->next->type != DELIM)
-				|| (is_tok_symbol(cur) && !is_file(cur->next))
-			)
-		)
-		{
-			data->token_syntax_error = true;
-			ft_putstr_fd(NL_ERR, 2);
-		}
-		cur = cur->prev;
-	}
-}
-*/
-
-void	check_for_redir_files(t_token *head, t_data *data)
-{
-	t_token	*cur;
-
-//	cur = tok_lstlast(head);
 	cur = head;
 	while (cur)
 	{

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 18:08:46 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:14:06 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ char	*read_command_line(t_data *data)
 	if (!input && g_signal != SIGINT)
 	{
 		data->prompt_cont_error = true;
-		ft_putstr_fd(CONT_ERR, 2);
+		ft_putstr_fd(CON_ERR, 2);
+		ft_putstr_fd(CON_ERR2, 2);
 	}
 	modify_sigint(NORMAL_SIGNAL, data);
 	trim = ft_strtrim(input, "\n");

@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 18:02:42 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:14:03 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 
-# ifndef ERROR_MSGS
-#  define NL_ERR "minishell: syntax error near unexpected token `newline'\n"
-#  define PIPE_ERR "minishell: syntax error near unexpected token `| '\n"
-#  define CONT_ERR "\nminishell: unexpected EOF while looking for matching \"\'\nminishell: syntax error: unexpected end of file\n"
-# endif
+# define NL_ERR "minishell: syntax error near unexpected token `newline'\n"
+# define PIPE_ERR "minishell: syntax error near unexpected token `| '\n"
+# define CON_ERR "\nminishell: unexpected EOF while looking for matching \"\'\n"
+# define CON_ERR2 "minishell: syntax error: unexpected end of file\n"
 
 extern volatile sig_atomic_t	g_signal;
 
@@ -91,7 +90,7 @@ typedef struct s_cmd
 
 typedef struct s_token
 {
-	char			*str;	
+	char			*str;
 	t_token			*next;
 	t_token			*prev;
 	int				type;
