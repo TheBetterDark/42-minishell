@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 14:02:02 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/19 15:09:27 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,8 @@ void	unexpected_token_error(t_token *head, t_data *data);
 void	check_for_redir_files(t_token *head, t_data *data);
 void	check_for_final_cmd(t_token *head, t_data *data);
 void	get_next_input(t_data *data);
+
+bool	check_redir_file_error(t_token *symbol, t_token *file);
 
 //	**PARSE**	//
 void	parse(t_data *data);

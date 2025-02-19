@@ -6,7 +6,7 @@
 #    By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 11:51:31 by smoore            #+#    #+#              #
-#    Updated: 2025/02/18 14:53:04 by smoore           ###   ########.fr        #
+#    Updated: 2025/02/19 15:10:00 by smoore           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ SRCS = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/parser/try_expand_dup.c \
 	$(SRC_DIR)/parser/get_expanded_substr_dbl.c \
 	$(SRC_DIR)/tokens/assign_tok_types.c \
+	$(SRC_DIR)/tokens/check_redir_file_error.c \
 	$(SRC_DIR)/tokens/token_error.c \
 	$(SRC_DIR)/tokens/get_next_input.c \
 	$(SRC_DIR)/tokens/command_line_split.c \

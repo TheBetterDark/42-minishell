@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:42:46 by muabdi            #+#    #+#             */
-/*   Updated: 2025/02/19 13:58:55 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/19 14:24:25 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*get_expanded_substr_dbl(char *name, int *i, t_data *data)
 {
 	char	*expand;
 	char	*substr;
-	char	*join;
 	int		start;
 
 	(*i)++;
