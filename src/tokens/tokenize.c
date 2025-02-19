@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:35:40 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/19 15:18:06 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	tokenize(t_data *data)
 {
 	char	**words;
 	char	**cur;
-	t_token	*new;	
+	t_token	*new;
 
 	if (!g_signal && data->input)
 	{
