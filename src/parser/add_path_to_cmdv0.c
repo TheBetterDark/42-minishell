@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:36:23 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/11 14:54:26 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 19:52:10 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ static char	**get_paths(t_data *data)
 	char	**paths;
 
 	path_str = ft_str_arr_has((const char **)data->env, "PATH");
+	if (!path_str)
+		return (NULL);
+	path_str = ft_strchr(path_str, '=') + 1;
 	if (!path_str)
 		return (NULL);
 	paths = ft_split(path_str, ':');
