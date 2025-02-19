@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:37:40 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 17:21:00 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:56:22 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	is_builtin_cmd_parent(char *cmdv)
 	if (!cmdv)
 		return (NULL);
 	i = 0;
-	while (i < 3)
+	while (i <= 3)
 	{
 		if (word_match(cmdv, (char *)builtins[i]))
 			return (true);

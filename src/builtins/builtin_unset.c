@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:35:25 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 12:22:49 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:55:34 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,21 @@ void	builtin_unset(t_data *data, char **unset_str);
 */
 void	builtin_unset(t_data *data, char **unset_str)
 {
-	char	*env_value;
 	char	**new_env;
+	char	*env_var;
 
 	unset_str++;
 	while (*unset_str)
 	{
 		if ((ft_str_arr_has((const char **)data->env, *unset_str)) == false)
 			return ;
-		env_value = find_environment_value(*unset_str, data);
-		if (!env_value)
+		env_var = find_env_match(*unset_str, data->env);
+		if (!env_var)
+		{
+			printf("unset: `%s': not a valid identifier\n", env_var);
 			return ;
-		free(env_value);
-		new_env = ft_str_arr_minus((const char **)data->env, *unset_str);
+		}
+		new_env = ft_str_arr_minus((const char **)data->env, env_var);
 		if (!new_env)
 		{
 			perror("unset failed");
