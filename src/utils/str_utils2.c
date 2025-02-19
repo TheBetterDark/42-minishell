@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:02:49 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:07:08 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	has_quotes(char *str);
 bool	calculate_if_finished(int single_quotes, int double_quotes);
 bool	has_finished_quotes(char *str);
-char	get_last_quote(char *input);
+char	get_first_quote(char *input);
 
 bool	has_quotes(char *str)
 {
@@ -54,6 +54,8 @@ bool	has_finished_quotes(char *str)
 	single_quotes = 0;
 	double_quotes = 0;
 	finished = false;
+	if (!str)
+		return (true);
 	while (str[i])
 	{
 		if (str[i] == '\'')
@@ -66,18 +68,16 @@ bool	has_finished_quotes(char *str)
 	return (finished);
 }
 
-char	get_last_quote(char *input)
+char	get_first_quote(char *input)
 {
-	int		len;
 	int		i;
 
-	len = ft_strlen(input) - 1;
 	i = 0;
-	while (i < len)
+	while (input[i])
 	{
-		if (is_quote(input[len]))
-			return (input[len]);
-		len--;
+		if (is_quote(input[i]))
+			return (input[i]);
+		i++;
 	}
 	return ('x');
 }

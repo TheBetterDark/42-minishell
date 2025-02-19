@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 17:31:05 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:08:46 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*read_command_line(t_data *data)
 	free(input);
 	modify_sigint(HEREDOC_SIGNAL, data);
 	input = complete_quoted_input(trim);
-	if (!input)
+	if (!input && g_signal != SIGINT)
 	{
 		data->prompt_cont_error = true;
 		ft_putstr_fd(CONT_ERR, 2);

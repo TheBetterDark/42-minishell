@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:14:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 17:20:24 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:02:45 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*finish_quotes(char *input)
 	bool	found;
 
 	found = false;
-	quote = get_last_quote(input);
+	quote = get_first_quote(input);
 	join = ft_strjoin(input, "\n");
 	buf = NULL;
 	str1 = NULL;

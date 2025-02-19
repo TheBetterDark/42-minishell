@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 17:28:24 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:02:42 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int		quoted_strlen(char *str);
 bool	has_quotes(char *str);
 bool	calculate_if_finished(int single_quotes, int double_quotes);
 bool	has_finished_quotes(char *str);
-char	get_last_quote(char *input);
+char	get_first_quote(char *input);
 
 char	*finish_quotes(char *input);
 

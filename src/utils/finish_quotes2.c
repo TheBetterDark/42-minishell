@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:14:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 17:52:37 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:04:15 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,12 @@ char	*complete_quoted_input(char *input)
 	new_input = NULL;
 	if (!has_quotes(input))
 		return (input);
-	return (check_and_complete_quotes(input));
+	while (!has_finished_quotes(input))
+	{
+		new_input = check_and_complete_quotes(input);
+		if (new_input == input)
+			break ;
+		input = new_input;
+	}
+	return (input);
 }
