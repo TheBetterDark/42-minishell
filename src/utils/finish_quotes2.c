@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:14:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 13:34:49 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 14:05:24 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*complete_quoted_input(char *input);
 
 char	*complete_quoted_input(char *input)
 {
-	char	*new_input;
 	int		i;
 	int		delim;
 
@@ -32,16 +31,12 @@ char	*complete_quoted_input(char *input)
 			while (input[i] && input[i] != delim)
 				i++;
 			if (!input[i])
-			{
-				new_input = finish_quotes(input);
-				free(input);
-				return (new_input);
-			}	
+				return (free(input), finish_quotes(input));
 			else
 				i++;
 		}
 		else
 			i++;
 	}
-	return  (input);
+	return (input);
 }
