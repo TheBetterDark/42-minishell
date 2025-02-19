@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/18 18:14:38 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 12:28:37 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+
+# ifndef ERROR_MSGS
+#  define NL_ERR "minishell: syntax error near unexpected token `newline'\n"
+#  define PIPE_ERR "minishell: syntax error near unexpected token `| '\n"
+# endif
 
 extern volatile sig_atomic_t	g_signal;
 

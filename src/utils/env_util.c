@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:42:46 by muabdi            #+#    #+#             */
-/*   Updated: 2025/02/13 15:44:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/19 12:06:35 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,15 @@ char	*find_env_match(char *key, char **env)
 char	*get_environment_variable(char *env_var, t_data *data)
 {
 	char	*value;
+	char	*key;
 
 	value = NULL;
 	if (env_var)
-		value = find_env_match(get_key(env_var), data->env);
+	{
+		key = get_key(env_var);
+		value = find_env_match(key, data->env);
+		free(key);
+	}
 	if (!value)
 		return (NULL);
 	return (value);
