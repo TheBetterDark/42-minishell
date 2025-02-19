@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:02:31 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/07 14:42:41 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/18 18:14:12 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ bool	word_match(char *word, char *check);
 bool	is_blank(char c);
 bool	is_symbol(char c);
 bool	is_quote(char c);
+bool	is_ascii_symbol(char c);
 
 bool	word_match(char *word, char *check)
 {
@@ -37,4 +38,9 @@ bool	is_symbol(char c)
 bool	is_quote(char c)
 {
 	return (c == '\'' || c == '\"');
+}
+
+bool	is_ascii_symbol(char c)
+{
+	return (ft_isascii(c) && !ft_isalnum(c));
 }

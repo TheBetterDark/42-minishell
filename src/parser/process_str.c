@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:06 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/10 17:58:43 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:28:49 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*handle_double_quotes(char *name, int *i, t_data *data)
 		while (name[*i] && name[*i] != '\"')
 			(*i)++;
 		substr = ft_substr(name, start, *i - start);
-		expand = try_expand_dup(substr, data);
+		expand = try_expand_dup(substr, data, true);
 		free(substr);
 		if (name[*i] && name[*i] == '\"')
 			(*i)++;
@@ -70,7 +70,7 @@ char	*handle_non_quotes(char *name, int *i, t_data *data)
 	while (name[*i] && !is_quote(name[*i]))
 		(*i)++;
 	substr = ft_substr(name, start, (*i) - start);
-	expand = try_expand_dup(substr, data);
+	expand = try_expand_dup(substr, data, false);
 	free(substr);
 	return (expand);
 }

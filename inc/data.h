@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:45:05 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/13 15:45:46 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/18 18:14:38 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ bool	word_match(char *word, char *check);
 bool	is_blank(char c);
 bool	is_symbol(char c);
 bool	is_quote(char c);
+bool	is_ascii_symbol(char c);
 
 int		quoted_strlen(char *str);
 
@@ -145,6 +146,9 @@ void	normal_sigint_handler(int signo);
 void	child_sigint_handler(int signo);
 void	heredoc_sigint_handler(int signo);
 void	modify_sigint(int state, t_data *data);
+
+char	*complete_quoted_input(char *input);
+char	*append_symbols_dbl(char *expand, char *name, int *i);
 
 //	**TOKENIZE**	//
 void	tokenize(t_data *data);
@@ -198,7 +202,8 @@ char	*process_str(char *name, t_data *data);
 
 char	*get_plain_substr(char *name, int *i);
 char	*get_expanded_substr(char *substr, int *i, t_data *data);
-char	*try_expand_dup(char *substr, t_data *data);
+char	*get_expanded_substr_dbl(char *name, int *i, t_data *data);
+char	*try_expand_dup(char *substr, t_data *data, bool dbl); // bool dbl
 
 char	*get_environment_variable(char *env_var, t_data *data);
 char	*find_env_match(char *key, char **env);

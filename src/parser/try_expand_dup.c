@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:38:17 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/10 18:45:24 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/18 18:29:53 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_plain_substr(char *name, int *i);
 char	*get_expanded_substr(char *substr, int *i, t_data *data);
-char	*try_expand_dup(char *substr, t_data *data);
+char	*try_expand_dup(char *substr, t_data *data, bool dbl);
 
 char	*get_plain_substr(char *name, int *i)
 {
@@ -53,7 +53,7 @@ char	*get_expanded_substr(char *name, int *i, t_data *data)
 	return (expand);
 }
 
-char	*try_expand_dup(char *name, t_data *data)
+char	*try_expand_dup(char *name, t_data *data, bool is_dbl)
 {
 	char	*str1;
 	char	*str2;
@@ -66,8 +66,10 @@ char	*try_expand_dup(char *name, t_data *data)
 	{
 		str1 = ft_strdup(join);
 		free(join);
-		if (name[i] == '$' && name[i + 1] != '$')
+		if (name[i] == '$' && name[i + 1] != '$' && !is_dbl)
 			str2 = get_expanded_substr(name, &i, data);
+		else if (name[i] == '$' && name[i + 1] != '$' && is_dbl)
+			str2 = get_expanded_substr_dbl(name, &i, data);
 		else
 			str2 = get_plain_substr(name, &i);
 		join = ft_strjoin(str1, str2);

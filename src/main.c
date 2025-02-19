@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 20:56:21 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/18 15:06:47 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	*read_command_line(t_data *data)
 	modify_sigint(NORMAL_SIGNAL, data);
 	trim = ft_strtrim(input, " \t");
 	free(input);
+	input = complete_quoted_input(trim);
+	/*
 	if (!has_finished_quotes(trim))
 	{
 		input = finish_quotes(trim);
@@ -39,7 +41,8 @@ char	*read_command_line(t_data *data)
 		trim = ft_strtrim(input, "\n");
 		free(input);
 	}
-	return (trim);
+	*/
+	return (input);
 }
 
 void	run_minishell(t_data *data)

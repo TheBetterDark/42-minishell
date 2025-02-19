@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 13:37:18 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/12 19:00:26 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:27:05 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static bool	read_write(t_ins *ins, t_data *data)
 	}
 	if (ins->eof_quoted == false)
 	{
-		expand = try_expand_dup(buf, data);
+		expand = try_expand_dup(buf, data, false);
 		free(buf);
 		ft_putstr_fd(expand, ins->fd);
 		free(expand);
