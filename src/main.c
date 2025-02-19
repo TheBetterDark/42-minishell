@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 18:14:06 by muabdi           ###   ########.fr       */
+/*   Updated: 2025/02/19 18:26:07 by muabdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	run_minishell(t_data *data)
 		free_minishell(data);
 		g_signal = NO_SIGNAL;
 		data->input = read_command_line(data);
-		if (g_signal == SIGINT || data->prompt_cont_error)
+		if (data->input && (g_signal == SIGINT || data->prompt_cont_error))
 			continue ;
 		if (!data->input)
 		{
