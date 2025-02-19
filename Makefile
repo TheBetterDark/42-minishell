@@ -6,7 +6,7 @@
 #    By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/07 11:51:31 by smoore            #+#    #+#              #
-#    Updated: 2025/02/19 12:35:42 by smoore           ###   ########.fr        #
+#    Updated: 2025/02/18 14:53:04 by smoore           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ SRCS = $(SRC_DIR)/main.c \
 	$(SRC_DIR)/tokens/tokenize.c \
 	$(SRC_DIR)/utils/init_free_data.c \
 	$(SRC_DIR)/utils/finish_quotes.c \
-	$(SRC_DIR)/utils/complete_quotes.c \
+	$(SRC_DIR)/utils/finish_quotes2.c \
 	$(SRC_DIR)/utils/quote_strlen.c \
 	$(SRC_DIR)/utils/str_utils.c \
 	$(SRC_DIR)/utils/str_utils2.c \

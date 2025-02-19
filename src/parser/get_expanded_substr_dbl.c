@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:42:46 by muabdi            #+#    #+#             */
-/*   Updated: 2025/02/19 12:28:01 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/18 18:35:57 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ char	*get_expanded_substr_dbl(char *name, int *i, t_data *data)
 	}
 	else
 	{
-		while (name[*i] && name[*i] != '\"'
-			&& (ft_isalnum(name[*i]) || name[*i] == '_'))
+		while (name[*i] && name[*i] != '\"' &&
+			(ft_isalnum(name[*i]) || name[*i] == '_'))
 			(*i)++;
 		substr = ft_substr(name, start, *i - start);
 	}

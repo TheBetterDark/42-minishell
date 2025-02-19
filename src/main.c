@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 11:52:56 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 13:15:03 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 13:29:20 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	*read_command_line(t_data *data)
 	trim = ft_strtrim(input, " \t");
 	free(input);
 	input = complete_quoted_input(trim);
-	free(trim);
 	return (input);
 }
 

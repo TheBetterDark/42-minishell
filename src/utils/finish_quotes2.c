@@ -6,7 +6,7 @@
 /*   By: muabdi <muabdi@student.42london.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 12:14:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/02/19 12:31:09 by smoore           ###   ########.fr       */
+/*   Updated: 2025/02/19 13:34:49 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ char	*complete_quoted_input(char *input)
 			if (!input[i])
 			{
 				new_input = finish_quotes(input);
+				free(input);
 				return (new_input);
-			}
+			}	
 			else
 				i++;
 		}
 		else
 			i++;
 	}
-	return (input);
+	return  (input);
 }
